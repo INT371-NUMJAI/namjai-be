@@ -1,0 +1,55 @@
+name: namjai-be-dev
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create .env file
+        run: |
+          echo spring.datasource.url= ${{ secrets.DEV_DB_URL }} >> ./src/main/resources/application.properties
+          echo spring.datasource.username= ${{ secrets.DEV_DB_USERNAME }} >> ./src/main/resources/application.properties
+          echo spring.datasource.password= ${{ secrets.DEV_DB_PASSWORD }} >> ./src/main/resources/application.properties
+          cat ./src/main/resources/application.properties
+      - name: Login to Github Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/int371-numjai/namjai-be:dev
+
+      - name: Publish compose file
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOSTNAME }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: ./docker-compose.dev.yml
+          target: ~/backend/dev/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run application
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOSTNAME }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker-compose -f ~/backend/dev/docker-compose.dev.yml pull
+            docker-compose -f ~/backend/dev/docker-compose.dev.yml up -d

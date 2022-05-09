@@ -1,0 +1,9 @@
+networks:
+  default:
+    external:
+      name: int371-network
+services:
+  backend:
+    container_name: backend_dev
+    build: .
+    image: ghcr.io/int371-numjai/namjai-be:dev
