@@ -159,13 +159,6 @@
     </pluginRepositories>
     <profiles>
         <profile>
-            <id>local</id>
-            <properties>
-                <build.profile.id>local</build.profile.id>
-                <profileActive>local</profileActive>
-            </properties>
-        </profile>
-        <profile>
             <id>dev</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
