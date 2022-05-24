@@ -53,3 +53,4 @@ jobs:
           script: |
             docker-compose -f ~/backend/dev/docker-compose.dev.yml pull
             docker-compose -f ~/backend/dev/docker-compose.dev.yml up -d
+            docker image prune -f
