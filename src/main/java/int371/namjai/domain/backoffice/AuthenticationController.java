@@ -1,16 +1,17 @@
 package int371.namjai.domain.backoffice;
 
 
-import int371.namjai.domain.auth.auth.JwtAuthenticationRequest;
-import int371.namjai.domain.auth.auth.JwtAuthenticationResponse;
 import int371.namjai.domain.foundation.Foundation;
 import int371.namjai.domain.foundation.FoundationRepository;
 import int371.namjai.domain.resource.Resource;
 import int371.namjai.domain.role.Role;
 import int371.namjai.domain.role.RoleRepository;
-import int371.namjai.domain.user.UserRepository;
+import int371.namjai.domain.security_auth.auth.APILoginRequest;
+import int371.namjai.domain.security_auth.auth.APITokenResponse;
 import int371.namjai.domain.user.User;
+import int371.namjai.domain.user.UserRepository;
 import int371.namjai.utill.Constant;
+import int371.namjai.utill.DateUtill;
 import int371.namjai.utill.UserRoleName;
 import int371.namjai.utill.auth.CustomUserDetailsService;
 import int371.namjai.utill.auth.TokenHelper;
@@ -56,6 +57,9 @@ public class AuthenticationController {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private DateUtill dateUtill;
+
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -63,7 +67,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/login", consumes = "application/json")
-    public ResponseEntity<JwtAuthenticationResponse> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws Exception {
+    public ResponseEntity<APITokenResponse> createAuthenticationToken(@RequestBody APILoginRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
@@ -75,18 +79,19 @@ public class AuthenticationController {
 //        Users user = userRepo.findByEmailIgnoreCase(authenticationRequest.getEmail());
         final String accessToken = jwtToken.generateToken(userDetails);
 
-        return ResponseEntity.ok((new JwtAuthenticationResponse(accessToken)));
+        return ResponseEntity.ok((new APITokenResponse(accessToken)));
     }
 
     @PostMapping(value = "/signup")
     public ResponseEntity<User> createNewUser(@RequestBody User newUser) {
-        String encryptedPassword = passwordEncoder.encode(newUser.getPassword());
+//        String encryptedPassword = passwordEncoder.encode(newUser.getPassword());
 //        String encryptedPassword = passwordEncoder.encode("123");
         String newUserUUid = UUID.randomUUID().toString();
-//        Role role = new Role("2", UserRoleName.ROLE_USER);
-        Role role = new Role("1", UserRoleName.ROLE_ADMIN);
-       newUser.setUserUUid(newUserUUid);
-        newUser.setPassword(encryptedPassword);
+        Role role = new Role("2", UserRoleName.ROLE_USER);
+//        Role role = new Role("1", UserRoleName.ROLE_ADMIN);
+        newUser.setUserUUid(newUserUUid);
+        newUser.setPassword(encryptedPassword(newUser.getPassword()));
+        newUser.setCreateDate(dateUtill.nowDateTimeFormatter());
         newUser.setRole(role);
         userRepo.save(newUser);
         return ResponseEntity.ok().body(newUser);
@@ -96,10 +101,12 @@ public class AuthenticationController {
     public ResponseEntity<Foundation> createNewFoundation() {
 //        String encryptedPassword = passwordEncoder.encode(apiUserSignup.getPassword());
         String newFDNUUid = UUID.randomUUID().toString();
-//        Role role = new Role("2","user");
+        Role role = new Role("3", UserRoleName.ROLE_FDN);
 //        User newUser = new User(newUserUUid, apiUserSignup.getUserName(),apiUserSignup.getEmail(),apiUserSignup.getFirstName(),apiUserSignup.getLastName(),encryptedPassword,role) ;
         Foundation apiFDN = new Foundation();
-        Resource resource = new Resource("testResourceUUid","testFilename","testPathName");
+//        APIFDNToUser apifdnToUser =  new APIFDNToUser();
+        User fdnUser = new User();
+        Resource resource = new Resource("testResourceUUid", "testFilename", "testPathName");
         apiFDN.setFdnUUid(newFDNUUid);
         apiFDN.setFdnName("test1");
         apiFDN.setAddressNo("test1");
@@ -112,15 +119,28 @@ public class AuthenticationController {
         apiFDN.setFounderName("test1");
         apiFDN.setFdnDetail("testDetail1");
         apiFDN.setFdnSize(Constant.FDN_SMALL_SIZE);
-        apiFDN.setEstablishDate("today");
+        apiFDN.setEstablishDate(dateUtill.nowDateFormatter());
         apiFDN.setEmail("testEmail1");
         apiFDN.setContactNumber("09999999991");
         apiFDN.setStatus(Constant.FDN_STATUS_PENDING);
+        apiFDN.setPassword(encryptedPassword("123"));
         apiFDN.setResource(resource);
 //        apiFDN.setEstablishDate(System.cu);
+        fdnUser.setUserUUid(UUID.randomUUID().toString());
+        fdnUser.setUserName(apiFDN.getFdnName());
+        fdnUser.setEmail(apiFDN.getEmail());
+        fdnUser.setFirstName("Foundation");
+        fdnUser.setLastName(apiFDN.getFdnName() + "test");
+        fdnUser.setPassword(apiFDN.getPassword());
+        fdnUser.setCreateDate(dateUtill.nowDateTimeFormatter());
+        fdnUser.setRole(role);
+        userRepo.save(fdnUser);
         fdnRepo.save(apiFDN);
         return ResponseEntity.ok().body(apiFDN);
     }
+
+
+
 //    @PutMapping("/user/edit")
 //    public ResponseEntity<Users> editProfile(@RequestBody Users user, Authentication auth) {
 //        Users updateUser = userService.getUserCurrent(auth);
@@ -132,4 +152,8 @@ public class AuthenticationController {
 //        userRepo.save(updateUser);
 //        return ResponseEntity.ok().body(updateUser);
 //    }
+
+    private String encryptedPassword(String password) {
+        return passwordEncoder.encode(password);
+    }
 }

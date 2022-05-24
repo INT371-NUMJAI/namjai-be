@@ -1,7 +1,7 @@
-package int371.namjai.domain.auth;
+package int371.namjai.domain.security_auth;
 
-import int371.namjai.domain.auth.auth.RestAuthenticationEntryPoint;
-import int371.namjai.domain.auth.auth.TokenAuthenticationFilter;
+import int371.namjai.domain.security_auth.auth.RestAuthenticationEntryPoint;
+import int371.namjai.domain.security_auth.auth.TokenAuthenticationFilter;
 import int371.namjai.utill.auth.CustomUserDetailsService;
 import int371.namjai.utill.auth.TokenHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
                 .authorizeRequests()
-                .antMatchers("/backoffice/users").hasRole("ADMIN")
+                .antMatchers("/backoffice/**").hasRole("ADMIN")
                 .antMatchers(
                         "/auth/**","/role"
                 ).permitAll()
@@ -75,9 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // TokenAuthenticationFilter will ignore the below paths
         web
                 .ignoring()
-                .antMatchers("/api/test/**");
-
-
+                .antMatchers("/view/**");
     }
 
 }

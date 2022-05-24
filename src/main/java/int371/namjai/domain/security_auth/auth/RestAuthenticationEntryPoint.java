@@ -1,4 +1,4 @@
-package int371.namjai.domain.auth.auth;
+package int371.namjai.domain.security_auth.auth;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

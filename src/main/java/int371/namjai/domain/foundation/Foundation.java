@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "foundations")
@@ -50,19 +49,22 @@ public class Foundation {
     @Column(name="fdn_detail")
     private String fdnDetail;
 
-    @Column(name="fdn_size")
+    @Column(name = "fdn_size")
     private String fdnSize;
 
-    @Column(name="establish_date")
+    @Column(name = "establish_date")
     private String establishDate;
 
-    @Column(name="email",unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name="contact_num")
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "contact_num")
     private String contactNumber;
 
-    @Column(name="status")
+    @Column(name = "status")
     private String status;
 
     @OneToOne(cascade = CascadeType.ALL)

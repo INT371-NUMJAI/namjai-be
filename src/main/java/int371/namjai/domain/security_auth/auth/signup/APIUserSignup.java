@@ -1,4 +1,4 @@
-package int371.namjai.domain.auth.auth.signup;
+package int371.namjai.domain.security_auth.auth.signup;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +15,5 @@ public class APIUserSignup {
     private String firstName;
     private String lastName;
     private String password;
-
-
 
 }

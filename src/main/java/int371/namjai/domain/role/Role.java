@@ -17,8 +17,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role implements GrantedAuthority {
+
     @Id
-    @Column(name="role_uuid")
+    @Column(name = "role_id")
     private String roleUUid;
 
     @Column(name="role_name")

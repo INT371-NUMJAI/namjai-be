@@ -1,11 +1,9 @@
 package int371.namjai.utill.auth;
 
-import int371.namjai.domain.role.Role;
 import int371.namjai.domain.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,16 +15,17 @@ public class UserPrincipal implements UserDetails {
     public UserPrincipal(User user){
         this.user=user;
     }
-
+//    private UserDetails userDetails;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        for (Role role : user.getRoles()) {
-            authorities.add(new SimpleGrantedAuthority(role.getAuthority()));
-        }
-        return authorities;
-
+//        User user = new User();
+//        for (Role role : user.getRoles()) {
+//            authorities.add(new SimpleGrantedAuthority(user.getAuthority()));
+//        }
+//        return authorities;
+        return Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getAuthority()));
     }
 
     @Override
