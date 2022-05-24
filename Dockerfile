@@ -2,7 +2,7 @@ FROM maven:3.8.5-jdk-8-slim as build
 WORKDIR /namjai-be
 COPY src ./src
 COPY pom.xml ./
-RUN mvn clean install -DskipTests -Pdev
+RUN mvn clean install -DskipTests 
 
 
 FROM adoptopenjdk/openjdk8:alpine-slim as deploy
