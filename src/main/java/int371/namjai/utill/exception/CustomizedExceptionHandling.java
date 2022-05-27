@@ -1,8 +1,10 @@
 package int371.namjai.utill.exception;
 
 import int371.namjai.domain.foundation.FoundationNotFoundException;
+import int371.namjai.domain.user.exceptions.UserDuplicateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -22,4 +24,26 @@ public class CustomizedExceptionHandling extends ResponseEntityExceptionHandler 
         ResponseEntity<Object> entity = new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         return entity;
     }
+
+    @ExceptionHandler(UserDuplicateException.class)
+    public ResponseEntity<Object> handleExceptions(UserDuplicateException exception, WebRequest webRequest) {
+        ExceptionResponse response = new ExceptionResponse();
+        response.setHttpStatus(HttpStatus.BAD_REQUEST);
+        response.setDateTime(LocalDateTime.now());
+        response.setMessage("This user has been already registered");
+        ResponseEntity<Object> entity = new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return entity;
+    }
+
+        @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Object> handleExceptions(BadCredentialsException exception, WebRequest webRequest) {
+        ExceptionResponse response = new ExceptionResponse();
+        response.setHttpStatus(HttpStatus.UNAUTHORIZED);
+        response.setDateTime(LocalDateTime.now());
+        response.setMessage("Invalid email or password , Please try agin");
+        ResponseEntity<Object> entity = new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return entity;
+    }
+
+
 }

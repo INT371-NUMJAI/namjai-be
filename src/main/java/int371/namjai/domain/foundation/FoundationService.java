@@ -1,35 +1,34 @@
 package int371.namjai.domain.foundation;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-//@Service
-@Component("foundationService")
-@Scope("singleton")
+@Service
 public class FoundationService {
 
     @Autowired
     private FoundationRepository foundationRepository;
 
-//    public FoundationService(FoundationRepository foundationRepository) {
-//        this.foundationRepository = foundationRepository;
-//    }
+    @Autowired
+    private FoundationDocumentsRepo foundationDocumentsRepo;
 
-    //
-//    @Override
-//    public IEvent getEventByUuid(UUID uuid) throws EventNotFoundException {
-//        return eventRepository.findById(uuid)
-//                .orElseThrow(() -> new EventNotFoundException("Event does not exist where uuid is " + uuid.toString()));
-//    }
-//
+
     public Foundation getFoundationById(String fdnUUid) {
         return foundationRepository.findById(fdnUUid)
                 .orElseThrow(FoundationNotFoundException::new);
-//              .orElseThrow(()-> new EntityNotFoundException("Foundation does not exist where uuid is "+fdnUUid));
-
     }
 
+    public FoundationDocuments getFoundationDocFIle(String fdnUUid){
+        return  foundationDocumentsRepo.findByFoundation_FdnUUid(fdnUUid).orElseThrow(FoundationNotFoundException::new);
+    }
+
+    public Foundation convertJsonStringToMovie(String jsonString) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Foundation newFoundation = mapper.readValue(jsonString, Foundation.class);
+        return newFoundation;
+    }
 
 }

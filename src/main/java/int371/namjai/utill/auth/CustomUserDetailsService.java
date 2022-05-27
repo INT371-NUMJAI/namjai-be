@@ -18,7 +18,7 @@ public class CustomUserDetailsService implements IUserDetailsService {
     @Override
     public UserPrincipal loadUserByEmail(String email) throws UsernameNotFoundException {
         try{
-            User user = userRepository.findByEmailIgnoreCase(email);
+            User user = userRepository.findByEmailIgnoreCaseAndStatusActive(email);
             return new UserPrincipal(user);
         }catch(UsernameNotFoundException e) {
             throw  new UsernameNotFoundException("No user found with email"+email);
@@ -28,7 +28,7 @@ public class CustomUserDetailsService implements IUserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 //        Users user = userRepository.findByUserName(username);
-        User user = userRepository.findByEmailIgnoreCase(email);
+        User user = userRepository.findByEmailIgnoreCaseAndStatusActive(email);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", email));
         }

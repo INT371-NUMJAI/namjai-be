@@ -1,17 +1,18 @@
-package int371.namjai.domain.backoffice;
-
+package int371.namjai.domain.security_auth.auth;
 
 import int371.namjai.domain.foundation.Foundation;
 import int371.namjai.domain.foundation.FoundationRepository;
-import int371.namjai.domain.resource.Resource;
+import int371.namjai.domain.foundation.FoundationService;
 import int371.namjai.domain.role.Role;
 import int371.namjai.domain.role.RoleRepository;
-import int371.namjai.domain.security_auth.auth.APILoginRequest;
-import int371.namjai.domain.security_auth.auth.APITokenResponse;
+import int371.namjai.domain.security_auth.auth.signup.APILoginRequest;
+import int371.namjai.domain.security_auth.auth.signup.APITokenResponse;
 import int371.namjai.domain.user.User;
 import int371.namjai.domain.user.UserRepository;
+import int371.namjai.domain.user.exceptions.UserDuplicateException;
 import int371.namjai.utill.Constant;
 import int371.namjai.utill.DateUtill;
+import int371.namjai.utill.ResourceUtilService;
 import int371.namjai.utill.UserRoleName;
 import int371.namjai.utill.auth.CustomUserDetailsService;
 import int371.namjai.utill.auth.TokenHelper;
@@ -24,7 +25,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.UUID;
 
 
@@ -45,9 +48,6 @@ public class AuthenticationController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-//    @Autowired
-//    private UserService userService;
-
     @Autowired
     private UserRepository userRepo;
 
@@ -60,6 +60,11 @@ public class AuthenticationController {
     @Autowired
     private DateUtill dateUtill;
 
+    @Autowired
+    private ResourceUtilService resourceUtilService;
+
+    @Autowired
+    private FoundationService foundationService;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -72,23 +77,36 @@ public class AuthenticationController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword()));
         } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect username or password", e);
+            throw new BadCredentialsException("Invalid email or password");
         }
-//        final UserDetails userDetails = userDetailsService.loadUserByEmail(authenticationRequest.getEmail());
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-//        Users user = userRepo.findByEmailIgnoreCase(authenticationRequest.getEmail());
+
         final String accessToken = jwtToken.generateToken(userDetails);
 
         return ResponseEntity.ok((new APITokenResponse(accessToken)));
     }
 
     @PostMapping(value = "/signup")
-    public ResponseEntity<User> createNewUser(@RequestBody User newUser) {
-//        String encryptedPassword = passwordEncoder.encode(newUser.getPassword());
-//        String encryptedPassword = passwordEncoder.encode("123");
+    public ResponseEntity<String> createNewUser(@RequestBody User newUser) {
+        try{
         String newUserUUid = UUID.randomUUID().toString();
         Role role = new Role("2", UserRoleName.ROLE_USER);
-//        Role role = new Role("1", UserRoleName.ROLE_ADMIN);
+        newUser.setUserUUid(newUserUUid);
+        newUser.setPassword(encryptedPassword(newUser.getPassword()));
+        newUser.setCreateDate(dateUtill.nowDateTimeFormatter());
+        newUser.setRole(role);
+        newUser.setStatus(Constant.USER_STATUS_ACTIVE);
+        userRepo.save(newUser);
+        return ResponseEntity.ok().body("Sign up successfully");}
+        catch (RuntimeException e){
+            throw new UserDuplicateException();
+        }
+    }
+
+    @PostMapping(value = "/signup/admin")
+    public ResponseEntity<User> createNewAdmin(@RequestBody User newUser) {
+        String newUserUUid = UUID.randomUUID().toString();
+        Role role = new Role("1", UserRoleName.ROLE_ADMIN);
         newUser.setUserUUid(newUserUUid);
         newUser.setPassword(encryptedPassword(newUser.getPassword()));
         newUser.setCreateDate(dateUtill.nowDateTimeFormatter());
@@ -98,60 +116,43 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/signup/fdn")
-    public ResponseEntity<Foundation> createNewFoundation() {
-//        String encryptedPassword = passwordEncoder.encode(apiUserSignup.getPassword());
+    public ResponseEntity<Foundation> createNewFoundation(@RequestParam("docFile") MultipartFile docFile,@RequestParam("apifdnToUser")String apifdnToUser,@RequestParam("password") String password) throws Exception {
         String newFDNUUid = UUID.randomUUID().toString();
         Role role = new Role("3", UserRoleName.ROLE_FDN);
-//        User newUser = new User(newUserUUid, apiUserSignup.getUserName(),apiUserSignup.getEmail(),apiUserSignup.getFirstName(),apiUserSignup.getLastName(),encryptedPassword,role) ;
-        Foundation apiFDN = new Foundation();
-//        APIFDNToUser apifdnToUser =  new APIFDNToUser();
         User fdnUser = new User();
-        Resource resource = new Resource("testResourceUUid", "testFilename", "testPathName");
+
+        Foundation apiFDN = foundationService.convertJsonStringToMovie(apifdnToUser);
         apiFDN.setFdnUUid(newFDNUUid);
-        apiFDN.setFdnName("test1");
-        apiFDN.setAddressNo("test1");
-        apiFDN.setStreetNo("test1");
-        apiFDN.setStreetName("testStreetname");
-        apiFDN.setSubDistrict("test1");
-        apiFDN.setDistrict("test1");
-        apiFDN.setProvince("test1");
-        apiFDN.setPostalCode("test1");
-        apiFDN.setFounderName("test1");
-        apiFDN.setFdnDetail("testDetail1");
-        apiFDN.setFdnSize(Constant.FDN_SMALL_SIZE);
         apiFDN.setEstablishDate(dateUtill.nowDateFormatter());
-        apiFDN.setEmail("testEmail1");
-        apiFDN.setContactNumber("09999999991");
         apiFDN.setStatus(Constant.FDN_STATUS_PENDING);
-        apiFDN.setPassword(encryptedPassword("123"));
-        apiFDN.setResource(resource);
-//        apiFDN.setEstablishDate(System.cu);
-        fdnUser.setUserUUid(UUID.randomUUID().toString());
-        fdnUser.setUserName(apiFDN.getFdnName());
+        apiFDN.setResource(null);
+
+        String fdnToUserUUid = UUID.randomUUID().toString();
+        fdnUser.setUserUUid(fdnToUserUUid);
         fdnUser.setEmail(apiFDN.getEmail());
         fdnUser.setFirstName("Foundation");
-        fdnUser.setLastName(apiFDN.getFdnName() + "test");
-        fdnUser.setPassword(apiFDN.getPassword());
+        fdnUser.setLastName(apiFDN.getFdnName());
+        fdnUser.setPassword(encryptedPassword(password));
         fdnUser.setCreateDate(dateUtill.nowDateTimeFormatter());
         fdnUser.setRole(role);
-        userRepo.save(fdnUser);
+        fdnUser.setStatus(Constant.USER_STATUS_DISABLE);
+
         fdnRepo.save(apiFDN);
+        userRepo.save(fdnUser);
+        resourceUtilService.saveFDNDocumentFile(docFile,apiFDN);
+
         return ResponseEntity.ok().body(apiFDN);
     }
 
 
+    @PostMapping("/test")
+    public ResponseEntity<String> uploadFileWithBody(@RequestParam("file") MultipartFile file,@RequestParam("testString") String testString) throws IOException {
+        resourceUtilService.saveFDNDocumentFile(file);
+        String returnString = testString;
+        return  ResponseEntity.ok().body(returnString);
+    }
 
-//    @PutMapping("/user/edit")
-//    public ResponseEntity<Users> editProfile(@RequestBody Users user, Authentication auth) {
-//        Users updateUser = userService.getUserCurrent(auth);
-//        updateUser.setUsername(user.getUsername());
-//        updateUser.setFirstname(user.getFirstname());
-//        updateUser.setLastname(user.getLastname());
-//        String encryptedPassword = passwordEncoder.encode(user.getPassword());
-//        updateUser.setPassword(encryptedPassword);
-//        userRepo.save(updateUser);
-//        return ResponseEntity.ok().body(updateUser);
-//    }
+
 
     private String encryptedPassword(String password) {
         return passwordEncoder.encode(password);

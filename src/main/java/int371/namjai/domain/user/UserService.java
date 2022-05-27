@@ -17,10 +17,10 @@ public class UserService {
 
     public User getUserCurrent(Authentication auth){
         String userCurrent  = auth.getName();
-        return    userRepo.findByUserName(userCurrent);
+        return    userRepo.findByEmailIgnoreCaseAndStatusActive(userCurrent);
     }
 
-    public Boolean checkUserNameIsAlreadyExists(String userName){
-        return userRepo.existsByUserName(userName);
+    public Boolean checkUserNameIsAlreadyExists(String email){
+        return userRepo.existsByEmail(email);
     }
 }

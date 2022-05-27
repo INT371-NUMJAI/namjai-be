@@ -1,6 +1,7 @@
 package int371.namjai.domain.foundation;
 
 import int371.namjai.domain.resource.Resource;
+import int371.namjai.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -58,9 +59,6 @@ public class Foundation {
     @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "password")
-    private String password;
-
     @Column(name = "contact_num")
     private String contactNumber;
 
@@ -70,5 +68,6 @@ public class Foundation {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "resource_uuid", referencedColumnName = "resource_uuid")
     private Resource resource;
+
 
 }

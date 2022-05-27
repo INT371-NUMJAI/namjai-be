@@ -1,8 +1,6 @@
 package int371.namjai.domain.backoffice;
 
-import int371.namjai.domain.foundation.Foundation;
-import int371.namjai.domain.foundation.FoundationRepository;
-import int371.namjai.domain.foundation.FoundationService;
+import int371.namjai.domain.foundation.*;
 import int371.namjai.domain.foundation.mapper.APIVerificationFDN;
 import int371.namjai.domain.user.User;
 import int371.namjai.domain.user.UserRepository;
@@ -35,11 +33,8 @@ public class BackOfficeController {
     @Autowired
     private BackOfficeService backOfficeService;
 
-//    public BackOfficeController(UserRepository userRepository, FoundationRepository foundationRepository, FoundationService foundationService) {
-//        this.userRepository = userRepository;
-//        this.foundationRepository = foundationRepository;
-//        this.foundationService = foundationService;
-//    }
+    @Autowired
+    private FoundationDocumentsRepo foundationDocumentsRepo;
 
     @GetMapping(value = "/users")
     private List<User> getAllUser() {
@@ -49,13 +44,22 @@ public class BackOfficeController {
 
     @PostMapping(value = "/approve-foundation")
     @ResponseBody
-    private ResponseEntity<Foundation> approveFoundation(@RequestBody APIVerificationFDN apiVerificationFDN) throws MessagingException {
+    private ResponseEntity<Void> approveFoundation(@RequestBody APIVerificationFDN apiVerificationFDN) throws MessagingException {
         Foundation foundation = foundationService.getFoundationById(apiVerificationFDN.getFdnUUid());
+        FoundationDocuments foundationDocuments = foundationService.getFoundationDocFIle(apiVerificationFDN.getFdnUUid());
         String newStatus = ("V".equals(apiVerificationFDN.getStatus())) ? Constant.FDN_STATUS_VERIFIED : Constant.FDN_STATUS_REJECTED;
-        foundation.setStatus(newStatus);
-        foundationRepository.save(foundation);
+        if(Constant.FDN_STATUS_VERIFIED.equals(newStatus)){
+            User newUser = userRepository.findByEmailIgnoreCaseAndStatusDisable(foundation.getEmail());
+            newUser.setStatus(Constant.USER_STATUS_ACTIVE);
+            foundation.setStatus(newStatus);
+            foundationRepository.save(foundation);
+            userRepository.save(newUser);
+        }
         backOfficeService.sendmail(foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
-        return ResponseEntity.ok(foundation);
+        foundationDocumentsRepo.delete(foundationDocuments);
+        foundationRepository.delete(foundation);
+//        return ResponseEntity.ok(foundation);
+        return ResponseEntity.ok().build();
     }
 
 

@@ -1,4 +1,4 @@
-package int371.namjai.domain.security_auth.auth;
+package int371.namjai.domain.security_auth.auth.configfiles;
 
 
 import int371.namjai.utill.auth.IUserDetailsService;
@@ -27,7 +27,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         this.iUserDetailsService=iUserDetailsService;
     }
 
-
     @Override
     public void doFilterInternal(
             HttpServletRequest request,
@@ -35,27 +34,21 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             FilterChain chain
     ) throws IOException, ServletException {
 
-//        String username;
         String email;
         String authToken = tokenHelper.getToken(request);
 
-//        if (authToken != null) {
         if (!ObjectUtils.isEmpty(authToken)) {
-            // get username from token
-//            username = tokenHelper.getUsernameFromToken(authToken);
             email = tokenHelper.getEmailFromToken(authToken);
             if (!ObjectUtils.isEmpty(email)) {
-                // get user
-//                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UserDetails userDetails = iUserDetailsService.loadUserByUsername(email);
                 if (tokenHelper.validateToken(authToken, userDetails)) {
-                    // create authentication
                     TokenBasedAuthentication authentication = new TokenBasedAuthentication(userDetails);
                     authentication.setToken(authToken);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
         }
+        request.getParameterNames();
         chain.doFilter(request, response);
     }
 }
