@@ -111,6 +111,7 @@ public class AuthenticationController {
         newUser.setPassword(encryptedPassword(newUser.getPassword()));
         newUser.setCreateDate(dateUtill.nowDateTimeFormatter());
         newUser.setRole(role);
+        newUser.setStatus(Constant.USER_STATUS_ACTIVE);
         userRepo.save(newUser);
         return ResponseEntity.ok().body(newUser);
     }
