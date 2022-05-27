@@ -9,6 +9,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -23,7 +24,10 @@ public class ResourceUtilService {
         if (!ObjectUtils.isEmpty(docFile)) {
             String fileName = docFile.getOriginalFilename();
             File myFile = new File(Constant.FDN_DOC_PATH + fileName);
-        myFile.createNewFile();
+            myFile.createNewFile();
+            FileOutputStream fos = new FileOutputStream(myFile);
+            fos.write(docFile.getBytes());
+            fos.close();
             foundationDocuments.setFdnDocUUid(UUID.randomUUID().toString());
             foundationDocuments.setFileName(fileName);
             foundationDocuments.setFilePath(Constant.FDN_DOC_PATH);
@@ -31,19 +35,24 @@ public class ResourceUtilService {
             foundationDocuments.setFoundation(foundation);
             foundationDocumentsRepo.save(foundationDocuments);
         }
+
+
     }
 
     public void saveFDNDocumentFile(MultipartFile docFile) throws IOException {
         if (!ObjectUtils.isEmpty(docFile)) {
             String fileName = docFile.getOriginalFilename();
             File myFile = new File(Constant.FDN_DOC_PATH + fileName);
-            docFile.transferTo(myFile);
+            // docFile.transferTo(myFile);
+            FileOutputStream fos = new FileOutputStream(myFile);
+            fos.write(docFile.getBytes());
+            fos.close();
         }
     }
 
-    private String getFileExtension(String fileName){
+    private String getFileExtension(String fileName) {
         int index = fileName.lastIndexOf('.');
-        if(index > 0) {
+        if (index > 0) {
             String extension = fileName.substring(index + 1);
             return extension;
         }
