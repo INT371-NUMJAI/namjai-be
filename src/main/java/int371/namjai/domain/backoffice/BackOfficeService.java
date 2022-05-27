@@ -29,7 +29,7 @@ public class BackOfficeService {
         Message msg = new MimeMessage(session);
         msg.setFrom(new InternetAddress("namjai.service@gmail.com", false));
 
-        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("khonjai.3994@gmail.com"));
+        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(fdnEmail));
 //        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(fdnEmail));
         msg.setSubject("Namjai - Verification Result");
         msg.setContent("Tutorials point email", "text/html");
