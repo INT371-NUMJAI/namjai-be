@@ -54,11 +54,13 @@ public class BackOfficeController {
             foundation.setStatus(newStatus);
             foundationRepository.save(foundation);
             userRepository.save(newUser);
+            backOfficeService.sendmail(foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
         }
-        backOfficeService.sendmail(foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
-        foundationDocumentsRepo.delete(foundationDocuments);
-        foundationRepository.delete(foundation);
-//        return ResponseEntity.ok(foundation);
+        else{
+            backOfficeService.sendmail(foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
+            foundationDocumentsRepo.delete(foundationDocuments);
+            foundationRepository.delete(foundation);
+        }
         return ResponseEntity.ok().build();
     }
 
