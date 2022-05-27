@@ -22,7 +22,7 @@ public class ResourceUtilService {
         FoundationDocuments foundationDocuments = new FoundationDocuments();
         if (!ObjectUtils.isEmpty(docFile)) {
             String fileName = docFile.getOriginalFilename();
-            File myFile = new File(Constant.FDN_DOC_PATH_LOCAL + fileName);
+            File myFile = new File(Constant.FDN_DOC_PATH + fileName);
         myFile.createNewFile();
             foundationDocuments.setFdnDocUUid(UUID.randomUUID().toString());
             foundationDocuments.setFileName(fileName);
@@ -36,7 +36,7 @@ public class ResourceUtilService {
     public void saveFDNDocumentFile(MultipartFile docFile) throws IOException {
         if (!ObjectUtils.isEmpty(docFile)) {
             String fileName = docFile.getOriginalFilename();
-            File myFile = new File(Constant.FDN_DOC_PATH_LOCAL + fileName);
+            File myFile = new File(Constant.FDN_DOC_PATH + fileName);
             docFile.transferTo(myFile);
         }
     }
