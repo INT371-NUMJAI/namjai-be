@@ -24,7 +24,6 @@ public class ResourceUtilService {
         if (!ObjectUtils.isEmpty(docFile)) {
             String fileName = docFile.getOriginalFilename();
             File myFile = new File(Constant.FDN_DOC_PATH + fileName);
-            myFile.createNewFile();
             FileOutputStream fos = new FileOutputStream(myFile);
             fos.write(docFile.getBytes());
             fos.close();
