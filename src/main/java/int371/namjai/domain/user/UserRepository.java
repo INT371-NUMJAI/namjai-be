@@ -1,11 +1,20 @@
 package int371.namjai.domain.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,String> {
-    User findByEmailIgnoreCase(String  email);
-    User findByUserName(String username);
-    boolean existsByUserName(String username);
+
+    @Query(value = "SELECT u FROM User u WHERE UPPER(u.email) LIKE UPPER(?1) " +
+            "AND u.status LIKE 'ACTIVE' ")
+    User findByEmailIgnoreCaseAndStatusActive(String  email);
+
+    @Query(value = "SELECT u FROM User u WHERE UPPER(u.email) LIKE UPPER(?1) " +
+            "AND u.status LIKE 'DISABLE' ")
+    User findByEmailIgnoreCaseAndStatusDisable(String  email);
+
+
+    boolean existsByEmail(String email);
 }

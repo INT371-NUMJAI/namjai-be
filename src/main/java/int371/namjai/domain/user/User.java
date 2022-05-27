@@ -1,5 +1,6 @@
 package int371.namjai.domain.user;
 
+import int371.namjai.domain.foundation.Foundation;
 import int371.namjai.domain.role.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,9 +19,6 @@ public class User {
     @Column(name = "user_uuid")
     private String userUUid;
 
-    @Column(name = "username", unique = true, nullable = false)
-    private String userName;
-
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
@@ -36,23 +34,17 @@ public class User {
 
     @Column(name = "create_date", nullable = false)
     private Timestamp createDate;
-    //    @ManyToMany(fetch=FetchType.EAGER)
-//    @JoinTable(name="users_roles",
-//            joinColumns = @JoinColumn(name="user_uuid",referencedColumnName = "user_uuid"),inverseJoinColumns = @JoinColumn(name="role_uuid",referencedColumnName = "role_uuid"))
-//    private Set<Role> roles = new HashSet<>();
-//
+
+    @Column(name="status")
+    private String status;
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role = new Role();
 
-//    public void setRole(Role role){
-//        this.roles.add(role);
-//    }
 
-
-    public User(String userUUid, String userName, String email, String firstName, String lastName, String password) {
+    public User(String userUUid, String email, String firstName, String lastName, String password) {
         this.userUUid = userUUid;
-        this.userName = userName;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
