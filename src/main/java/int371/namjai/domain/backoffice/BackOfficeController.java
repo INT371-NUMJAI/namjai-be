@@ -59,7 +59,9 @@ public class BackOfficeController {
         else{
             backOfficeService.sendmail(foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
             foundationDocumentsRepo.delete(foundationDocuments);
+            userRepository.deleteByEmail(foundation.getEmail());
             foundationRepository.delete(foundation);
+
         }
         return ResponseEntity.ok().build();
     }
