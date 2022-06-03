@@ -87,17 +87,18 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/signup")
-    public ResponseEntity<String> createNewUser(@RequestBody User newUser) {
-        try{
-        String newUserUUid = UUID.randomUUID().toString();
-        Role role = new Role("2", UserRoleName.ROLE_USER);
-        newUser.setUserUUid(newUserUUid);
-        newUser.setPassword(encryptedPassword(newUser.getPassword()));
-        newUser.setCreateDate(dateUtill.nowDateTimeFormatter());
-        newUser.setRole(role);
-        newUser.setStatus(Constant.USER_STATUS_ACTIVE);
-        userRepo.save(newUser);
-        return ResponseEntity.ok().body("Sign up successfully");}
+    public ResponseEntity<Void> createNewUser(@RequestBody User newUser) {
+        try {
+            String newUserUUid = UUID.randomUUID().toString();
+            Role role = new Role("2", UserRoleName.ROLE_USER);
+            newUser.setUserUUid(newUserUUid);
+            newUser.setPassword(encryptedPassword(newUser.getPassword()));
+            newUser.setCreateDate(dateUtill.nowDateTimeFormatter());
+            newUser.setRole(role);
+            newUser.setStatus(Constant.USER_STATUS_ACTIVE);
+            userRepo.save(newUser);
+            return ResponseEntity.ok().build();
+        }
         catch (RuntimeException e){
             throw new UserDuplicateException();
         }
