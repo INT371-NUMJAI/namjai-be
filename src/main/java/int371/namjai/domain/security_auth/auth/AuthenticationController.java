@@ -104,18 +104,7 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping(value = "/signup/admin")
-    public ResponseEntity<User> createNewAdmin(@RequestBody User newUser) {
-        String newUserUUid = UUID.randomUUID().toString();
-        Role role = new Role("1", UserRoleName.ROLE_ADMIN);
-        newUser.setUserUUid(newUserUUid);
-        newUser.setPassword(encryptedPassword(newUser.getPassword()));
-        newUser.setCreateDate(dateUtill.nowDateTimeFormatter());
-        newUser.setRole(role);
-        newUser.setStatus(Constant.USER_STATUS_ACTIVE);
-        userRepo.save(newUser);
-        return ResponseEntity.ok().body(newUser);
-    }
+
 
     @PostMapping(value = "/signup/fdn")
     public ResponseEntity<Foundation> createNewFoundation(@RequestParam("docFile") MultipartFile docFile,@RequestParam("apifdnToUser")String apifdnToUser,@RequestParam("password") String password) throws Exception {
