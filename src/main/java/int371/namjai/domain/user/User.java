@@ -1,6 +1,5 @@
 package int371.namjai.domain.user;
 
-import int371.namjai.domain.foundation.Foundation;
 import int371.namjai.domain.role.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +27,9 @@ public class User {
     @Column(name = "lname", nullable = false)
     private String lastName;
 
+    @Column(name = "username", nullable = false)
+    private String userName;
+
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -35,7 +37,7 @@ public class User {
     @Column(name = "create_date", nullable = false)
     private Timestamp createDate;
 
-    @Column(name="status")
+    @Column(name = "status")
     private String status;
 
     @ManyToOne

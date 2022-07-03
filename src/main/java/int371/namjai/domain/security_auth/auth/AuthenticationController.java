@@ -80,10 +80,10 @@ public class AuthenticationController {
             throw new BadCredentialsException("Invalid email or password");
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-
+        String role = userRepo.selectRoleNameByEmail(authenticationRequest.getEmail());
         final String accessToken = jwtToken.generateToken(userDetails);
 
-        return ResponseEntity.ok((new APITokenResponse(accessToken)));
+        return ResponseEntity.ok((new APITokenResponse(userDetails.getUsername(), role, accessToken)));
     }
 
     @PostMapping(value = "/signup")
