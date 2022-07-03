@@ -130,17 +130,29 @@ public class AuthenticationController {
 
         fdnRepo.save(apiFDN);
         userRepo.save(fdnUser);
-        resourceUtilService.saveFDNDocumentFile(docFile,apiFDN);
+        resourceUtilService.saveFDNDocumentFile(docFile, apiFDN);
 
         return ResponseEntity.ok().body(apiFDN);
     }
 
+    @PostMapping(value = "/signup/admin")
+    public ResponseEntity<User> createNewAdmin(@RequestBody User newUser) {
+        String newUserUUid = UUID.randomUUID().toString();
+        Role role = new Role("1", UserRoleName.ROLE_ADMIN);
+        newUser.setUserUUid(newUserUUid);
+        newUser.setPassword(encryptedPassword(newUser.getPassword()));
+        newUser.setCreateDate(dateUtill.nowDateTimeFormatter());
+        newUser.setRole(role);
+        newUser.setStatus(Constant.USER_STATUS_ACTIVE);
+        userRepo.save(newUser);
+        return ResponseEntity.ok().body(newUser);
+    }
 
     @PostMapping("/test")
-    public ResponseEntity<String> uploadFileWithBody(@RequestParam("file") MultipartFile file,@RequestParam("testString") String testString) throws IOException {
+    public ResponseEntity<String> uploadFileWithBody(@RequestParam("file") MultipartFile file, @RequestParam("testString") String testString) throws IOException {
         resourceUtilService.saveFDNDocumentFile(file);
         String returnString = testString;
-        return  ResponseEntity.ok().body(returnString);
+        return ResponseEntity.ok().body(returnString);
     }
 
 
