@@ -176,9 +176,6 @@
         </profile>
         <profile>
             <id>local</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
                 <build.profile.id>local</build.profile.id>
                 <profileActive>local</profileActive>
