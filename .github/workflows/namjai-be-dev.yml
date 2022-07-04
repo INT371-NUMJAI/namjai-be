@@ -13,7 +13,7 @@ jobs:
 
       - name: Create .env file
         run: |
-          sed '$d' ./src/main/resources/application.properties
+          sed '$d' ./src/main/resources/application.properties > ./src/main/resources/application.properties.tmp && mv ./src/main/resources/application.properties.tmp ./src/main/resources/application.properties
           sed -i -e '$a\' ./src/main/resources/application.properties
           echo spring.profiles.active=dev >> ./src/main/resources/application.properties
           echo spring.datasource.url= ${{ secrets.DEV_DB_URL }} >> ./src/main/resources/application-dev.properties
