@@ -1,7 +1,11 @@
 package int371.namjai.domain.backoffice;
 
-import int371.namjai.domain.foundation.*;
+import int371.namjai.domain.foundation.Foundation;
+import int371.namjai.domain.foundation.FoundationRepository;
+import int371.namjai.domain.foundation.FoundationService;
 import int371.namjai.domain.foundation.mapper.APIVerificationFDN;
+import int371.namjai.domain.foundation_document.FoundationDocuments;
+import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
 import int371.namjai.domain.user.User;
 import int371.namjai.domain.user.UserRepository;
 import int371.namjai.utill.Constant;

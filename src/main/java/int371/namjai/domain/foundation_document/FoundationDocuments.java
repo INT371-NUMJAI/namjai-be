@@ -1,4 +1,4 @@
-package int371.namjai.domain.foundation;
+package int371.namjai.domain.foundation_document;
 
 
 import lombok.AllArgsConstructor;
@@ -6,7 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "fdns_resources_documents")
@@ -29,9 +32,10 @@ public class FoundationDocuments {
     @Column(name = "file_type")
     private String fileType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fdn_uuid")
-    private Foundation foundation;
+    //    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "fdn_uuid")
+    @Column(name = "fdn_uuid")
+    private String foundationUUid;
 
 
 }
