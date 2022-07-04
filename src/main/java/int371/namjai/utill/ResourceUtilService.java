@@ -42,7 +42,7 @@ public class ResourceUtilService {
     public void saveFDNDocumentFile(MultipartFile docFile, String fdnName) throws IOException {
         if (!ObjectUtils.isEmpty(docFile)) {
             String fileName = docFile.getOriginalFilename();
-            String fullPath = Constant.FDN_DOC_PATH + "\\" + fdnName;
+            String fullPath = Constant.FDN_DOC_PATH + fdnName;
             File createDir = new File(fullPath);
             createDir.mkdir();
             File myFile = new File(fullPath, fileName);
