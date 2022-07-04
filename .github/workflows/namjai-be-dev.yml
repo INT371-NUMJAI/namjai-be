@@ -13,10 +13,12 @@ jobs:
 
       - name: Create .env file
         run: |
+          sed "$(( $(wc -l < ./src/main/resources/application.properties)-2+1 )),$ d" ./src/main/resources/application.properties
+          echo spring.profiles.active=dev >> ./src/main/resources/application.properties
           echo spring.datasource.url= ${{ secrets.DEV_DB_URL }} >> ./src/main/resources/application-dev.properties
           echo spring.datasource.username= ${{ secrets.DEV_DB_USERNAME }} >> ./src/main/resources/application-dev.properties
           echo spring.datasource.password= ${{ secrets.DEV_DB_PASSWORD }} >> ./src/main/resources/application-dev.properties
-          cat ./src/main/resources/application-dev.properties
+          cat ./src/main/resources/application.properties
       - name: Login to Github Docker Registry
         uses: docker/login-action@v1
         with:
