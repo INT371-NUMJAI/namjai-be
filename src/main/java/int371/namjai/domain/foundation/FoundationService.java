@@ -3,6 +3,8 @@ package int371.namjai.domain.foundation;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import int371.namjai.domain.foundation_document.FoundationDocuments;
+import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,7 @@ public class FoundationService {
     }
 
     public FoundationDocuments getFoundationDocFIle(String fdnUUid){
-        return  foundationDocumentsRepo.findByFoundation_FdnUUid(fdnUUid).orElseThrow(FoundationNotFoundException::new);
+        return foundationDocumentsRepo.findByFoundationUUid(fdnUUid).orElseThrow(FoundationNotFoundException::new);
     }
 
     public Foundation convertJsonStringToMovie(String jsonString) throws JsonProcessingException {

@@ -1,8 +1,11 @@
 package int371.namjai.domain.security_auth.auth;
 
+import int371.namjai.domain.foundation.APIFDNRegister;
 import int371.namjai.domain.foundation.Foundation;
 import int371.namjai.domain.foundation.FoundationRepository;
 import int371.namjai.domain.foundation.FoundationService;
+import int371.namjai.domain.foundation_document.FoundationDocuments;
+import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
 import int371.namjai.domain.role.Role;
 import int371.namjai.domain.role.RoleRepository;
 import int371.namjai.domain.security_auth.auth.signup.APILoginRequest;
@@ -55,6 +58,9 @@ public class AuthenticationController {
     private FoundationRepository fdnRepo;
 
     @Autowired
+    private FoundationDocumentsRepo foundationDocumentsRepo;
+
+    @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
@@ -105,34 +111,44 @@ public class AuthenticationController {
     }
 
 
-
     @PostMapping(value = "/signup/fdn")
-    public ResponseEntity<Foundation> createNewFoundation(@RequestParam("docFile") MultipartFile docFile,@RequestParam("apifdnToUser")String apifdnToUser,@RequestParam("password") String password) throws Exception {
-        String newFDNUUid = UUID.randomUUID().toString();
+    public ResponseEntity<Foundation> createNewFoundation(@RequestBody APIFDNRegister apifdnRegister) throws Exception {
         Role role = new Role("3", UserRoleName.ROLE_FDN);
         User fdnUser = new User();
 
-        Foundation apiFDN = foundationService.convertJsonStringToMovie(apifdnToUser);
-        apiFDN.setFdnUUid(newFDNUUid);
-        apiFDN.setEstablishDate(dateUtill.nowDateFormatter());
-        apiFDN.setStatus(Constant.FDN_STATUS_PENDING);
-        apiFDN.setResource(null);
+        Foundation newFDN = new Foundation();
+        newFDN.setFdnUUid(apifdnRegister.getFdnUUid());
+        newFDN.setFdnName(apifdnRegister.getFdnName());
+        newFDN.setAddressNo(apifdnRegister.getAddressNo());
+        newFDN.setStreetNo(apifdnRegister.getStreetNo());
+        newFDN.setStreetName(apifdnRegister.getStreetName());
+        newFDN.setSubDistrict(apifdnRegister.getSubDistrict());
+        newFDN.setDistrict(apifdnRegister.getDistrict());
+        newFDN.setProvince(apifdnRegister.getProvince());
+        newFDN.setPostalCode(apifdnRegister.getPostalCode());
+        newFDN.setFounderName(apifdnRegister.getFounderName());
+        newFDN.setFdnDetail(apifdnRegister.getFdnDetail());
+        newFDN.setFdnSize(apifdnRegister.getFdnSize());
+        newFDN.setEmail(apifdnRegister.getEmail());
+        newFDN.setContactNumber(apifdnRegister.getContactNo());
+        newFDN.setEstablishDate(dateUtill.nowDateFormatter());
+        newFDN.setStatus(Constant.FDN_STATUS_PENDING);
+        newFDN.setResource(null);
 
         String fdnToUserUUid = UUID.randomUUID().toString();
         fdnUser.setUserUUid(fdnToUserUUid);
-        fdnUser.setEmail(apiFDN.getEmail());
+        fdnUser.setEmail(newFDN.getEmail());
         fdnUser.setFirstName("Foundation");
-        fdnUser.setLastName(apiFDN.getFdnName());
-        fdnUser.setPassword(encryptedPassword(password));
+        fdnUser.setLastName(newFDN.getFdnName());
+        fdnUser.setUserName(apifdnRegister.getFdnName());
+        fdnUser.setPassword(encryptedPassword(apifdnRegister.getPassword()));
         fdnUser.setCreateDate(dateUtill.nowDateTimeFormatter());
         fdnUser.setRole(role);
         fdnUser.setStatus(Constant.USER_STATUS_DISABLE);
 
-        fdnRepo.save(apiFDN);
+        fdnRepo.save(newFDN);
         userRepo.save(fdnUser);
-        resourceUtilService.saveFDNDocumentFile(docFile, apiFDN);
-
-        return ResponseEntity.ok().body(apiFDN);
+        return ResponseEntity.ok().body(newFDN);
     }
 
     @PostMapping(value = "/signup/admin")
@@ -148,13 +164,17 @@ public class AuthenticationController {
         return ResponseEntity.ok().body(newUser);
     }
 
-    @PostMapping("/test")
-    public ResponseEntity<String> uploadFileWithBody(@RequestParam("file") MultipartFile file, @RequestParam("testString") String testString) throws IOException {
-        resourceUtilService.saveFDNDocumentFile(file);
-        String returnString = testString;
-        return ResponseEntity.ok().body(returnString);
+    // todo =>  check filetype (only zip)
+    @PostMapping("/fdn/upload-doc")
+    public ResponseEntity<String> uploadFileWithBody(@RequestParam("file") MultipartFile file, @RequestParam("fdnUuid") String fdnUuid) throws IOException {
+        resourceUtilService.saveFDNDocumentFile(file, fdnUuid);
+        String newFDNDocUUid = UUID.randomUUID().toString();
+        String fileName = file.getOriginalFilename();
+        String fileExtension = resourceUtilService.getFileExtension(fileName);
+        FoundationDocuments fdnDoc = new FoundationDocuments(newFDNDocUUid, fileName, Constant.FDN_DOC_PATH, fileExtension, fdnUuid);
+        foundationDocumentsRepo.save(fdnDoc);
+        return ResponseEntity.ok().body(newFDNDocUUid);
     }
-
 
 
     private String encryptedPassword(String password) {

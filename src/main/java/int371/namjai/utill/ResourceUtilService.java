@@ -1,8 +1,8 @@
 package int371.namjai.utill;
 
 import int371.namjai.domain.foundation.Foundation;
-import int371.namjai.domain.foundation.FoundationDocuments;
-import int371.namjai.domain.foundation.FoundationDocumentsRepo;
+import int371.namjai.domain.foundation_document.FoundationDocuments;
+import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -19,6 +19,7 @@ public class ResourceUtilService {
     @Autowired
     private FoundationDocumentsRepo foundationDocumentsRepo;
 
+
     public void saveFDNDocumentFile(MultipartFile docFile, Foundation foundation) throws IOException {
         FoundationDocuments foundationDocuments = new FoundationDocuments();
         if (!ObjectUtils.isEmpty(docFile)) {
@@ -31,25 +32,27 @@ public class ResourceUtilService {
             foundationDocuments.setFileName(fileName);
             foundationDocuments.setFilePath(Constant.FDN_DOC_PATH);
             foundationDocuments.setFileType(getFileExtension(fileName));
-            foundationDocuments.setFoundation(foundation);
+            foundationDocuments.setFoundationUUid(foundation.getFdnUUid());
             foundationDocumentsRepo.save(foundationDocuments);
         }
 
 
     }
 
-    public void saveFDNDocumentFile(MultipartFile docFile) throws IOException {
+    public void saveFDNDocumentFile(MultipartFile docFile, String fdnName) throws IOException {
         if (!ObjectUtils.isEmpty(docFile)) {
             String fileName = docFile.getOriginalFilename();
-            File myFile = new File(Constant.FDN_DOC_PATH + fileName);
-            // docFile.transferTo(myFile);
+            String fullPath = Constant.FDN_DOC_PATH + "\\" + fdnName;
+            File createDir = new File(fullPath);
+            createDir.mkdir();
+            File myFile = new File(fullPath, fileName);
             FileOutputStream fos = new FileOutputStream(myFile);
             fos.write(docFile.getBytes());
             fos.close();
         }
     }
 
-    private String getFileExtension(String fileName) {
+    public String getFileExtension(String fileName) {
         int index = fileName.lastIndexOf('.');
         if (index > 0) {
             String extension = fileName.substring(index + 1);
