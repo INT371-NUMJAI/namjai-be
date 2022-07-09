@@ -119,9 +119,7 @@ public class AuthenticationController {
         Foundation newFDN = new Foundation();
         newFDN.setFdnUUid(apifdnRegister.getFdnUUid());
         newFDN.setFdnName(apifdnRegister.getFdnName());
-        newFDN.setAddressNo(apifdnRegister.getAddressNo());
-        newFDN.setStreetNo(apifdnRegister.getStreetNo());
-        newFDN.setStreetName(apifdnRegister.getStreetName());
+        newFDN.setAddressDetail(apifdnRegister.getAddressDetail());
         newFDN.setSubDistrict(apifdnRegister.getSubDistrict());
         newFDN.setDistrict(apifdnRegister.getDistrict());
         newFDN.setProvince(apifdnRegister.getProvince());

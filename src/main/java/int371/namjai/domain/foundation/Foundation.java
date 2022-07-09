@@ -1,7 +1,6 @@
 package int371.namjai.domain.foundation;
 
 import int371.namjai.domain.resource.Resource;
-import int371.namjai.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,25 +19,19 @@ public class Foundation {
     @Column(name = "fdn_uuid")
     private String fdnUUid;
 
-    @Column(name = "name",unique = true)
+    @Column(name = "name", unique = true)
     private String fdnName;
 
-    @Column(name ="address_no")
-    private String addressNo;
+    @Column(name = "address_detail")
+    private String addressDetail;
 
-    @Column(name="street_no")
-    private String streetNo;
-
-    @Column(name="street_name")
-    private String streetName;
-
-    @Column(name="sub_district")
+    @Column(name = "sub_district")
     private String subDistrict;
 
-    @Column(name="district")
+    @Column(name = "district")
     private String district;
 
-    @Column(name="province")
+    @Column(name = "province")
     private String province;
 
     @Column(name="postalcode")
