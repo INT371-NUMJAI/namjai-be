@@ -54,6 +54,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            export CR_PAT=${{ secrets.GITHUB_TOKEN }}
+            echo $CR_PAT | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
             docker-compose -f ~/backend/dev/docker-compose.dev.yml pull
             docker-compose -f ~/backend/dev/docker-compose.dev.yml up -d
             docker image prune -f
