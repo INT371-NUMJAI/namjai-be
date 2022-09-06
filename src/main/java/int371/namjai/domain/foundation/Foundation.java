@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "foundations")
@@ -58,9 +59,14 @@ public class Foundation {
     @Column(name = "status")
     private String status;
 
+    @Column(name = "approval")
+    private String approval;
+
+    @Column(name = "create_date")
+    private Timestamp createDate;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "resource_uuid", referencedColumnName = "resource_uuid")
     private Resource resource;
-
 
 }

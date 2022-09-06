@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "fdns_resources_documents")
@@ -37,5 +38,6 @@ public class FoundationDocuments {
     @Column(name = "fdn_uuid")
     private String foundationUUid;
 
-
+    @Column(name = "create_date")
+    private Timestamp createDate;
 }

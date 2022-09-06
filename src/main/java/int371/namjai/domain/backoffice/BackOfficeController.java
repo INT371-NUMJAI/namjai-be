@@ -4,7 +4,6 @@ import int371.namjai.domain.foundation.Foundation;
 import int371.namjai.domain.foundation.FoundationRepository;
 import int371.namjai.domain.foundation.FoundationService;
 import int371.namjai.domain.foundation.mapper.APIVerificationFDN;
-import int371.namjai.domain.foundation_document.FoundationDocuments;
 import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
 import int371.namjai.domain.user.User;
 import int371.namjai.domain.user.UserRepository;
@@ -50,7 +49,7 @@ public class BackOfficeController {
     @ResponseBody
     private ResponseEntity<Void> approveFoundation(@RequestBody APIVerificationFDN apiVerificationFDN) throws MessagingException {
         Foundation foundation = foundationService.getFoundationById(apiVerificationFDN.getFdnUUid());
-        FoundationDocuments foundationDocuments = foundationService.getFoundationDocFIle(apiVerificationFDN.getFdnUUid());
+//        FoundationDocuments foundationDocuments = foundationService.getFoundationDocFIle(apiVerificationFDN.getFdnUUid());
         String newStatus = ("V".equals(apiVerificationFDN.getStatus())) ? Constant.FDN_STATUS_VERIFIED : Constant.FDN_STATUS_REJECTED;
         if(Constant.FDN_STATUS_VERIFIED.equals(newStatus)){
             User newUser = userRepository.findByEmailIgnoreCaseAndStatusDisable(foundation.getEmail());
@@ -62,7 +61,7 @@ public class BackOfficeController {
         }
         else{
             backOfficeService.sendmail(foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
-            foundationDocumentsRepo.delete(foundationDocuments);
+//            foundationDocumentsRepo.delete(foundationDocuments);
             userRepository.deleteByEmail(foundation.getEmail());
             foundationRepository.delete(foundation);
 
