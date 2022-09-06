@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -169,7 +171,9 @@ public class AuthenticationController {
         String newFDNDocUUid = UUID.randomUUID().toString();
         String fileName = file.getOriginalFilename();
         String fileExtension = resourceUtilService.getFileExtension(fileName);
-        FoundationDocuments fdnDoc = new FoundationDocuments(newFDNDocUUid, fileName, Constant.FDN_DOC_PATH, fileExtension, fdnUuid);
+        Date date = new Date();
+//        FoundationDocuments fdnDoc = new FoundationDocuments(newFDNDocUUid, fileName, Constant.FDN_DOC_PATH, fileExtension, fdnUuid,new Timestamp(date.getTime()));
+        FoundationDocuments fdnDoc = new FoundationDocuments(newFDNDocUUid, fileName, Constant.FDN_DOC_PATH, fileExtension, fdnUuid, new Timestamp(date.getTime()));
         foundationDocumentsRepo.save(fdnDoc);
         return ResponseEntity.ok().body(newFDNDocUUid);
     }

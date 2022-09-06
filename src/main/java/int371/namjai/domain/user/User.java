@@ -45,12 +45,16 @@ public class User {
     private Role role = new Role();
 
 
-    public User(String userUUid, String email, String firstName, String lastName, String password) {
+    public User(String userUUid, String email, String firstName, String lastName, String userName, String password, Timestamp createDate, String status, Role role) {
         this.userUUid = userUUid;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.userName = userName;
         this.password = password;
+        this.createDate = createDate;
+        this.status = status;
+        this.role = role;
     }
 
 
