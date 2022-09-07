@@ -32,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -101,7 +102,7 @@ public class AuthenticationController {
             Role role = new Role("2", UserRoleName.ROLE_USER);
             newUser.setUserUUid(newUserUUid);
             newUser.setPassword(encryptedPassword(newUser.getPassword()));
-            newUser.setCreateDate(dateUtill.nowDateTimeFormatter());
+            newUser.setCreateDate(LocalDate.now());
             newUser.setRole(role);
             newUser.setStatus(Constant.USER_STATUS_ACTIVE);
             userRepo.save(newUser);
@@ -131,7 +132,7 @@ public class AuthenticationController {
         newFDN.setFdnSize(apifdnRegister.getFdnSize());
         newFDN.setEmail(apifdnRegister.getEmail());
         newFDN.setContactNumber(apifdnRegister.getContactNo());
-        newFDN.setEstablishDate(dateUtill.nowDateFormatter());
+        newFDN.setEstablishDate(apifdnRegister.getEstablishDate());
         newFDN.setStatus(Constant.FDN_STATUS_PENDING);
         newFDN.setResource(null);
 
@@ -142,7 +143,8 @@ public class AuthenticationController {
         fdnUser.setLastName(newFDN.getFdnName());
         fdnUser.setUserName(apifdnRegister.getFdnName());
         fdnUser.setPassword(encryptedPassword(apifdnRegister.getPassword()));
-        fdnUser.setCreateDate(dateUtill.nowDateTimeFormatter());
+        fdnUser.setCreateDate(LocalDate.now());
+//        fdnUser.setCreateDate(dateUtill.nowDateTimeFormatter());
         fdnUser.setRole(role);
         fdnUser.setStatus(Constant.USER_STATUS_DISABLE);
 
@@ -157,7 +159,7 @@ public class AuthenticationController {
         Role role = new Role("1", UserRoleName.ROLE_ADMIN);
         newUser.setUserUUid(newUserUUid);
         newUser.setPassword(encryptedPassword(newUser.getPassword()));
-        newUser.setCreateDate(dateUtill.nowDateTimeFormatter());
+        newUser.setCreateDate(LocalDate.now());
         newUser.setRole(role);
         newUser.setStatus(Constant.USER_STATUS_ACTIVE);
         userRepo.save(newUser);

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "foundations")
@@ -63,7 +63,7 @@ public class Foundation {
     private String approval;
 
     @Column(name = "create_date")
-    private Timestamp createDate;
+    private LocalDate createDate;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "resource_uuid", referencedColumnName = "resource_uuid")

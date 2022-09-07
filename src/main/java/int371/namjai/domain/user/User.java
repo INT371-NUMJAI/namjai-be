@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "users")
@@ -35,7 +35,7 @@ public class User {
 
 
     @Column(name = "create_date", nullable = false)
-    private Timestamp createDate;
+    private LocalDate createDate;
 
     @Column(name = "status")
     private String status;
@@ -45,7 +45,7 @@ public class User {
     private Role role = new Role();
 
 
-    public User(String userUUid, String email, String firstName, String lastName, String userName, String password, Timestamp createDate, String status, Role role) {
+    public User(String userUUid, String email, String firstName, String lastName, String userName, String password, LocalDate createDate, String status, Role role) {
         this.userUUid = userUUid;
         this.email = email;
         this.firstName = firstName;
