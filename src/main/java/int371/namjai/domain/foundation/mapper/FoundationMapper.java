@@ -14,7 +14,7 @@ public interface FoundationMapper {
 
     @Mappings({
             @Mapping(target = "fdnName", source = "fdnName"),
-            @Mapping(target = "createDate", source = "createDate"),
+            @Mapping(target = "createDate", source = "createDate", dateFormat = "dd/MM/yyyy"),
             @Mapping(target = "status", source = "status"),
             @Mapping(target = "approval", source = "approval")
     })
