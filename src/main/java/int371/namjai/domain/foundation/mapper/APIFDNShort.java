@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class APIFDNShort {
+     private String fdnUUID;
      private String fdnName;
      private String createDate;
      private String status;

@@ -13,6 +13,7 @@ public interface FoundationMapper {
     FoundationMapper INSTANCE = Mappers.getMapper(FoundationMapper.class);
 
     @Mappings({
+            @Mapping(target = "fdnUUID", source = "fdnUUid"),
             @Mapping(target = "fdnName", source = "fdnName"),
             @Mapping(target = "createDate", source = "createDate", dateFormat = "dd/MM/yyyy"),
             @Mapping(target = "status", source = "status"),
