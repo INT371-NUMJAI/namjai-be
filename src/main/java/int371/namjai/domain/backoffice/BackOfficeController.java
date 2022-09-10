@@ -57,13 +57,13 @@ public class BackOfficeController {
             foundation.setStatus(newStatus);
             foundationRepository.save(foundation);
             userRepository.save(newUser);
-            backOfficeService.sendmail(foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
+            backOfficeService.sendmail(apiVerificationFDN.getFdnUUid(), foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
         }
-        else{
-            backOfficeService.sendmail(foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
+        else {
+            backOfficeService.sendmail(apiVerificationFDN.getFdnUUid(), foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
 //            foundationDocumentsRepo.delete(foundationDocuments);
-            userRepository.deleteByEmail(foundation.getEmail());
-            foundationRepository.delete(foundation);
+//            userRepository.deleteByEmail(foundation.getEmail());
+//            foundationRepository.delete(foundation);
 
         }
         return ResponseEntity.ok().build();

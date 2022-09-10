@@ -22,4 +22,21 @@ public interface FoundationMapper {
     APIFDNShort foundationToBrief(Foundation foundation);
 
     List<APIFDNShort> toAPIFDNShort(List<Foundation> foundationList);
+
+
+    @Mappings({
+            @Mapping(target = "fdnUUID", source = "fdnUUid"),
+            @Mapping(target = "fdnName", source = "fdnName"),
+            @Mapping(target = "addressDetail", source = "addressDetail"),
+            @Mapping(target = "subDistrict", source = "subDistrict"),
+            @Mapping(target = "district", source = "district"),
+            @Mapping(target = "province", source = "province"),
+            @Mapping(target = "postalCode", source = "postalCode"),
+            @Mapping(target = "email", source = "email"),
+            @Mapping(target = "contactNumber", source = "contactNumber"),
+            @Mapping(target = "qrCodePath", source = "qrCodePath")
+    })
+    FoundationContactDTO toFoundationContactDto(Foundation foundation);
+
+
 }

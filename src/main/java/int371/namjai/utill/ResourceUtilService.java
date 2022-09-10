@@ -52,7 +52,6 @@ public class ResourceUtilService {
         }
     }
 
-
     public String getFileExtension(String fileName) {
         int index = fileName.lastIndexOf('.');
         if (index > 0) {

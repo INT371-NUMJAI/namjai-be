@@ -1,13 +1,15 @@
 package int371.namjai.domain.foundation;
 
-import int371.namjai.domain.resource.Resource;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.sql.Date;
 
 @Entity
 @Table(name = "foundations")
@@ -63,10 +65,16 @@ public class Foundation {
     private String approval;
 
     @Column(name = "create_date")
-    private LocalDate createDate;
+    private Date createDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "resource_uuid", referencedColumnName = "resource_uuid")
-    private Resource resource;
+    @Column(name = "qrcode_path")
+    private String qrCodePath;
+
+    @Column(name = "profile_path")
+    private String profilePath;
+
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "resource_uuid", referencedColumnName = "resource_uuid")
+//    private Resource resource;
 
 }

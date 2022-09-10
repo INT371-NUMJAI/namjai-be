@@ -1,6 +1,9 @@
 package int371.namjai.domain.backoffice;
 
+import int371.namjai.domain.foundation_rejected.FoundationRejected;
+import int371.namjai.domain.foundation_rejected.FoundationRejectedRepository;
 import int371.namjai.utill.Constant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
@@ -8,13 +11,19 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Properties;
+import java.util.UUID;
 
 @Service
 public class BackOfficeService {
 
-    public void sendmail(String fdnEmail, String status, String messge) throws javax.mail.MessagingException {
+    @Autowired
+    private FoundationRejectedRepository foundationRejectedRepository;
+
+
+    public void sendmail(String fdnUUid, String fdnEmail, String status, String message) throws javax.mail.MessagingException {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -23,7 +32,7 @@ public class BackOfficeService {
 
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("namjai.service@gmail.com", "abc@-456.qq");
+                return new PasswordAuthentication("namjai.service@gmail.com", "abc@-456.QQ");
             }
         });
         Message msg = new MimeMessage(session);
@@ -43,7 +52,9 @@ public class BackOfficeService {
         if (Constant.FDN_STATUS_VERIFIED.equals(status)) {
             messageBodyPart.setContent("Your foundation account have been verified , Please Log in to Namjai ", "text/html");
         } else {
-            messageBodyPart.setContent("Your foundation account have been rejected  due to " + messge + ". Please try again", "text/html");
+            messageBodyPart.setContent("Your foundation account have been rejected  due to " + message + ". Please try again", "text/html");
+            FoundationRejected foundationRejected = new FoundationRejected(UUID.randomUUID().toString(), fdnUUid, message, new Timestamp(System.currentTimeMillis()));
+            foundationRejectedRepository.save(foundationRejected);
         }
 
         msg.setContent(multipart);
