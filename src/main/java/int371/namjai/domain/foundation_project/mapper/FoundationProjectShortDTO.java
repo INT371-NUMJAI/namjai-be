@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class FoundationProjectShortDTO {
 
+    private String projectUUID;
     private String projectName;
     private String ProjectDetail;
     private int goal;

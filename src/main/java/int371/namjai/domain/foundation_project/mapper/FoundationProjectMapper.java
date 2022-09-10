@@ -15,6 +15,7 @@ public interface FoundationProjectMapper {
     FoundationProjectMapper INSTANCE = Mappers.getMapper(FoundationProjectMapper.class);
 
     @Mappings({
+            @Mapping(target = "projectUUID", source = "fdnProjectUUid"),
             @Mapping(target = "projectName", source = "fdnProjectName"),
             @Mapping(target = "projectDetail", source = "fdnProjectDetail"),
             @Mapping(target = "goal", source = "goal")
