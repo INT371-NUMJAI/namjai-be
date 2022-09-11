@@ -55,12 +55,11 @@ public class ResourceUtilService {
     public String saveFileToProjectFolder(MultipartFile file, String fdnName) throws IOException {
         String fullPath = "";
         if (!ObjectUtils.isEmpty(file)) {
-//            String fileName = file.getOriginalFilename();
+            String fileName = file.getOriginalFilename();
             fullPath = Constant.FDN_PATH + fdnName;
-//             fullPath = Constant.FDN_PATH + fdnName+"/"+"projects"+"/"+fdn_project_uuid;
             File createDir = new File(fullPath);
-            createDir.mkdir();
-            File myFile = new File(fullPath, file.getOriginalFilename());
+            createDir.mkdirs();
+            File myFile = new File(fullPath, fileName);
             FileOutputStream fos = new FileOutputStream(myFile); //
             fos.write(file.getBytes());
             fos.close();
