@@ -20,4 +20,5 @@ public class FoundationProjectDTO {
     private Timestamp endDate;
     private Set<TargetCategories> targetCategoriesSet;
     private FoundationContactDTO foundationContactDTO;
+    private String picturePath;
 }

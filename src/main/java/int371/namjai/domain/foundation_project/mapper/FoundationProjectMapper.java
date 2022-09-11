@@ -32,6 +32,7 @@ public interface FoundationProjectMapper {
             @Mapping(target = "goal", source = "foundationProject.goal"),
             @Mapping(target = "startDate", source = "foundationProject.startDate"),
             @Mapping(target = "endDate", source = "foundationProject.endDate"),
+            @Mapping(target = "picturePath", source = "foundationProject.picturePath"),
             @Mapping(target = "targetCategoriesSet", source = "foundationProject.targetCategoriesSet"),
             @Mapping(target = "foundationContactDTO", source = "foundationContactDTO"),
     })
