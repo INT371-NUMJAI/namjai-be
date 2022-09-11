@@ -8,6 +8,9 @@ import int371.namjai.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class AuthenticationService {
 
@@ -19,8 +22,10 @@ public class AuthenticationService {
 
 
     //    public String getProfileNameDisplay(String role, String email) {
-    public String getProfileNameDisplay(String email) {
+    public Map<String, String> getProfileNameDisplay(String email) {
         String uuid = "";
+        Map<String, String> responseMap = new HashMap();
+        responseMap.put("UUID", "someValue");
         User userFound = userRepo.findByEmailIgnoreCase(email);
         if (userFound.getRole().getRoleUUid().equals("3")) {
             Foundation newFoundation = foundationRepo.findByEmailIgnoreCase(userFound.getEmail());
@@ -28,7 +33,8 @@ public class AuthenticationService {
         } else {
             uuid = userFound.getUserUUid();
         }
-        return uuid;
+        responseMap.put("UUID", uuid);
+        return responseMap;
     }
 
 }

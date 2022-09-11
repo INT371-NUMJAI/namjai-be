@@ -19,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -54,7 +55,7 @@ public class FoundationController {
     }
 
     @GetMapping(value = "/view/getName")
-    public String getNameOnProfileDisplay(@RequestParam String email) {
+    public Map<String, String> getNameOnProfileDisplay(@RequestParam String email) {
         return authenticationService.getProfileNameDisplay(email);
 //        return authenticationService.getProfileNameDisplay(apiGetName.getRole(), apiGetName.getEmail());
     }
