@@ -52,6 +52,21 @@ public class ResourceUtilService {
         }
     }
 
+//    public void saveFile(MultipartFile file, String fdnName,String path) throws IOException {
+//        if (!ObjectUtils.isEmpty(file)) {
+//            String fileName = file.getOriginalFilename();
+////            String fullPath = Constant.FDN_DOC_PATH + fdnName;
+////            String fullpath = Constant.FDN_PATH
+//            String fullPath = Constant.FDN_DOC_PATH + fdnName;
+//            File createDir = new File(fullPath);
+//            createDir.mkdir();
+//            File myFile = new File(fullPath, fileName);
+//            FileOutputStream fos = new FileOutputStream(myFile);
+////            fos.write(docFile.getBytes());
+//            fos.close();
+//        }
+//    }
+
     public String getFileExtension(String fileName) {
         int index = fileName.lastIndexOf('.');
         if (index > 0) {

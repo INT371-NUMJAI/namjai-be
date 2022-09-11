@@ -21,4 +21,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     boolean existsByEmail(String email);
 
     void deleteByEmail(String email);
+
+    @Query(value = "SELECT u FROM User u WHERE UPPER(u.email) LIKE UPPER(?1) ")
+    User findByEmailIgnoreCase(String email);
 }
