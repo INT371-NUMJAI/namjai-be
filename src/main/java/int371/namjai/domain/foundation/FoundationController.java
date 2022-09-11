@@ -32,11 +32,11 @@ public class FoundationController {
     private AuthenticationService authenticationService;
 
     @GetMapping(value = "/view/foundation/{id}")
-    @ResponseBody
     private ResponseEntity<Foundation> getFoundationById(@PathVariable("id") String fdnUUid) {
         Foundation foundation = foundationService.getFoundationById(fdnUUid);
         return ResponseEntity.ok(foundation);
     }
+
 
     @GetMapping(value = "/view/foundationlist")
     private List<APIFDNShort> getShortFoundation() {
