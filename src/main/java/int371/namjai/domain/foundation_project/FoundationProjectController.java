@@ -87,7 +87,7 @@ public class FoundationProjectController {
         foundationProject.setFdnProjectDetailPlace(apiFoundationProjectForm.getFdnProjectDetailPlace());
         foundationProject.setTargetCategoriesSet(apiFoundationProjectForm.getTargetCategoriesSet());
         foundationProject.setResponsiblePerson(apiFoundationProjectForm.getResponsiblePerson());
-
+        foundationProjectRepo.save(foundationProject);
         return ResponseEntity.ok("test demo");
 
     }
