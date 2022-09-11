@@ -19,36 +19,46 @@ import java.util.Set;
 @AllArgsConstructor
 public class FoundationProject {
 
+    @Id
+    @Column(name = "fdn_project_uuid")
+    private String fdnProjectUUid;
+
+    @Column(name = "fp_name")
+    private String fdnProjectName;
+
+    @Column(name = "start_date")
+    private Timestamp startDate;
+
+    @Column(name = "end_date")
+    private Timestamp endDate;
+
+    @Column(name = "goal")
+    private Integer goal;
+
+    @Column(name = "create_date")
+    private Timestamp createDate;
+
+    @ManyToOne
+    @JoinColumn(name = "fdn_uuid")
+    private Foundation foundation = new Foundation();
+
+    @Column(name = "picture_path")
+    private String picturePath;
+
+    @Column(name = "fp_detail")
+    private String fdnProjectDetail;
+
+    @Column(name = "fp_detail_place")
+    private String fdnProjectDetailPlace;
+
+    @Column(name = "responsible_person")
+    private String responsiblePerson;
+
     @ManyToMany
     @JoinTable(
             name = "fdn_project_target_categories",
             joinColumns = @JoinColumn(name = "fdn_project_uuid"),
             inverseJoinColumns = @JoinColumn(name = "target_category_id"))
     Set<TargetCategories> targetCategoriesSet;
-    @Id
-    @Column(name = "fdn_project_uuid")
-    private String fdnProjectUUid;
-    @Column(name = "fp_name")
-    private String fdnProjectName;
-    @Column(name = "start_date")
-    private Timestamp startDate;
-    @Column(name = "end_date")
-    private Timestamp endDate;
-    @Column(name = "goal")
-    private Integer goal;
-    @Column(name = "create_date")
-    private Timestamp createDate;
-    @ManyToOne
-    @JoinColumn(name = "fdn_uuid")
-    private Foundation foundation = new Foundation();
-    @Column(name = "picture_path")
-    private String picturePath;
-    @Column(name = "fp_detail")
-    private String fdnProjectDetail;
-    @Column(name = "fp_detail_place")
-    private String fdnProjectDetailPlace;
-    @Column(name = "responsible_person")
-    private String responsiblePerson;
-
 
 }

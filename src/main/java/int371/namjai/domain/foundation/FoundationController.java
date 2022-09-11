@@ -4,6 +4,7 @@ import int371.namjai.domain.foundation.mapper.APIFDNShort;
 import int371.namjai.domain.foundation_document.FoundationDocuments;
 import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
 import int371.namjai.domain.security_auth.AuthenticationService;
+import int371.namjai.utill.ResourceUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -11,10 +12,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -26,10 +29,16 @@ public class FoundationController {
     private FoundationService foundationService;
 
     @Autowired
+    private FoundationRepository foundationRepo;
+
+    @Autowired
     private FoundationDocumentsRepo foundationDocumentsRepo;
 
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private ResourceUtilService resourceUtilService;
 
     @GetMapping(value = "/view/foundation/{id}")
     private ResponseEntity<Foundation> getFoundationById(@PathVariable("id") String fdnUUid) {
@@ -45,9 +54,8 @@ public class FoundationController {
     }
 
     @GetMapping(value = "/view/getName")
-//    public String getNameOnProfileDisplay(@RequestBody APIGetName apiGetName) {
-    public String getNameOnProfileDisplay(@RequestParam String userUUID) {
-        return authenticationService.getProfileNameDisplay(userUUID);
+    public String getNameOnProfileDisplay(@RequestParam String email) {
+        return authenticationService.getProfileNameDisplay(email);
 //        return authenticationService.getProfileNameDisplay(apiGetName.getRole(), apiGetName.getEmail());
     }
 
@@ -69,4 +77,16 @@ public class FoundationController {
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .body(resource);
     }
+
+    @PostMapping("/view/foundation/upload/qr")
+    public ResponseEntity<String> uploadQRWithBody(@RequestParam("file") MultipartFile file, @RequestParam("fdnName") String fdnName, @RequestParam("fdnUUID") String fdnUUID) throws IOException {
+        String path = resourceUtilService.saveFileToProjectFolder(file, fdnName);
+        String fileName = file.getOriginalFilename();
+//        FoundationDocuments fdnDoc = new FoundationDocuments(newFDNDocUUid, fileName, Constant.FDN_DOC_PATH, fileExtension, fdnUuid,new Timestamp(date.getTime()));
+        Foundation foundation = foundationService.getFoundationById(fdnUUID);
+        foundation.setQrCodePath(path + "/" + fileName);
+        foundationRepo.save(foundation);
+        return ResponseEntity.ok().body(path + "/" + fileName);
+    }
+
 }

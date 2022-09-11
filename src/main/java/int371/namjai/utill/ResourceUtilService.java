@@ -52,20 +52,22 @@ public class ResourceUtilService {
         }
     }
 
-//    public void saveFile(MultipartFile file, String fdnName,String path) throws IOException {
-//        if (!ObjectUtils.isEmpty(file)) {
+    public String saveFileToProjectFolder(MultipartFile file, String fdnName) throws IOException {
+        String fullPath = "";
+        if (!ObjectUtils.isEmpty(file)) {
 //            String fileName = file.getOriginalFilename();
-////            String fullPath = Constant.FDN_DOC_PATH + fdnName;
-////            String fullpath = Constant.FDN_PATH
-//            String fullPath = Constant.FDN_DOC_PATH + fdnName;
-//            File createDir = new File(fullPath);
-//            createDir.mkdir();
-//            File myFile = new File(fullPath, fileName);
-//            FileOutputStream fos = new FileOutputStream(myFile);
-////            fos.write(docFile.getBytes());
-//            fos.close();
-//        }
-//    }
+            fullPath = Constant.FDN_PATH + fdnName;
+//             fullPath = Constant.FDN_PATH + fdnName+"/"+"projects"+"/"+fdn_project_uuid;
+            File createDir = new File(fullPath);
+            createDir.mkdir();
+            File myFile = new File(fullPath, file.getOriginalFilename());
+            FileOutputStream fos = new FileOutputStream(myFile); //
+            fos.write(file.getBytes());
+            fos.close();
+            return fullPath;
+        }
+        return fullPath;
+    }
 
     public String getFileExtension(String fileName) {
         int index = fileName.lastIndexOf('.');
