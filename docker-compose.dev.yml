@@ -9,3 +9,4 @@ services:
     image: ghcr.io/int371-numjai/namjai-be:dev
     volumes:
       - ~/backend/dev/fdn_documents:/fdn_documents
+      - ~/backend/dev/foundation:/foundation
