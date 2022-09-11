@@ -15,8 +15,4 @@ public class UtilController {
     private AuthenticationService authenticationService;
 
 
-//    @PostMapping(value = "/getName")
-//    public String getNameOnProfileDisplay(@RequestBody APIGetName apiGetName){
-//        return authenticationService.getProfileNameDisplay(apiGetName.getRole(),apiGetName.getEmail());
-//    }
 }

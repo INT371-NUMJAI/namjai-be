@@ -4,7 +4,6 @@ import int371.namjai.domain.foundation.mapper.APIFDNShort;
 import int371.namjai.domain.foundation_document.FoundationDocuments;
 import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
 import int371.namjai.domain.security_auth.AuthenticationService;
-import int371.namjai.domain.security_auth.auth.APIGetName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -45,9 +44,11 @@ public class FoundationController {
         return apifdnShort;
     }
 
-    @PostMapping(value = "/view/getName")
-    public String getNameOnProfileDisplay(@RequestBody APIGetName apiGetName) {
-        return authenticationService.getProfileNameDisplay(apiGetName.getRole(), apiGetName.getEmail());
+    @GetMapping(value = "/view/getName")
+//    public String getNameOnProfileDisplay(@RequestBody APIGetName apiGetName) {
+    public String getNameOnProfileDisplay(@RequestParam String userUUID) {
+        return authenticationService.getProfileNameDisplay(userUUID);
+//        return authenticationService.getProfileNameDisplay(apiGetName.getRole(), apiGetName.getEmail());
     }
 
 

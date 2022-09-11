@@ -90,9 +90,10 @@ public class AuthenticationController {
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
         String role = userRepo.selectRoleNameByEmail(authenticationRequest.getEmail());
+        String userUUID = userRepo.findByEmailIgnoreCase(authenticationRequest.getEmail()).getUserUUid();
         final String accessToken = jwtToken.generateToken(userDetails);
 
-        return ResponseEntity.ok((new APITokenResponse(userDetails.getUsername(), role, accessToken)));
+        return ResponseEntity.ok((new APITokenResponse(userUUID, userDetails.getUsername(), role, accessToken)));
     }
 
     @PostMapping(value = "/signup")

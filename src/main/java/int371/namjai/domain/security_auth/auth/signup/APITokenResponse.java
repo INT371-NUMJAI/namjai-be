@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class APITokenResponse {
+    private String userUUID;
     private String userName;
     private String role;
     private final String accessToken;

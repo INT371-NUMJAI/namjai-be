@@ -5,6 +5,7 @@ import int371.namjai.domain.foundation.Foundation;
 import int371.namjai.domain.foundation.FoundationRepository;
 import int371.namjai.domain.user.User;
 import int371.namjai.domain.user.UserRepository;
+import int371.namjai.domain.user.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,15 @@ public class AuthenticationService {
     private FoundationRepository foundationRepo;
 
 
-    public String getProfileNameDisplay(String role, String email) {
+    //    public String getProfileNameDisplay(String role, String email) {
+    public String getProfileNameDisplay(String userUUID) {
         String profileName = "";
-        if (role.equals("ROLE_FDN")) {
-            Foundation newFoundation = foundationRepo.findByEmailIgnoreCase(email);
+        User userFound = userRepo.findById(userUUID).orElseThrow(UserNotFoundException::new);
+        if (userFound.getRole().getRoleUUid().equals("3")) {
+            Foundation newFoundation = foundationRepo.findByEmailIgnoreCase(userFound.getEmail());
             profileName = newFoundation.getFdnName();
-        } else if (role.equals("ROLE_USER")) {
-            User user = userRepo.findByEmailIgnoreCase(email);
+        } else if (userFound.getRole().getRoleUUid().equals("2")) {
+            User user = userRepo.findByEmailIgnoreCase(userFound.getEmail());
             profileName = user.getUserName();
         }
         return profileName;
