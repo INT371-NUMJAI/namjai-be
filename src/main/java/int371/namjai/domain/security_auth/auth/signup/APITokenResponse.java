@@ -10,6 +10,7 @@ public class APITokenResponse {
     private String userName;
     private String email;
     private String role;
+    private String status;
     private final String accessToken;
 
 }
