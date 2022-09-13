@@ -124,6 +124,7 @@ public class AuthenticationController {
         Foundation newFDN = new Foundation();
         newFDN.setFdnUUid(apifdnRegister.getFdnUUid());
         newFDN.setFdnName(apifdnRegister.getFdnName());
+        newFDN.setNameEn(apifdnRegister.getFdnNameEn());
         newFDN.setAddressDetail(apifdnRegister.getAddressDetail());
         newFDN.setSubDistrict(apifdnRegister.getSubDistrict());
         newFDN.setDistrict(apifdnRegister.getDistrict());
@@ -147,7 +148,6 @@ public class AuthenticationController {
         fdnUser.setUserName(apifdnRegister.getFdnName());
         fdnUser.setPassword(encryptedPassword(apifdnRegister.getPassword()));
         fdnUser.setCreateDate(LocalDate.now());
-//        fdnUser.setCreateDate(dateUtill.nowDateTimeFormatter());
         fdnUser.setRole(role);
         fdnUser.setStatus(Constant.USER_STATUS_DISABLE);
 

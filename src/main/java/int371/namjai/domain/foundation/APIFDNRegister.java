@@ -8,6 +8,7 @@ import lombok.Setter;
 public class APIFDNRegister {
     private String fdnUUid;
     private String fdnName;
+    private String fdnNameEn;
     private String addressDetail;
     private String subDistrict;
     private String district;
