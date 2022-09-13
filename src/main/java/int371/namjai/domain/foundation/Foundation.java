@@ -73,6 +73,9 @@ public class Foundation {
     @Column(name = "profile_path")
     private String profilePath;
 
+    @Column(name = "name_en")
+    private String nameEn;
+
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "resource_uuid", referencedColumnName = "resource_uuid")
 //    private Resource resource;

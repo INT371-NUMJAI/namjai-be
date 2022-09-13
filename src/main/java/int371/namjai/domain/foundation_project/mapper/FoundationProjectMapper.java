@@ -18,7 +18,8 @@ public interface FoundationProjectMapper {
             @Mapping(target = "projectUUID", source = "fdnProjectUUid"),
             @Mapping(target = "projectName", source = "fdnProjectName"),
             @Mapping(target = "projectDetail", source = "fdnProjectDetail"),
-            @Mapping(target = "goal", source = "goal")
+            @Mapping(target = "goal", source = "goal"),
+            @Mapping(target = "status", source = "status")
     })
     FoundationProjectShortDTO toFoundationProjectShortDTO(FoundationProject foundationProject);
 
@@ -33,6 +34,7 @@ public interface FoundationProjectMapper {
             @Mapping(target = "startDate", source = "foundationProject.startDate"),
             @Mapping(target = "endDate", source = "foundationProject.endDate"),
             @Mapping(target = "picturePath", source = "foundationProject.picturePath"),
+            @Mapping(target = "status", source = "foundationProject.status"),
             @Mapping(target = "targetCategoriesSet", source = "foundationProject.targetCategoriesSet"),
             @Mapping(target = "foundationContactDTO", source = "foundationContactDTO"),
     })

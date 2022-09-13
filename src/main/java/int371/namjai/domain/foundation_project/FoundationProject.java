@@ -54,6 +54,9 @@ public class FoundationProject {
     @Column(name = "responsible_person")
     private String responsiblePerson;
 
+    @Column(name = "status")
+    private String status;
+
     @ManyToMany
     @JoinTable(
             name = "fdn_project_target_categories",

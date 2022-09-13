@@ -18,7 +18,9 @@ public class FoundationProjectDTO {
     private Integer goal;
     private Timestamp startDate;
     private Timestamp endDate;
+    private String picturePath;
+    private String status;
     private Set<TargetCategories> targetCategoriesSet;
     private FoundationContactDTO foundationContactDTO;
-    private String picturePath;
+
 }

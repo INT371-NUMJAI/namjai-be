@@ -93,4 +93,10 @@ public class FoundationProjectController {
     }
 
 
+    @PostMapping(value = "/foundationproject/edit")
+    public ResponseEntity<Void> updateFoundationProject(@RequestBody APIEditStatusProjectStatus apiEditStatusProjectStatus) {
+        foundationProjectService.editFoundationProjectStatus(apiEditStatusProjectStatus);
+        return ResponseEntity.ok().build();
+    }
+
 }

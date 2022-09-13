@@ -42,4 +42,10 @@ public class FoundationProjectService {
         FoundationProjectDTO foundationProjectDTO = FoundationProjectMapper.INSTANCE.toFoundationProjectDto(foundationProject, foundationContactDTO);
         return foundationProjectDTO;
     }
+
+    public void editFoundationProjectStatus(APIEditStatusProjectStatus apiEditStatusProjectStatus) {
+        FoundationProject foundationProject = getFoundationById(apiEditStatusProjectStatus.getFdnProjectUUID());
+        foundationProject.setStatus(apiEditStatusProjectStatus.getNewStatus());
+        foundationProjectRepo.save(foundationProject);
+    }
 }

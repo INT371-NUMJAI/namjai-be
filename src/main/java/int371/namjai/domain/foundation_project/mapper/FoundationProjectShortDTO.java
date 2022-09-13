@@ -13,4 +13,5 @@ public class FoundationProjectShortDTO {
     private String projectName;
     private String ProjectDetail;
     private int goal;
+    private String status;
 }
