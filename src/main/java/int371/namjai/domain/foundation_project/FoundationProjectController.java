@@ -48,6 +48,11 @@ public class FoundationProjectController {
         return ResponseEntity.ok(foundationProjectService.getAllFoundationProjectInShort());
     }
 
+    @GetMapping(value = "/foundationproject/target")
+    public ResponseEntity<List<FoundationProjectShortDTO>> getAllFoundationProjectsInShortByTargetID(@RequestParam String targetCatID) {
+        return ResponseEntity.ok(foundationProjectService.getAllFoundationProjectInShortByTargetCatID(targetCatID));
+    }
+
 
     @GetMapping(value = "/short/target")
     public ResponseEntity<List<TargetCategories>> getAllTargetCategories() {

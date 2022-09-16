@@ -48,4 +48,9 @@ public class FoundationProjectService {
         foundationProject.setStatus(apiEditStatusProjectStatus.getNewStatus());
         foundationProjectRepo.save(foundationProject);
     }
+
+    public List<FoundationProjectShortDTO> getAllFoundationProjectInShortByTargetCatID(String targetCatID) {
+        List<FoundationProject> foundationProjectList = foundationProjectRepo.findByTargetCategoriesSet(targetCatID);
+        return FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectList);
+    }
 }
