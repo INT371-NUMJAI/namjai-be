@@ -14,4 +14,10 @@ public interface FoundationProjectRepository extends JpaRepository<FoundationPro
 //
     @Query("select fp from FoundationProject  fp left join fp.targetCategoriesSet t where t.targetCategoriesID = ?1")
     List<FoundationProject> findByTargetCategoriesSet(String targetCatID);
+
+
+    @Query(value = "select * from fdn_projects fp where fp.status ='OPEN' order by random()  limit 6 ", nativeQuery = true)
+    List<FoundationProject> findTop6AndStatusOpen();
+
+//    List<FoundationProject> findTop6By();
 }

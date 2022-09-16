@@ -4,6 +4,7 @@ package int371.namjai.domain.foundation_project;
 import int371.namjai.domain.foundation.Foundation;
 import int371.namjai.domain.foundation.FoundationService;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectDTO;
+import int371.namjai.domain.foundation_project.mapper.FoundationProjectMapper;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectShortDTO;
 import int371.namjai.domain.target_catergories.TargetCategories;
 import int371.namjai.domain.target_catergories.TargetCategoriesRepository;
@@ -46,6 +47,11 @@ public class FoundationProjectController {
     @GetMapping(value = "/short/foundationprojects")
     public ResponseEntity<List<FoundationProjectShortDTO>> getAllFoundationProjectsInShort() {
         return ResponseEntity.ok(foundationProjectService.getAllFoundationProjectInShort());
+    }
+
+    @GetMapping(value = "/random")
+    public ResponseEntity<List<FoundationProjectShortDTO>> getRandomFoundationProjectsInShort() {
+        return ResponseEntity.ok(FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectRepo.findTop6AndStatusOpen()));
     }
 
     @GetMapping(value = "/foundationproject/target")
