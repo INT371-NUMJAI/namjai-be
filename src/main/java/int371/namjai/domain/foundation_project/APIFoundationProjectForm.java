@@ -5,7 +5,7 @@ import int371.namjai.domain.target_catergories.TargetCategories;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.Set;
 
 @Getter
@@ -14,8 +14,8 @@ public class APIFoundationProjectForm {
     private String fdnUUID;
     private String fdnProjectUUID;
     private String fdnProjectName;
-    private Timestamp startDate;
-    private Timestamp endDate;
+    private Date startDate;
+    private Date endDate;
     private int goal;
     private String fdnProjectDetail;
     private String fdnProjectDetailPlace;
