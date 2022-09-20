@@ -9,9 +9,6 @@ import java.util.List;
 @Repository
 public interface FoundationProjectRepository extends JpaRepository<FoundationProject, String> {
 
-    //    @Query("select m from Movie m left join m.movieGenre g where g.genre_id = ?1")
-//    List<Movie> findByMovieGenre(int genre_id);
-//
     @Query("select fp from FoundationProject  fp left join fp.targetCategoriesSet t where t.targetCategoriesID = ?1")
     List<FoundationProject> findByTargetCategoriesSet(String targetCatID);
 
@@ -19,5 +16,7 @@ public interface FoundationProjectRepository extends JpaRepository<FoundationPro
     @Query(value = "select * from fdn_projects fp where fp.status ='OPEN' order by random()  limit 6 ", nativeQuery = true)
     List<FoundationProject> findTop6AndStatusOpen();
 
+    @Query("select fp from FoundationProject  fp  where  fp.foundation.fdnUUid = ?1 ")
+    List<FoundationProject> findByfdnUUID(String fdnUUID);
 //    List<FoundationProject> findTop6By();
 }
