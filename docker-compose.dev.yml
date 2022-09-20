@@ -10,3 +10,4 @@ services:
     volumes:
       - ~/backend/dev/fdn_documents:/fdn_documents
       - ~/backend/dev/foundation:/foundation
+      - ~/backend/dev/web_resources:/web_resources

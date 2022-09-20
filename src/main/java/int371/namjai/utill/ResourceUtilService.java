@@ -68,6 +68,18 @@ public class ResourceUtilService {
         return fullPath;
     }
 
+    public void savePictureProfileToFoundation(MultipartFile file, String fdnUUID) throws IOException {
+        String fileName = file.getOriginalFilename();
+        if (!ObjectUtils.isEmpty(file) && !ObjectUtils.isEmpty(fileName)) {
+            String fullPath = Constant.FDN_PATH + fdnUUID;
+            File myFile = new File(fullPath, fileName);
+            myFile.mkdir();
+            FileOutputStream fos = new FileOutputStream(myFile); //
+            fos.write(file.getBytes());
+            fos.close();
+        }
+    }
+
     public String getFileExtension(String fileName) {
         int index = fileName.lastIndexOf('.');
         if (index > 0) {

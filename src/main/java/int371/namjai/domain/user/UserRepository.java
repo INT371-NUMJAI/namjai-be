@@ -1,6 +1,7 @@
 package int371.namjai.domain.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +24,8 @@ User findByEmailIgnoreCaseAndStatusDisable(String email);
 
     boolean existsByEmail(String email);
 
+    @Modifying
+    @Query(value = "DELETE FROM User u WHERE UPPER(u.email) LIKE UPPER(?1) ")
     void deleteByEmail(String email);
 
     @Query(value = "SELECT u FROM User u WHERE UPPER(u.email) LIKE UPPER(?1) ")

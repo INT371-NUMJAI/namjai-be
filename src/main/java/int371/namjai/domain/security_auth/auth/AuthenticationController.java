@@ -27,6 +27,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -183,8 +184,17 @@ public class AuthenticationController {
         return ResponseEntity.ok().body(newFDNDocUUid);
     }
 
+    @DeleteMapping(value = "/delete/user")
+    @Transactional
+    public ResponseEntity<Void> deleteUser(@RequestParam("email") String userEmail) {
+        userRepo.deleteByEmail(userEmail);
+
+        return ResponseEntity.ok().build();
+    }
 
     private String encryptedPassword(String password) {
         return passwordEncoder.encode(password);
     }
+
+
 }

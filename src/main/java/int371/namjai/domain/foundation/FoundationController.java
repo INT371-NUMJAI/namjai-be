@@ -90,5 +90,15 @@ public class FoundationController {
         return ResponseEntity.ok().body(path + "/" + fileName);
     }
 
+    @PostMapping("/view/foundation/upload-profile")
+    public ResponseEntity<String> uploadProfilePicWithBody(@RequestParam("file") MultipartFile file, @RequestParam("fdnUUID") String fdnUUID) throws IOException {
+        Foundation foundation = foundationService.getFoundationById(fdnUUID);
+        String path = resourceUtilService.saveFileToProjectFolder(file, foundation.getNameEn());
+        String fileName = file.getOriginalFilename();
+//        FoundationDocuments fdnDoc = new FoundationDocuments(newFDNDocUUid, fileName, Constant.FDN_DOC_PATH, fileExtension, fdnUuid,new Timestamp(date.getTime()));
+        foundation.setProfilePath(path + "/" + fileName);
+        foundationRepo.save(foundation);
+        return ResponseEntity.ok().body(path + "/" + fileName);
+    }
 
 }
