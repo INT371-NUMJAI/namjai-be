@@ -111,9 +111,9 @@ public class FoundationProjectController {
     }
 
     @GetMapping(value = "/project/user")
-    public ResponseEntity<List<FoundationProjectShortDTO>> getFdnProjectByFdnUUID(@RequestParam("fdnUUID") String fdnUUID) {
+    public ResponseEntity<List<FoundationProjectShortDTO>> getFdnProjectByFdnUUID(@RequestParam("email") String email) {
 //        return ResponseEntity.ok(targetCategoriesRepo.findAll());
-        List<FoundationProject> foundationProjectList = foundationProjectRepo.findByfdnUUID(fdnUUID);
+        List<FoundationProject> foundationProjectList = foundationProjectRepo.findByFDNEmailIgnoreCase(email);
         List<FoundationProjectShortDTO> foundationProjectShortDTOS = FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectList);
         return ResponseEntity.ok().body(foundationProjectShortDTOS);
     }
