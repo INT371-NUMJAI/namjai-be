@@ -1,5 +1,6 @@
 package int371.namjai.domain.foundation;
 
+import int371.namjai.domain.foundation.mapper.APIFDNList;
 import int371.namjai.domain.foundation.mapper.APIFDNShort;
 import int371.namjai.domain.foundation_document.FoundationDocuments;
 import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
@@ -52,6 +53,12 @@ public class FoundationController {
     private List<APIFDNShort> getShortFoundation() {
         List<APIFDNShort> apifdnShort = foundationService.getAPIFDNShort();
         return apifdnShort;
+    }
+
+    @GetMapping(value = "/view/foundationlist/short")
+    private List<APIFDNList> getShortFoundationList() {
+        List<APIFDNList> apifdnShortList = foundationService.getFoundationListShort();
+        return apifdnShortList;
     }
 
     @GetMapping(value = "/view/getName")

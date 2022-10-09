@@ -39,4 +39,13 @@ public interface FoundationMapper {
     FoundationContactDTO toFoundationContactDto(Foundation foundation);
 
 
+    @Mappings({
+            @Mapping(target = "fdnUUID", source = "fdnUUid"),
+            @Mapping(target = "fdnName", source = "fdnName"),
+            @Mapping(target = "profilePath", source = "profilePath"),
+    })
+    APIFDNList foundationListShort(Foundation foundationList);
+
+    List<APIFDNList> toFDNListShort(List<Foundation> foundationList);
+
 }
