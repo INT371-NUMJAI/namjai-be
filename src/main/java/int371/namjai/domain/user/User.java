@@ -21,6 +21,9 @@ public class User {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Column(name = "fname", nullable = false)
     private String firstName;
 

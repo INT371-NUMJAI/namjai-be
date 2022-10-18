@@ -4,6 +4,8 @@ import int371.namjai.domain.foundation.FoundationNotFoundException;
 import int371.namjai.domain.foundation_project.exceptions.FoundationProjectsNotFoundException;
 import int371.namjai.domain.report_issue.ReportIssueNotFoundException;
 import int371.namjai.domain.user.exceptions.UserDuplicateException;
+import int371.namjai.domain.user.exceptions.UserNotFoundException;
+import int371.namjai.domain.volunteer_projects.exceoptions.VolunteerProjectException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -43,6 +45,26 @@ public class CustomizedExceptionHandling extends ResponseEntityExceptionHandler 
         response.setHttpStatus(HttpStatus.NOT_FOUND);
         response.setDateTime(LocalDateTime.now());
         response.setMessage("This report  may not exist");
+        ResponseEntity<Object> entity = new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return entity;
+    }
+
+    @ExceptionHandler(VolunteerProjectException.class)
+    public ResponseEntity<Object> handleExceptions(VolunteerProjectException exception, WebRequest webRequest) {
+        ExceptionResponse response = new ExceptionResponse();
+        response.setHttpStatus(HttpStatus.NOT_FOUND);
+        response.setDateTime(LocalDateTime.now());
+        response.setMessage("This volunteer project  may not exist");
+        ResponseEntity<Object> entity = new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return entity;
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Object> handleExceptions(UserNotFoundException exception, WebRequest webRequest) {
+        ExceptionResponse response = new ExceptionResponse();
+        response.setHttpStatus(HttpStatus.NOT_FOUND);
+        response.setDateTime(LocalDateTime.now());
+        response.setMessage("This user  may not exist");
         ResponseEntity<Object> entity = new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         return entity;
     }

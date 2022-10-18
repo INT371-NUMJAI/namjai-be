@@ -108,6 +108,7 @@ public class AuthenticationController {
             newUser.setCreateDate(LocalDate.now());
             newUser.setRole(role);
             newUser.setStatus(Constant.USER_STATUS_ACTIVE);
+            newUser.setPhoneNumber(newUser.getPhoneNumber());
             userRepo.save(newUser);
             return ResponseEntity.ok().build();
         }
@@ -150,6 +151,7 @@ public class AuthenticationController {
         fdnUser.setPassword(encryptedPassword(apifdnRegister.getPassword()));
         fdnUser.setCreateDate(LocalDate.now());
         fdnUser.setRole(role);
+        fdnUser.setPhoneNumber(apifdnRegister.getContactNo());
         fdnUser.setStatus(Constant.USER_STATUS_DISABLE);
 
         fdnRepo.save(newFDN);
@@ -166,6 +168,7 @@ public class AuthenticationController {
         newUser.setCreateDate(LocalDate.now());
         newUser.setRole(role);
         newUser.setStatus(Constant.USER_STATUS_ACTIVE);
+        newUser.setPhoneNumber(newUser.getPhoneNumber());
         userRepo.save(newUser);
         return ResponseEntity.ok().body(newUser);
     }

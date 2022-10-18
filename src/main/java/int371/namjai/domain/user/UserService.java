@@ -11,12 +11,17 @@ public class UserService {
     private UserRepository userRepo;
 
 
-    public User getUserCurrent(Authentication auth){
-        String userCurrent  = auth.getName();
-        return    userRepo.findByEmailIgnoreCaseAndStatusActive(userCurrent);
+    public User getUserCurrent(Authentication auth) {
+        String userCurrent = auth.getName();
+        return userRepo.findByEmailIgnoreCaseAndStatusActive(userCurrent);
     }
 
-    public Boolean checkUserNameIsAlreadyExists(String email){
+    public Boolean checkUserNameIsAlreadyExists(String email) {
         return userRepo.existsByEmail(email);
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepo.findByEmailIgnoreCaseAndStatusActive(email);
+//                .orElseThrow(UserNotFoundException::new);
     }
 }

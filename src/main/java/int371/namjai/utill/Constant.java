@@ -18,6 +18,9 @@ public class Constant {
     public static final String FDN_PATH = "./foundation/";
     public static final String WEB_RESOURCE_PATH = "./web_resource/";
 
+    public static final String VOLUNTEER_PROJECT_ONSITE = "ONSITE";
+    public static final String VOLUNTEER_PROJECT_ONLINE = "ONLINE";
+
 //    public static final String FDN_DOC_PATH = "~/backend/dev/fdn_documents/";
 //    public static final String FDN_DOC_PATH_LOCAL = "D:\\me\\int371\\namjai-be\\fdn_documents\\";
 
