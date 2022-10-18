@@ -55,8 +55,8 @@ public class VolunteerRegisteredService {
         volunteerRegisteredRepo.save(volunteerRegistered);
     }
 
-    public void unRegisteredVolunteerProject(VolunteerRegisteredUserDTO volunteerRegisteredUserDTO) {
-        VolunteerRegistered volunteerRegistered = volunteerRegisteredRepo.findById()
-
-    }
+//    public void unRegisteredVolunteerProject(VolunteerRegisteredUserDTO volunteerRegisteredUserDTO) {
+//        VolunteerRegistered volunteerRegistered = volunteerRegisteredRepo.findById()
+//
+//    }
 }
