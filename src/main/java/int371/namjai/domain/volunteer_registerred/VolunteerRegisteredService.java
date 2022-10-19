@@ -27,7 +27,7 @@ public class VolunteerRegisteredService {
     private UserService userService;
 
     public void recordVolunteerRegisterByRegisteredUser(VolunteerRegisteredUserDTO volunteerRegisteredUserDTO) {
-        VolunteerProjects volunteerProject = volunteerProjectsService.getVolunteerProject(volunteerRegisteredUserDTO.getVolunteerProjectUUID());
+        VolunteerProjects volunteerProject = volunteerProjectsService.getVolunteerProjectByUUID(volunteerRegisteredUserDTO.getVolunteerProjectUUID());
         User user = userService.getUserByEmail(volunteerRegisteredUserDTO.getUserEmail());
         volunteerRegistered.setVolunteerRegisteredUUID(UUID.randomUUID().toString());
         volunteerRegistered.setVolunteerProjects(volunteerProject);
@@ -37,7 +37,7 @@ public class VolunteerRegisteredService {
     }
 
     public void recordVolunteerRegisterByUnregisteredUser(VolunteerUnRegisteredUserDTO volunteerUnRegisteredUserDTO) {
-        VolunteerProjects volunteerProject = volunteerProjectsService.getVolunteerProject(volunteerUnRegisteredUserDTO.getVolunteerProjectUUID());
+        VolunteerProjects volunteerProject = volunteerProjectsService.getVolunteerProjectByUUID(volunteerUnRegisteredUserDTO.getVolunteerProjectUUID());
 
         VolunteerRegisteredAnonymous volunteerRegisteredAnonymous = new VolunteerRegisteredAnonymous();
         volunteerRegisteredAnonymous.setVolunteerRegisteredAnonymousUUID(UUID.randomUUID().toString());
@@ -58,5 +58,8 @@ public class VolunteerRegisteredService {
 //    public void unRegisteredVolunteerProject(VolunteerRegisteredUserDTO volunteerRegisteredUserDTO) {
 //        VolunteerRegistered volunteerRegistered = volunteerRegisteredRepo.findById()
 //
+//    }
+//    public List<UserDTO> getListOfEnRolledUserInVolunteerProject(String volunteerProjectUUID){
+//        VolunteerRegistered volunteerRegistered  = volunteerRegisteredRepo.findById(volunteerProjectUUID);
 //    }
 }

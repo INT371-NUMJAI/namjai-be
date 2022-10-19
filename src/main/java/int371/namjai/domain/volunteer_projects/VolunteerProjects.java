@@ -1,7 +1,7 @@
 package int371.namjai.domain.volunteer_projects;
 
 import int371.namjai.domain.foundation.Foundation;
-import int371.namjai.domain.user.User;
+import int371.namjai.domain.target_catergories.TargetCategories;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table(name = "volunteers_projects")
@@ -26,14 +27,15 @@ public class VolunteerProjects {
     @Column(name = "people_needed")
     private Integer peopleNeeded;
 
-    @Column(name = "people_register")
-    private Integer peopleRegistered;
+    @ManyToMany
+    @JoinTable(
+            name = "volunteer_project_target_categories",
+            joinColumns = @JoinColumn(name = "volunteer_projects_uuid"),
+            inverseJoinColumns = @JoinColumn(name = "target_category_id"))
+    Set<TargetCategories> targetCategoriesSet;
 
     @Column(name = "description")
     private String description;
-
-    @Column(name = "qualify")
-    private String qualify;
 
     @Column(name = "activity_type")
     private String activityType;
@@ -68,16 +70,18 @@ public class VolunteerProjects {
     @Column(name = "location_postalcose")
     private String locationPostalCode;
 
-
     @Column(name = "picture_path")
     private String picturePath;
+
 
     @ManyToOne
     @JoinColumn(name = "fdn_uuid", nullable = true)
     private Foundation foundation = new Foundation();
 
-    @ManyToOne
-    @JoinColumn(name = "user_uuid", nullable = true)
-    private User user = new User();
+    //    @ManyToOne
+//    @JoinColumn(name = "user_uuid", nullable = true)
+//    private User user = new User();
+    @Column(name = "people_registered")
+    private Integer peopleRegistered;
 
 }

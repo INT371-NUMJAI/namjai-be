@@ -22,5 +22,4 @@ public class FoundationProjectDTO {
     private String status;
     private Set<TargetCategories> targetCategoriesSet;
     private FoundationContactDTO foundationContactDTO;
-
 }
