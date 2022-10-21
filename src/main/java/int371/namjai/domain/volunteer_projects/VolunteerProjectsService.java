@@ -22,11 +22,6 @@ public class VolunteerProjectsService {
     @Autowired
     private FoundationService foundationService;
 
-    @Autowired
-    private VolunteerProjectQualifiesRepository volunteerProjectQualifiesRepo;
-
-    @Autowired
-    private VolunteerProjectDutiesRepository volunteerProjectDutiesRepo;
 
     public void createVolunteerProjects(VolunteerProjectsFormDTO newVolunteerProjects) {
         VolunteerProjects volunteerProjects = new VolunteerProjects();
@@ -50,15 +45,16 @@ public class VolunteerProjectsService {
         volunteerProjects.setLocationProvince(newVolunteerProjects.getLocationProvince());
         volunteerProjects.setLocationPostalCode(newVolunteerProjects.getLocationPostalCode());
         volunteerProjects.setTargetCategoriesSet(newVolunteerProjects.getTargetCategoriesSet());
-        List<VolunteerProjectQualifies> volunteerProjectQualifies = newVolunteerProjects.getVolunteerProjectQualifies();
-        List<VolunteerProjectDuties> volunteerProjectDuties = newVolunteerProjects.getVolunteerProjectDuties();
+        volunteerProjects.setQualify(newVolunteerProjects.getQualify());
+        volunteerProjects.setDuty(newVolunteerProjects.getDuty());
+
+
 //        volunteerProjects.setVolunteerProjectQualifies(newVolunteerProjects.getVolunteerProjectQualifies());
 
 //        volunteerProjects.setPicturePath(newVolunteerProjects.getPicturePath());
 //        volunteerProjects.setUser(null);
         volunteerProjectsRepo.save(volunteerProjects);
-        volunteerProjectQualifiesRepo.saveAll(volunteerProjectQualifies);
-        volunteerProjectDutiesRepo.saveAll(volunteerProjectDuties);
+
     }
 
     public List<VolunteerProjects> getVolunteerProjectsList() {
@@ -67,10 +63,8 @@ public class VolunteerProjectsService {
 
     public VolunteerProjectDetailDTO getVolunteerProjectDetailByUUID(String volunteerProjectUUID) {
         VolunteerProjects volunteerProjects = volunteerProjectsRepo.findById(volunteerProjectUUID).orElseThrow(VolunteerProjectException::new);
-        List<VolunteerProjectDuties> duties = volunteerProjectDutiesRepo.findByVolunteerProjectsUUID(volunteerProjects.getVolunteerProjectsUUID());
-        List<VolunteerProjectQualifies> qualifies = volunteerProjectQualifiesRepo.findByVolunteerProjectsUUID(volunteerProjects.getVolunteerProjectsUUID());
         FoundationContactDTO foundationContactDTO = FoundationMapper.INSTANCE.toFoundationContactDto(volunteerProjects.getFoundation());
-        return VolunteerProjectMapper.INSTANCE.toVolunteerProjectDetailDto(volunteerProjects, duties, qualifies, foundationContactDTO);
+        return VolunteerProjectMapper.INSTANCE.toVolunteerProjectDetailDto(volunteerProjects, foundationContactDTO);
     }
 
     public VolunteerProjects getVolunteerProjectByUUID(String volunteerProjectUUID) {

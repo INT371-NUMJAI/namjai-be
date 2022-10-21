@@ -1,15 +1,11 @@
 package int371.namjai.domain.volunteer_projects.mapper;
 
 import int371.namjai.domain.foundation.mapper.FoundationContactDTO;
-import int371.namjai.domain.volunteer_projects.VolunteerProjectDuties;
-import int371.namjai.domain.volunteer_projects.VolunteerProjectQualifies;
 import int371.namjai.domain.volunteer_projects.VolunteerProjects;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
-
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface VolunteerProjectMapper {
@@ -32,10 +28,10 @@ public interface VolunteerProjectMapper {
             @Mapping(target = "locationProvince", source = "volunteerProjects.locationProvince"),
             @Mapping(target = "locationPostalCode", source = "volunteerProjects.locationPostalCode"),
             @Mapping(target = "targetCategoriesSet", source = "volunteerProjects.targetCategoriesSet"),
-            @Mapping(target = "volunteerProjectQualifies", source = "qualifies"),
-            @Mapping(target = "volunteerProjectDuties", source = "duties"),
+            @Mapping(target = "qualify", source = "volunteerProjects.qualify"),
+            @Mapping(target = "duty", source = "volunteerProjects.duty"),
             @Mapping(target = "foundationContactDTO", source = "contact"),
 
     })
-    VolunteerProjectDetailDTO toVolunteerProjectDetailDto(VolunteerProjects volunteerProjects, List<VolunteerProjectDuties> duties, List<VolunteerProjectQualifies> qualifies, FoundationContactDTO contact);
+    VolunteerProjectDetailDTO toVolunteerProjectDetailDto(VolunteerProjects volunteerProjects, FoundationContactDTO contact);
 }

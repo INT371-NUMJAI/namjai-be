@@ -15,9 +15,6 @@ public class VolunteerProjectsController {
     @Autowired
     private VolunteerProjectsService volunteerProjectsService;
 
-    @Autowired
-    private VolunteerProjectQualifiesRepository volunteerProjectQualifiesRepo;
-
     @GetMapping("/volunteer-projects")
     public ResponseEntity<List<VolunteerProjects>> getVolunteerProjectList() {
         return ResponseEntity.ok().body(volunteerProjectsService.getVolunteerProjectsList());
@@ -27,11 +24,6 @@ public class VolunteerProjectsController {
     public ResponseEntity<Void> createNewVolunteerProject(@RequestBody VolunteerProjectsFormDTO volunteerProjects) {
         volunteerProjectsService.createVolunteerProjects(volunteerProjects);
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/volunteer-projects-qualifies")
-    public ResponseEntity<List<VolunteerProjectQualifies>> getVolunteerProjectQualifiesList() {
-        return ResponseEntity.ok().body(volunteerProjectQualifiesRepo.findAll());
     }
 
     @GetMapping("/volunteer-projects-detail/{id}")

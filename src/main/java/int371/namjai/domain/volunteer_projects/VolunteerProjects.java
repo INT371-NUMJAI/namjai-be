@@ -73,6 +73,12 @@ public class VolunteerProjects {
     @Column(name = "picture_path")
     private String picturePath;
 
+    @Column(name = "duty")
+    private String duty;
+
+    @Column(name = "qualify")
+    private String qualify;
+
 
     @ManyToOne
     @JoinColumn(name = "fdn_uuid", nullable = true)

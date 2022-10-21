@@ -1,13 +1,10 @@
 package int371.namjai.domain.volunteer_projects.mapper;
 
 import int371.namjai.domain.target_catergories.TargetCategories;
-import int371.namjai.domain.volunteer_projects.VolunteerProjectDuties;
-import int371.namjai.domain.volunteer_projects.VolunteerProjectQualifies;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -30,8 +27,8 @@ public class VolunteerProjectsFormDTO {
     private String locationProvince;
     private String locationPostalCode;
     private Set<TargetCategories> targetCategoriesSet;
-    private List<VolunteerProjectQualifies> volunteerProjectQualifies;
-    private List<VolunteerProjectDuties> volunteerProjectDuties;
+    private String duty;
+    private String qualify;
     //    private String picturePath;
     private String foundationUUID;
     private String userUUID;
