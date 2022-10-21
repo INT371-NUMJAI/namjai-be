@@ -1,7 +1,7 @@
 package int371.namjai.domain.volunteer_registerred.mapper;
 
-import int371.namjai.domain.user.User;
-import int371.namjai.domain.user.UserDTO;
+import int371.namjai.domain.volunteer_registerred.VolunteerEnrolled;
+import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProject;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -13,15 +13,17 @@ import java.util.List;
 public interface VolunteerRegisteredMapper {
     VolunteerRegisteredMapper INSTANCE = Mappers.getMapper(VolunteerRegisteredMapper.class);
 
+    //    @Mapping(target = "volunteerProjectUUID", source = "volunteerEnrolled.volunteerProjectUUID"),
     @Mappings({
-            @Mapping(target = "userUUID", source = "userUUid"),
-            @Mapping(target = "firstName", source = "firstName"),
-            @Mapping(target = "lastName", source = "lastName"),
-            @Mapping(target = "contactNumber", source = "phoneNumber"),
-            @Mapping(target = "email", source = "email")
+            @Mapping(target = "volunteerEnrolledUUID", source = "volunteerEnrolledUUID"),
+            @Mapping(target = "isMember", source = "volunteerEnrolled.isMember"),
+            @Mapping(target = "firstName", source = "volunteerEnrolled.firstName"),
+            @Mapping(target = "lastName", source = "volunteerEnrolled.lastName"),
+            @Mapping(target = "contactNumber", source = "volunteerEnrolled.contactNumber"),
+            @Mapping(target = "email", source = "volunteerEnrolled.email")
     })
-    UserDTO toUserDto(User user);
+    EnrolledListVolunteerProject toEnrolledVolunteerProject(VolunteerEnrolled volunteerEnrolled);
 
-    List<UserDTO> toUserDtoList(List<User> userList);
+    List<EnrolledListVolunteerProject> toEnrolledListVolunteerProjects(List<VolunteerEnrolled> volunteerEnrolled);
 
 }

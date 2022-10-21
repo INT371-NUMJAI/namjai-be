@@ -5,61 +5,70 @@ import int371.namjai.domain.user.UserService;
 import int371.namjai.domain.volunteer_projects.VolunteerProjects;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsRepository;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsService;
+import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProject;
+import int371.namjai.domain.volunteer_registerred.dto.UnEnrolledVolunteerProjectDTO;
 import int371.namjai.domain.volunteer_registerred.dto.VolunteerRegisteredUserDTO;
 import int371.namjai.domain.volunteer_registerred.dto.VolunteerUnRegisteredUserDTO;
+import int371.namjai.domain.volunteer_registerred.mapper.VolunteerRegisteredMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 public class VolunteerRegisteredService {
-    private final VolunteerRegistered volunteerRegistered = new VolunteerRegistered();
+    private final VolunteerEnrolled volunteerEnrolled = new VolunteerEnrolled();
     @Autowired
-    private VolunteerRegisteredRepository volunteerRegisteredRepo;
+    private VolunteerEnrolledRepository volunteerEnrolledRepo;
+
     @Autowired
     private VolunteerProjectsRepository volunteerProjectsRepo;
-    @Autowired
-    private VolunteerRegisteredAnonymousRepository volunteerRegisteredAnonymousRepo;
+
     @Autowired
     private VolunteerProjectsService volunteerProjectsService;
+
     @Autowired
     private UserService userService;
 
     public void recordVolunteerRegisterByRegisteredUser(VolunteerRegisteredUserDTO volunteerRegisteredUserDTO) {
         VolunteerProjects volunteerProject = volunteerProjectsService.getVolunteerProjectByUUID(volunteerRegisteredUserDTO.getVolunteerProjectUUID());
-        User user = userService.getUserByEmail(volunteerRegisteredUserDTO.getUserEmail());
-        volunteerRegistered.setVolunteerRegisteredUUID(UUID.randomUUID().toString());
-        volunteerRegistered.setVolunteerProjects(volunteerProject);
-        volunteerRegistered.setUser(user);
-        volunteerRegistered.setVolunteerRegisteredAnonymous(null);
-        volunteerRegisteredRepo.save(volunteerRegistered);
+        volunteerEnrolled.setVolunteerEnrolledUUID(UUID.randomUUID().toString());
+        volunteerEnrolled.setVolunteerProjects(volunteerProject);
+
+        User user = userService.getUserByEmail(volunteerRegisteredUserDTO.getEmail());
+        volunteerEnrolled.setUser(user);
+        volunteerEnrolled.setIsMember(true);
+        volunteerEnrolled.setEmail(volunteerRegisteredUserDTO.getEmail());
+        volunteerEnrolled.setContactNumber(user.getPhoneNumber());
+        volunteerEnrolled.setFirstName(user.getFirstName());
+        volunteerEnrolled.setLastName(user.getLastName());
+
+        volunteerEnrolledRepo.save(volunteerEnrolled);
     }
 
     public void recordVolunteerRegisterByUnregisteredUser(VolunteerUnRegisteredUserDTO volunteerUnRegisteredUserDTO) {
+        volunteerEnrolled.setVolunteerEnrolledUUID(UUID.randomUUID().toString());
+        volunteerEnrolled.setIsMember(false);
+        volunteerEnrolled.setUser(null);
+
+        volunteerEnrolled.setEmail(volunteerUnRegisteredUserDTO.getEmail());
+        volunteerEnrolled.setContactNumber(volunteerUnRegisteredUserDTO.getContactNumber());
+        volunteerEnrolled.setFirstName(volunteerUnRegisteredUserDTO.getFirstName());
+        volunteerEnrolled.setLastName(volunteerUnRegisteredUserDTO.getLastName());
         VolunteerProjects volunteerProject = volunteerProjectsService.getVolunteerProjectByUUID(volunteerUnRegisteredUserDTO.getVolunteerProjectUUID());
-
-        VolunteerRegisteredAnonymous volunteerRegisteredAnonymous = new VolunteerRegisteredAnonymous();
-        volunteerRegisteredAnonymous.setVolunteerRegisteredAnonymousUUID(UUID.randomUUID().toString());
-        volunteerRegisteredAnonymous.setEmail(volunteerUnRegisteredUserDTO.getEmail());
-        volunteerRegisteredAnonymous.setFirstName(volunteerUnRegisteredUserDTO.getFirstName());
-        volunteerRegisteredAnonymous.setLastName(volunteerUnRegisteredUserDTO.getLastName());
-        volunteerRegisteredAnonymous.setContactNumber(volunteerUnRegisteredUserDTO.getContactNumber());
-        volunteerRegisteredAnonymousRepo.save(volunteerRegisteredAnonymous);
-
-        volunteerRegistered.setVolunteerRegisteredAnonymous(volunteerRegisteredAnonymous);
-        volunteerRegistered.setVolunteerRegisteredUUID(UUID.randomUUID().toString());
-        volunteerRegistered.setVolunteerProjects(volunteerProject);
-        volunteerRegistered.setUser(null);
-
-        volunteerRegisteredRepo.save(volunteerRegistered);
+        volunteerEnrolled.setVolunteerProjects(volunteerProject);
+        volunteerEnrolledRepo.save(volunteerEnrolled);
     }
 
-//    public void unRegisteredVolunteerProject(VolunteerRegisteredUserDTO volunteerRegisteredUserDTO) {
-//        VolunteerRegistered volunteerRegistered = volunteerRegisteredRepo.findById()
-//
-//    }
-//    public List<UserDTO> getListOfEnRolledUserInVolunteerProject(String volunteerProjectUUID){
-//        VolunteerRegistered volunteerRegistered  = volunteerRegisteredRepo.findById(volunteerProjectUUID);
-//    }
+    public void unRegisteredVolunteerProject(UnEnrolledVolunteerProjectDTO unEnrolledVolunteerProjectDTO) {
+//        VolunteerEnrolled volunteerEnrolled = volunteerEnrolledRepo.findByVolunteerProjects_VolunteerProjectsUUIDAndAndVolunteerEnrolledUUID(unEnrolledVolunteerProjectDTO.getVolunteerProjectUUID(),unEnrolledVolunteerProjectDTO.getVolunteerEnrolledUUID());
+        volunteerEnrolledRepo.deleteById(unEnrolledVolunteerProjectDTO.getVolunteerEnrolledUUID());
+    }
+
+    public List<EnrolledListVolunteerProject> getListOfEnRolledUserInVolunteerProject(String volunteerProjectUUID) {
+        List<VolunteerEnrolled> volunteerEnrolledList = volunteerEnrolledRepo.findByVolunteerProjects_VolunteerProjectsUUID(volunteerProjectUUID);
+        List<EnrolledListVolunteerProject> userDTOList = VolunteerRegisteredMapper.INSTANCE.toEnrolledListVolunteerProjects(volunteerEnrolledList);
+        return userDTOList;
+    }
 }

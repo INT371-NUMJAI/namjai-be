@@ -5,8 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VolunteerUnRegisteredUserDTO {
-    private String volunteerProjectUUID;
+public class EnrolledListVolunteerProject {
+    private String volunteerEnrolledUUID;
+    //    private String volunteerProjectUUID;
+    private String isMember;
     private String email;
     private String firstName;
     private String lastName;

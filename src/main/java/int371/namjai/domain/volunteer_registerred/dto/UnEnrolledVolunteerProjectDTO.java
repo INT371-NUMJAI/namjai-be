@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class VolunteerRegisteredUserDTO {
+public class UnEnrolledVolunteerProjectDTO {
+    private String volunteerEnrolledUUID;
     private String volunteerProjectUUID;
-    private String email;
 }

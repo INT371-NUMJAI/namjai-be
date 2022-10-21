@@ -28,7 +28,7 @@ public class UtilController {
     private WebResourceRepository webResourceRepo;
 
     @GetMapping("/img")
-    public ResponseEntity<byte[]> getImage(@RequestParam String imagePath) throws IOException {
+    public ResponseEntity<byte[]> getImage(@RequestParam("type") String location, @RequestParam("path") String imagePath) throws IOException {
         try {
 //            FileInputStream file = new FileInputStream(imagePath);
             Path path = Paths.get(imagePath);

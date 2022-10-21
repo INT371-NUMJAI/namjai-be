@@ -1,10 +1,14 @@
 package int371.namjai.domain.volunteer_registerred;
 
+import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProject;
+import int371.namjai.domain.volunteer_registerred.dto.UnEnrolledVolunteerProjectDTO;
 import int371.namjai.domain.volunteer_registerred.dto.VolunteerRegisteredUserDTO;
 import int371.namjai.domain.volunteer_registerred.dto.VolunteerUnRegisteredUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/view")
@@ -22,6 +26,17 @@ public class VolunteerRegisteredController {
     @PostMapping(value = "/volunteer/unregistered-user")
     public ResponseEntity<Void> creatNewVolunteerByUnRegisteredUser(@RequestBody VolunteerUnRegisteredUserDTO volunteerUnRegisteredUserDTO) {
         volunteerRegisteredService.recordVolunteerRegisterByUnregisteredUser(volunteerUnRegisteredUserDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/volunteer/{id}/enrolledlist")
+    public ResponseEntity<List<EnrolledListVolunteerProject>> getRegisteredUserVolunteerProject(@PathVariable("id") String volunteerProjectUUID) {
+        return ResponseEntity.ok().body(volunteerRegisteredService.getListOfEnRolledUserInVolunteerProject(volunteerProjectUUID));
+    }
+
+    @DeleteMapping("/volunteer-enrolled/remove")
+    public ResponseEntity<Void> removeEnrolledVolunteerProjectMember(@RequestBody UnEnrolledVolunteerProjectDTO unEnrolledVolunteerProjectDTO) {
+        volunteerRegisteredService.unRegisteredVolunteerProject(unEnrolledVolunteerProjectDTO);
         return ResponseEntity.ok().build();
     }
 
