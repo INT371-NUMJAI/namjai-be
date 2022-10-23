@@ -41,6 +41,7 @@ public interface VolunteerProjectMapper {
     @Mappings({
             @Mapping(target = "volunteerProjectUUID", source = " volunteerProjects.volunteerProjectsUUID"),
             @Mapping(target = "volunteerProjectName", source = " volunteerProjects.volunteerProjectName"),
+            @Mapping(target = "foundationName", source = "volunteerProjects.foundation.fdnName"),
             @Mapping(target = "peopleNeeded", source = " volunteerProjects.peopleNeeded"),
             @Mapping(target = "peopleRegistered", source = " volunteerProjects.peopleRegistered"),
             @Mapping(target = "activityStartDate", source = " volunteerProjects.activityStartDate"),

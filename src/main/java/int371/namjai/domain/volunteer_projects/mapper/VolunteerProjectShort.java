@@ -8,6 +8,7 @@ import lombok.Setter;
 public class VolunteerProjectShort {
     private String volunteerProjectUUID;
     private String volunteerProjectName;
+    private String foundationName;
     private Integer peopleNeeded;
     private Integer peopleRegistered;
     private String locationProvince;
