@@ -7,6 +7,7 @@ import int371.namjai.domain.foundation.mapper.FoundationMapper;
 import int371.namjai.domain.volunteer_projects.exceoptions.VolunteerProjectException;
 import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectDetailDTO;
 import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectMapper;
+import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectShort;
 import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectsFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,8 +58,12 @@ public class VolunteerProjectsService {
 
     }
 
-    public List<VolunteerProjects> getVolunteerProjectsList() {
-        return volunteerProjectsRepo.findAll();
+    public List<VolunteerProjectShort> getVolunteerProjectsList() {
+        List<VolunteerProjects> volunteerProjectsList = volunteerProjectsRepo.findAll();
+        List<VolunteerProjectShort> volunteerProjectShorts = VolunteerProjectMapper.INSTANCE.toVolunteerProjectShortList(volunteerProjectsList);
+        return volunteerProjectShorts;
+
+
     }
 
     public VolunteerProjectDetailDTO getVolunteerProjectDetailByUUID(String volunteerProjectUUID) {

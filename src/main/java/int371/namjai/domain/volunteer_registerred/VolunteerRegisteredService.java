@@ -40,6 +40,7 @@ public class VolunteerRegisteredService {
         volunteerEnrolled.setVolunteerEnrolledUUID(UUID.randomUUID().toString());
         volunteerEnrolled.setVolunteerProjects(volunteerProject);
 
+
         User user = userService.getUserByEmail(volunteerRegisteredUserDTO.getEmail());
         volunteerEnrolled.setUser(user);
         volunteerEnrolled.setIsMember(true);
@@ -81,4 +82,6 @@ public class VolunteerRegisteredService {
         Boolean isEnrolled = volunteerEnrolledRepo.existsByVolunteerProjects_VolunteerProjectsUUIDAndEmail(volunteerProjectUUID, userEmail);
         return isEnrolled;
     }
+
+
 }

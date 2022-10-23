@@ -13,7 +13,5 @@ public class VolunteerProjectShort {
     private String locationProvince;
     private String activityStartDate;
     private String activityEndDate;
-    private String activityStartTime;
-    private String activityEndTime;
-    private String picturePath;
+//    private String picturePath;
 }

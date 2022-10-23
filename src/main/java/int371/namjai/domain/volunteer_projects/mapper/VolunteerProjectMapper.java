@@ -7,6 +7,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface VolunteerProjectMapper {
     VolunteerProjectMapper INSTANCE = Mappers.getMapper(VolunteerProjectMapper.class);
@@ -34,4 +36,20 @@ public interface VolunteerProjectMapper {
 
     })
     VolunteerProjectDetailDTO toVolunteerProjectDetailDto(VolunteerProjects volunteerProjects, FoundationContactDTO contact);
+
+
+    @Mappings({
+            @Mapping(target = "volunteerProjectUUID", source = " volunteerProjects.volunteerProjectsUUID"),
+            @Mapping(target = "volunteerProjectName", source = " volunteerProjects.volunteerProjectName"),
+            @Mapping(target = "peopleNeeded", source = " volunteerProjects.peopleNeeded"),
+            @Mapping(target = "peopleRegistered", source = " volunteerProjects.peopleRegistered"),
+            @Mapping(target = "activityStartDate", source = " volunteerProjects.activityStartDate"),
+            @Mapping(target = "activityEndDate", source = " volunteerProjects.activityEndDate"),
+            @Mapping(target = "locationProvince", source = "volunteerProjects.locationProvince"),
+    })
+    VolunteerProjectShort toVolunteerProjectShort(VolunteerProjects volunteerProjects);
+
+    List<VolunteerProjectShort> toVolunteerProjectShortList(List<VolunteerProjects> volunteerProjectsList);
+
+
 }
