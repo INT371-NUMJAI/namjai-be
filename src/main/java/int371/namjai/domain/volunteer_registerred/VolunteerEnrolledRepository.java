@@ -17,6 +17,7 @@ public interface VolunteerEnrolledRepository extends JpaRepository<VolunteerEnro
     //    List<User> findByVolunteerProjectUUID(String fdnUUID);
     Boolean existsByVolunteerProjects_VolunteerProjectsUUIDAndEmail(String volunteerProjectUUID, String userEmail);
 
+
 //    @Query("select vra  from VolunteerRegistered  vr left join VolunteerRegisteredAnonymous  vra where  vr.volunteerProjects.volunteerProjectsUUID = ?1 ")
 //    List<VolunteerRegisteredAnonymous> findAnonymousByVolunteerProjectUUID(String fdnUUID);
 

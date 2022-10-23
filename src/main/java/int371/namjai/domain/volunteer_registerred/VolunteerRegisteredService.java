@@ -12,6 +12,7 @@ import int371.namjai.domain.volunteer_registerred.dto.VolunteerUnRegisteredUserD
 import int371.namjai.domain.volunteer_registerred.mapper.VolunteerRegisteredMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,6 +22,9 @@ public class VolunteerRegisteredService {
     private final VolunteerEnrolled volunteerEnrolled = new VolunteerEnrolled();
     @Autowired
     private VolunteerEnrolledRepository volunteerEnrolledRepo;
+
+    @Autowired
+    private VolunteerEnrolledCRUDRepository volunteerEnrolledCRUDRepository;
 
     @Autowired
     private VolunteerProjectsRepository volunteerProjectsRepo;
@@ -61,9 +65,10 @@ public class VolunteerRegisteredService {
         volunteerEnrolledRepo.save(volunteerEnrolled);
     }
 
+    @Transactional
     public void unRegisteredVolunteerProject(UnEnrolledVolunteerProjectDTO unEnrolledVolunteerProjectDTO) {
 //        VolunteerEnrolled volunteerEnrolled = volunteerEnrolledRepo.findByVolunteerProjects_VolunteerProjectsUUIDAndAndVolunteerEnrolledUUID(unEnrolledVolunteerProjectDTO.getVolunteerProjectUUID(),unEnrolledVolunteerProjectDTO.getVolunteerEnrolledUUID());
-        volunteerEnrolledRepo.deleteById(unEnrolledVolunteerProjectDTO.getVolunteerEnrolledUUID());
+        volunteerEnrolledCRUDRepository.removeVolunteerEnrolledByVolunteerProjects_VolunteerProjectsUUIDAndEmail(unEnrolledVolunteerProjectDTO.getVolunteerProjectUUID(), unEnrolledVolunteerProjectDTO.getEmail());
     }
 
     public List<EnrolledListVolunteerProject> getListOfEnRolledUserInVolunteerProject(String volunteerProjectUUID) {
