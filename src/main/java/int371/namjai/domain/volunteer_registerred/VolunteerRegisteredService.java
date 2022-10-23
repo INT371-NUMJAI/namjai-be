@@ -71,4 +71,9 @@ public class VolunteerRegisteredService {
         List<EnrolledListVolunteerProject> userDTOList = VolunteerRegisteredMapper.INSTANCE.toEnrolledListVolunteerProjects(volunteerEnrolledList);
         return userDTOList;
     }
+
+    public Boolean checkUserIsEnrolledOrNot(String volunteerProjectUUID, String userUUID) {
+        Boolean isEnrolled = volunteerEnrolledRepo.existsByVolunteerProjects_VolunteerProjectsUUIDAndUser_UserUUid(volunteerProjectUUID, userUUID);
+        return isEnrolled;
+    }
 }

@@ -40,4 +40,10 @@ public class VolunteerRegisteredController {
         return ResponseEntity.ok().build();
     }
 
+    //    checkUserIsEnrolledOrNot
+    @GetMapping("/volunteer/check-enrolled")
+    public ResponseEntity<Boolean> getRegisteredUserVolunteerProject(@RequestParam("volunteerid") String volunteerProjectUUID, @RequestParam("userid") String userUUID) {
+        return ResponseEntity.ok().body(volunteerRegisteredService.checkUserIsEnrolledOrNot(volunteerProjectUUID, userUUID));
+    }
+
 }
