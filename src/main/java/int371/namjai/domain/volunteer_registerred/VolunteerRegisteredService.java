@@ -72,8 +72,8 @@ public class VolunteerRegisteredService {
         return userDTOList;
     }
 
-    public Boolean checkUserIsEnrolledOrNot(String volunteerProjectUUID, String userUUID) {
-        Boolean isEnrolled = volunteerEnrolledRepo.existsByVolunteerProjects_VolunteerProjectsUUIDAndUser_UserUUid(volunteerProjectUUID, userUUID);
+    public Boolean checkUserIsEnrolledOrNot(String volunteerProjectUUID, String userEmail) {
+        Boolean isEnrolled = volunteerEnrolledRepo.existsByVolunteerProjects_VolunteerProjectsUUIDAndEmail(volunteerProjectUUID, userEmail);
         return isEnrolled;
     }
 }
