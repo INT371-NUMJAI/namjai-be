@@ -32,7 +32,7 @@ public class VolunteerRegisteredController {
         return ResponseEntity.ok().body(volunteerRegisteredService.getListOfEnRolledUserInVolunteerProject(volunteerProjectUUID));
     }
 
-    @DeleteMapping("/volunteer-enrolled/remove")
+    @DeleteMapping(value = "/volunteer-enrolled/remove")
     public ResponseEntity<Void> removeEnrolledVolunteerProjectMember(@RequestBody UnEnrolledVolunteerProjectDTO unEnrolledVolunteerProjectDTO) {
         volunteerRegisteredService.unRegisteredVolunteerProject(unEnrolledVolunteerProjectDTO);
         return ResponseEntity.ok().build();

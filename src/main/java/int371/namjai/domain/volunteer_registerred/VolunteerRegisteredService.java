@@ -66,7 +66,9 @@ public class VolunteerRegisteredService {
     @Transactional
     public void unRegisteredVolunteerProject(UnEnrolledVolunteerProjectDTO unEnrolledVolunteerProjectDTO) {
 //        VolunteerEnrolled volunteerEnrolled = volunteerEnrolledRepo.findByVolunteerProjects_VolunteerProjectsUUIDAndAndVolunteerEnrolledUUID(unEnrolledVolunteerProjectDTO.getVolunteerProjectUUID(),unEnrolledVolunteerProjectDTO.getVolunteerEnrolledUUID());
-        volunteerEnrolledCRUDRepository.removeVolunteerEnrolledByVolunteerProjects_VolunteerProjectsUUIDAndEmail(unEnrolledVolunteerProjectDTO.getVolunteerProjectUUID(), unEnrolledVolunteerProjectDTO.getEmail());
+        VolunteerEnrolled volunteerEnrolled = volunteerEnrolledRepo.findVolunteerEnrolledByEmailAndVolunteerProjects_VolunteerProjectsUUID(unEnrolledVolunteerProjectDTO.getEmail(), unEnrolledVolunteerProjectDTO.getVolunteerProjectUUID());
+        volunteerEnrolledRepo.delete(volunteerEnrolled);
+//        volunteerEnrolledRepo.save();
     }
 
     public EnrolledListVolunteerProjectDTO getListOfEnRolledUserInVolunteerProject(String volunteerProjectUUID) {
