@@ -1,14 +1,12 @@
 package int371.namjai.domain.volunteer_registerred;
 
-import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProject;
+import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProjectDTO;
 import int371.namjai.domain.volunteer_registerred.dto.UnEnrolledVolunteerProjectDTO;
 import int371.namjai.domain.volunteer_registerred.dto.VolunteerRegisteredUserDTO;
 import int371.namjai.domain.volunteer_registerred.dto.VolunteerUnRegisteredUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/view")
@@ -30,7 +28,7 @@ public class VolunteerRegisteredController {
     }
 
     @GetMapping("/volunteer/{id}/enrolledlist")
-    public ResponseEntity<List<EnrolledListVolunteerProject>> getRegisteredUserVolunteerProject(@PathVariable("id") String volunteerProjectUUID) {
+    public ResponseEntity<EnrolledListVolunteerProjectDTO> getRegisteredUserVolunteerProject(@PathVariable("id") String volunteerProjectUUID) {
         return ResponseEntity.ok().body(volunteerRegisteredService.getListOfEnRolledUserInVolunteerProject(volunteerProjectUUID));
     }
 

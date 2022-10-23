@@ -5,10 +5,7 @@ import int371.namjai.domain.user.UserService;
 import int371.namjai.domain.volunteer_projects.VolunteerProjects;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsRepository;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsService;
-import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProject;
-import int371.namjai.domain.volunteer_registerred.dto.UnEnrolledVolunteerProjectDTO;
-import int371.namjai.domain.volunteer_registerred.dto.VolunteerRegisteredUserDTO;
-import int371.namjai.domain.volunteer_registerred.dto.VolunteerUnRegisteredUserDTO;
+import int371.namjai.domain.volunteer_registerred.dto.*;
 import int371.namjai.domain.volunteer_registerred.mapper.VolunteerRegisteredMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,10 +69,14 @@ public class VolunteerRegisteredService {
         volunteerEnrolledCRUDRepository.removeVolunteerEnrolledByVolunteerProjects_VolunteerProjectsUUIDAndEmail(unEnrolledVolunteerProjectDTO.getVolunteerProjectUUID(), unEnrolledVolunteerProjectDTO.getEmail());
     }
 
-    public List<EnrolledListVolunteerProject> getListOfEnRolledUserInVolunteerProject(String volunteerProjectUUID) {
+    public EnrolledListVolunteerProjectDTO getListOfEnRolledUserInVolunteerProject(String volunteerProjectUUID) {
         List<VolunteerEnrolled> volunteerEnrolledList = volunteerEnrolledRepo.findByVolunteerProjects_VolunteerProjectsUUID(volunteerProjectUUID);
         List<EnrolledListVolunteerProject> userDTOList = VolunteerRegisteredMapper.INSTANCE.toEnrolledListVolunteerProjects(volunteerEnrolledList);
-        return userDTOList;
+        EnrolledListVolunteerProjectDTO enrolledListVolunteerProjectDTO = new EnrolledListVolunteerProjectDTO();
+        enrolledListVolunteerProjectDTO.setEnrolledListVolunteerProjectList(userDTOList); //enrolledListVolunteerProjectList
+        enrolledListVolunteerProjectDTO.setVolunteerProjectName(volunteerProjectsRepo.getVolunteerName(volunteerProjectUUID));
+        enrolledListVolunteerProjectDTO.setVolunteerProjectUUID(volunteerProjectUUID);
+        return enrolledListVolunteerProjectDTO;
     }
 
     public Boolean checkUserIsEnrolledOrNot(String volunteerProjectUUID, String userEmail) {
