@@ -144,7 +144,7 @@ public class AuthenticationController {
 
         String fdnToUserUUid = UUID.randomUUID().toString();
         fdnUser.setUserUUid(fdnToUserUUid);
-        fdnUser.setEmail(newFDN.getEmail());
+        fdnUser.setEmail(apifdnRegister.getEmail());
         fdnUser.setFirstName("Foundation");
         fdnUser.setLastName(newFDN.getFdnName());
         fdnUser.setUserName(apifdnRegister.getFdnName());
