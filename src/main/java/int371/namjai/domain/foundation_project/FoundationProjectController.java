@@ -98,6 +98,7 @@ public class FoundationProjectController {
         foundationProject.setFdnProjectDetailPlace(apiFoundationProjectForm.getFdnProjectDetailPlace());
         foundationProject.setTargetCategoriesSet(apiFoundationProjectForm.getTargetCategoriesSet());
         foundationProject.setResponsiblePerson(apiFoundationProjectForm.getResponsiblePerson());
+        foundationProject.setReceived(0L);
         foundationProjectRepo.save(foundationProject);
         return ResponseEntity.ok("test demo");
 
@@ -112,10 +113,17 @@ public class FoundationProjectController {
 
     @GetMapping(value = "/project/user")
     public ResponseEntity<List<FoundationProjectShortDTO>> getFdnProjectByFdnUUID(@RequestParam("email") String email) {
-//        return ResponseEntity.ok(targetCategoriesRepo.findAll());
         List<FoundationProject> foundationProjectList = foundationProjectRepo.findByFDNEmailIgnoreCase(email);
         List<FoundationProjectShortDTO> foundationProjectShortDTOS = FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectList);
         return ResponseEntity.ok().body(foundationProjectShortDTOS);
     }
 
+//findByFDNEmailIgnoreCaseAndStatusNotClosed
+
+    @GetMapping(value = "/project/user-open")
+    public ResponseEntity<List<FoundationProjectShortDTO>> getFdnProjectByFdnUUIDAndStatusNotClosed(@RequestParam("email") String email) {
+        List<FoundationProject> foundationProjectList = foundationProjectRepo.findByFDNEmailIgnoreCaseAndStatusNotClosed(email);
+        List<FoundationProjectShortDTO> foundationProjectShortDTOS = FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectList);
+        return ResponseEntity.ok().body(foundationProjectShortDTOS);
+    }
 }

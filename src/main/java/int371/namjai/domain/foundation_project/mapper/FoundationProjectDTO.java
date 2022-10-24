@@ -15,7 +15,9 @@ public class FoundationProjectDTO {
     private String foundationProjectName;
     private String foundationProjectDetail;
     private String foundationProjectDetailPlace;
-    private Integer goal;
+    private long goal;
+    private long received;
+    private double percentage;
     private Date startDate;
     private Date endDate;
     private String picturePath;
