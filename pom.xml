@@ -113,6 +113,13 @@
             <artifactId>mapstruct-processor</artifactId>
             <version>1.4.1.Final</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.stripe</groupId>
+            <artifactId>stripe-java</artifactId>
+            <version>20.63.1</version>
+        </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
