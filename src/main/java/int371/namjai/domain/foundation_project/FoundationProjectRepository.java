@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface FoundationProjectRepository extends JpaRepository<FoundationProject, String> {
 
-    @Query("select fp from FoundationProject  fp left join fp.targetCategoriesSet t where t.targetCategoriesID = ?1")
+    @Query("select fp from FoundationProject  fp left join fp.targetCategoriesSet t where t.targetCategoriesID = ?1 and fp.status='OPEN'")
     List<FoundationProject> findByTargetCategoriesSet(String targetCatID);
 
 
