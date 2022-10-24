@@ -140,7 +140,6 @@ public class AuthenticationController {
         newFDN.setEstablishDate(apifdnRegister.getEstablishDate());
         newFDN.setStatus(Constant.FDN_STATUS_PENDING);
         newFDN.setProfilePath(null);
-        newFDN.setQrCodePath(null);
 
         String fdnToUserUUid = UUID.randomUUID().toString();
         fdnUser.setUserUUid(fdnToUserUUid);

@@ -67,9 +67,6 @@ public class Foundation {
     @Column(name = "create_date")
     private Date createDate;
 
-    @Column(name = "qrcode_path")
-    private String qrCodePath;
-
     @Column(name = "profile_path")
     private String profilePath;
 

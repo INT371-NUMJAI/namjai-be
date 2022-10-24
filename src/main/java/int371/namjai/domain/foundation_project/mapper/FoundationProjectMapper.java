@@ -18,8 +18,11 @@ public interface FoundationProjectMapper {
             @Mapping(target = "projectUUID", source = "fdnProjectUUid"),
             @Mapping(target = "projectName", source = "fdnProjectName"),
             @Mapping(target = "projectDetail", source = "fdnProjectDetail"),
-            @Mapping(target = "goal", source = "goal"),
-            @Mapping(target = "status", source = "status")
+            @Mapping(target = "goal", expression = "java((long)foundationProject.getGoal())"),
+            @Mapping(target = " received", expression = "java((long)foundationProject.getReceived())"),
+            @Mapping(target = "status", source = "status"),
+            @Mapping(target = "percentage", expression = "java((double)((foundationProject.getReceived()/foundationProject.getGoal()))*100)"),
+
     })
     FoundationProjectShortDTO toFoundationProjectShortDTO(FoundationProject foundationProject);
 
@@ -30,7 +33,9 @@ public interface FoundationProjectMapper {
             @Mapping(target = "foundationProjectName", source = "foundationProject.fdnProjectName"),
             @Mapping(target = "foundationProjectDetail", source = "foundationProject.fdnProjectDetail"),
             @Mapping(target = "foundationProjectDetailPlace", source = "foundationProject.fdnProjectDetail"),
-            @Mapping(target = "goal", source = "foundationProject.goal"),
+            @Mapping(target = "goal", expression = "java((long)foundationProject.getGoal())"),
+            @Mapping(target = " received", expression = "java((long)foundationProject.getReceived())"),
+            @Mapping(target = "percentage", expression = "java((double)((foundationProject.getReceived()/foundationProject.getGoal()))*100)"),
             @Mapping(target = "startDate", source = "foundationProject.startDate"),
             @Mapping(target = "endDate", source = "foundationProject.endDate"),
             @Mapping(target = "picturePath", source = "foundationProject.picturePath"),

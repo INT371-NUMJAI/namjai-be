@@ -1,4 +1,4 @@
-package int371.namjai.domain.payment;
+package int371.namjai.domain.payment.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -12,6 +12,8 @@ public class FoundationProjectShortDTO {
     private String projectUUID;
     private String projectName;
     private String ProjectDetail;
-    private int goal;
+    private long goal;
+    private long received;
     private String status;
+    private double percentage;
 }

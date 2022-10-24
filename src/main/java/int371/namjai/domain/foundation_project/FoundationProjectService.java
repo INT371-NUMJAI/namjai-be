@@ -53,4 +53,8 @@ public class FoundationProjectService {
         List<FoundationProject> foundationProjectList = foundationProjectRepo.findByTargetCategoriesSet(targetCatID);
         return FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectList);
     }
+
+    public List<FoundationProjectShortDTO> getFoundationProjectsByFoundationUUID(String fdnUUID) {
+        return FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectRepo.findByfdnUUID(fdnUUID));
+    }
 }

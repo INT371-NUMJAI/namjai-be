@@ -19,7 +19,10 @@ public interface FoundationProjectRepository extends JpaRepository<FoundationPro
     @Query("select fp from FoundationProject  fp  where  fp.foundation.fdnUUid = ?1 ")
     List<FoundationProject> findByfdnUUID(String fdnUUID);
 
+
     @Query("select fp from FoundationProject  fp  where  UPPER(fp.foundation.email) = UPPER(?1) ")
     List<FoundationProject> findByFDNEmailIgnoreCase(String fdnEmail);
-//    List<FoundationProject> findTop6By();
+
+    @Query("select fp from FoundationProject  fp  where  UPPER(fp.foundation.email) = UPPER(?1) and fp.endDate <= current_date and fp.status != 'CLOSED'")
+    List<FoundationProject> findByFDNEmailIgnoreCaseAndStatusNotClosed(String fdnEmail);
 }

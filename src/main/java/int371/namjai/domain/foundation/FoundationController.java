@@ -86,16 +86,16 @@ public class FoundationController {
                 .body(resource);
     }
 
-    @PostMapping("/view/foundation/upload/qr")
-    public ResponseEntity<String> uploadQRWithBody(@RequestParam("file") MultipartFile file, @RequestParam("fdnName") String fdnName, @RequestParam("fdnUUID") String fdnUUID) throws IOException {
-        String path = resourceUtilService.saveFileToProjectFolder(file, fdnName);
-        String fileName = file.getOriginalFilename();
-//        FoundationDocuments fdnDoc = new FoundationDocuments(newFDNDocUUid, fileName, Constant.FDN_DOC_PATH, fileExtension, fdnUuid,new Timestamp(date.getTime()));
-        Foundation foundation = foundationService.getFoundationById(fdnUUID);
-        foundation.setQrCodePath(path + "/" + fileName);
-        foundationRepo.save(foundation);
-        return ResponseEntity.ok().body(path + "/" + fileName);
-    }
+//    @PostMapping("/view/foundation/upload/qr")
+//    public ResponseEntity<String> uploadQRWithBody(@RequestParam("file") MultipartFile file, @RequestParam("fdnName") String fdnName, @RequestParam("fdnUUID") String fdnUUID) throws IOException {
+//        String path = resourceUtilService.saveFileToProjectFolder(file, fdnName);
+//        String fileName = file.getOriginalFilename();
+////        FoundationDocuments fdnDoc = new FoundationDocuments(newFDNDocUUid, fileName, Constant.FDN_DOC_PATH, fileExtension, fdnUuid,new Timestamp(date.getTime()));
+//        Foundation foundation = foundationService.getFoundationById(fdnUUID);
+//        foundation.setQrCodePath(path + "/" + fileName);
+//        foundationRepo.save(foundation);
+//        return ResponseEntity.ok().body(path + "/" + fileName);
+//    }
 
     @PostMapping("/view/foundation/upload-profile")
     public ResponseEntity<String> uploadProfilePicWithBody(@RequestParam("file") MultipartFile file, @RequestParam("fdnUUID") String fdnUUID) throws IOException {
