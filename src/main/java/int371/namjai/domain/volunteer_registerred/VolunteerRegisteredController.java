@@ -1,7 +1,6 @@
 package int371.namjai.domain.volunteer_registerred;
 
 import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProjectDTO;
-import int371.namjai.domain.volunteer_registerred.dto.UnEnrolledVolunteerProjectDTO;
 import int371.namjai.domain.volunteer_registerred.dto.VolunteerRegisteredUserDTO;
 import int371.namjai.domain.volunteer_registerred.dto.VolunteerUnRegisteredUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +31,9 @@ public class VolunteerRegisteredController {
         return ResponseEntity.ok().body(volunteerRegisteredService.getListOfEnRolledUserInVolunteerProject(volunteerProjectUUID));
     }
 
-    @DeleteMapping(value = "/volunteer-enrolled/remove")
-    public ResponseEntity<Void> removeEnrolledVolunteerProjectMember(@RequestBody UnEnrolledVolunteerProjectDTO unEnrolledVolunteerProjectDTO) {
-        volunteerRegisteredService.unRegisteredVolunteerProject(unEnrolledVolunteerProjectDTO);
+    @DeleteMapping(value = "/volunteer-enrolled/remove/{email}/{id}")
+    public ResponseEntity<Void> removeEnrolledVolunteerProjectMember(@PathVariable("email") String email, @PathVariable("id") String volunteerProjectUUID) {
+        volunteerRegisteredService.unRegisteredVolunteerProject(email, volunteerProjectUUID);
         return ResponseEntity.ok().build();
     }
 

@@ -5,7 +5,10 @@ import int371.namjai.domain.user.UserService;
 import int371.namjai.domain.volunteer_projects.VolunteerProjects;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsRepository;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsService;
-import int371.namjai.domain.volunteer_registerred.dto.*;
+import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProject;
+import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProjectDTO;
+import int371.namjai.domain.volunteer_registerred.dto.VolunteerRegisteredUserDTO;
+import int371.namjai.domain.volunteer_registerred.dto.VolunteerUnRegisteredUserDTO;
 import int371.namjai.domain.volunteer_registerred.mapper.VolunteerRegisteredMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,9 +67,9 @@ public class VolunteerRegisteredService {
     }
 
     @Transactional
-    public void unRegisteredVolunteerProject(UnEnrolledVolunteerProjectDTO unEnrolledVolunteerProjectDTO) {
+    public void unRegisteredVolunteerProject(String email, String volunteerProjectUUID) {
 //        VolunteerEnrolled volunteerEnrolled = volunteerEnrolledRepo.findByVolunteerProjects_VolunteerProjectsUUIDAndAndVolunteerEnrolledUUID(unEnrolledVolunteerProjectDTO.getVolunteerProjectUUID(),unEnrolledVolunteerProjectDTO.getVolunteerEnrolledUUID());
-        VolunteerEnrolled volunteerEnrolled = volunteerEnrolledRepo.findVolunteerEnrolledByEmailAndVolunteerProjects_VolunteerProjectsUUID(unEnrolledVolunteerProjectDTO.getEmail(), unEnrolledVolunteerProjectDTO.getVolunteerProjectUUID());
+        VolunteerEnrolled volunteerEnrolled = volunteerEnrolledRepo.findVolunteerEnrolledByEmailAndVolunteerProjects_VolunteerProjectsUUID(email, volunteerProjectUUID);
         volunteerEnrolledRepo.delete(volunteerEnrolled);
 //        volunteerEnrolledRepo.save();
     }
