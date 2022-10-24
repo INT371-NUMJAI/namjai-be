@@ -15,5 +15,4 @@ public class FoundationContactDTO {
     private String postalCode;
     private String email;
     private String contactNumber;
-    private String qrCodePath;
 }

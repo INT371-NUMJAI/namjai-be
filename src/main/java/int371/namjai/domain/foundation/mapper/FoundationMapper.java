@@ -34,7 +34,6 @@ public interface FoundationMapper {
             @Mapping(target = "postalCode", source = "postalCode"),
             @Mapping(target = "email", source = "email"),
             @Mapping(target = "contactNumber", source = "contactNumber"),
-            @Mapping(target = "qrCodePath", source = "qrCodePath")
     })
     FoundationContactDTO toFoundationContactDto(Foundation foundation);
 
