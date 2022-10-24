@@ -1,5 +1,7 @@
-package int371.namjai.domain.security_auth.auth;
+package int371.namjai.domain.auth_security.auth;
 
+import int371.namjai.domain.auth_security.auth.signup.APILoginRequest;
+import int371.namjai.domain.auth_security.auth.signup.APITokenResponse;
 import int371.namjai.domain.foundation.APIFDNRegister;
 import int371.namjai.domain.foundation.Foundation;
 import int371.namjai.domain.foundation.FoundationRepository;
@@ -8,8 +10,6 @@ import int371.namjai.domain.foundation_document.FoundationDocuments;
 import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
 import int371.namjai.domain.role.Role;
 import int371.namjai.domain.role.RoleRepository;
-import int371.namjai.domain.security_auth.auth.signup.APILoginRequest;
-import int371.namjai.domain.security_auth.auth.signup.APITokenResponse;
 import int371.namjai.domain.user.User;
 import int371.namjai.domain.user.UserRepository;
 import int371.namjai.domain.user.exceptions.UserDuplicateException;

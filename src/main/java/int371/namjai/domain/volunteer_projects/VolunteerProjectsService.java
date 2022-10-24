@@ -9,6 +9,7 @@ import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectDetailDTO;
 import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectMapper;
 import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectShort;
 import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectsFormDTO;
+import int371.namjai.utill.UtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ public class VolunteerProjectsService {
 
     @Autowired
     private FoundationService foundationService;
+
+    @Autowired
+    private UtilService utilService;
 
 
     public void createVolunteerProjects(VolunteerProjectsFormDTO newVolunteerProjects) {

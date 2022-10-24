@@ -1,4 +1,4 @@
-package int371.namjai.domain.security_auth;
+package int371.namjai.domain.auth_security;
 
 
 import int371.namjai.domain.foundation.Foundation;

@@ -1,10 +1,10 @@
 package int371.namjai.domain.foundation;
 
+import int371.namjai.domain.auth_security.AuthenticationService;
 import int371.namjai.domain.foundation.mapper.APIFDNList;
 import int371.namjai.domain.foundation.mapper.APIFDNShort;
 import int371.namjai.domain.foundation_document.FoundationDocuments;
 import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
-import int371.namjai.domain.security_auth.AuthenticationService;
 import int371.namjai.utill.ResourceUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;

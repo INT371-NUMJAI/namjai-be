@@ -1,4 +1,4 @@
-package int371.namjai.domain.security_auth.auth;
+package int371.namjai.domain.auth_security.auth;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package int371.namjai.domain.security_auth.auth.configfiles;
+package int371.namjai.domain.auth_security.auth.configfiles;
 
 
 import int371.namjai.utill.auth.IUserDetailsService;

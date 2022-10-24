@@ -1,7 +1,7 @@
-package int371.namjai.domain.security_auth;
+package int371.namjai.domain.auth_security;
 
-import int371.namjai.domain.security_auth.auth.configfiles.RestAuthenticationEntryPoint;
-import int371.namjai.domain.security_auth.auth.configfiles.TokenAuthenticationFilter;
+import int371.namjai.domain.auth_security.auth.configfiles.RestAuthenticationEntryPoint;
+import int371.namjai.domain.auth_security.auth.configfiles.TokenAuthenticationFilter;
 import int371.namjai.utill.auth.CustomUserDetailsService;
 import int371.namjai.utill.auth.TokenHelper;
 import org.springframework.beans.factory.annotation.Autowired;
