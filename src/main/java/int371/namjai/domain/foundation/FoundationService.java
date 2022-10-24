@@ -33,7 +33,7 @@ public class FoundationService {
     }
 
     public List<APIFDNList> getFoundationListShort() {
-        List<Foundation> foundationList = foundationRepository.findAll();
+        List<Foundation> foundationList = foundationRepository.findFoundationsByStatus();
         List<APIFDNList> apifdnLists = FoundationMapper.INSTANCE.toFDNListShort(foundationList);
         return apifdnLists;
     }
