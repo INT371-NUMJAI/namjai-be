@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -67,6 +68,7 @@ public class PaymentController {
         transaction.setTransactionUUID(UUID.randomUUID().toString());
         transaction.setPaymentID(paymentIntentCreate.getId());
         transaction.setAmount(payment.getAmount());
+        transaction.setCreateDate(new Timestamp(System.currentTimeMillis()));
         transaction.setFoundationProject(foundationProject);
         transactionRepo.save(transaction);
 
