@@ -19,6 +19,7 @@ jobs:
           echo spring.datasource.url= ${{ secrets.DEV_DB_URL }} >> ./src/main/resources/application-dev.properties
           echo spring.datasource.username= ${{ secrets.DEV_DB_USERNAME }} >> ./src/main/resources/application-dev.properties
           echo spring.datasource.password= ${{ secrets.DEV_DB_PASSWORD }} >> ./src/main/resources/application-dev.properties
+          echo spring.datasource.password= ${{ secrets.STRIPE_SECRET_KEY }} >> ./src/main/resources/application-dev.properties
           cat ./src/main/resources/application.properties
       - name: Login to Github Docker Registry
         uses: docker/login-action@v1
