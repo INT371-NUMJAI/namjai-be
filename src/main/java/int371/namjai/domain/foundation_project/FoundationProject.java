@@ -34,7 +34,7 @@ public class FoundationProject {
     private Date endDate;
 
     @Column(name = "goal")
-    private Integer goal;
+    private double goal;
 
     @Column(name = "create_date")
     private Timestamp createDate;
@@ -64,5 +64,8 @@ public class FoundationProject {
             joinColumns = @JoinColumn(name = "fdn_project_uuid"),
             inverseJoinColumns = @JoinColumn(name = "target_category_id"))
     Set<TargetCategories> targetCategoriesSet;
+
+    @Column(name = "received")
+    private double received;
 
 }

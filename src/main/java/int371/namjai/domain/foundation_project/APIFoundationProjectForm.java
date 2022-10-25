@@ -16,7 +16,7 @@ public class APIFoundationProjectForm {
     private String fdnProjectName;
     private Date startDate;
     private Date endDate;
-    private int goal;
+    private Long goal;
     private String fdnProjectDetail;
     private String fdnProjectDetailPlace;
     private Set<TargetCategories> targetCategoriesSet;

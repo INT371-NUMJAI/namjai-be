@@ -39,6 +39,8 @@ public class VolunteerRegisteredService {
         VolunteerProjects volunteerProject = volunteerProjectsService.getVolunteerProjectByUUID(volunteerRegisteredUserDTO.getVolunteerProjectUUID());
         volunteerEnrolled.setVolunteerEnrolledUUID(UUID.randomUUID().toString());
         volunteerEnrolled.setVolunteerProjects(volunteerProject);
+        int peopleCount = volunteerProject.getPeopleRegistered() + 1;
+        volunteerProject.setPeopleRegistered(peopleCount);
 
 
         User user = userService.getUserByEmail(volunteerRegisteredUserDTO.getEmail());
@@ -50,6 +52,7 @@ public class VolunteerRegisteredService {
         volunteerEnrolled.setLastName(user.getLastName());
 
         volunteerEnrolledRepo.save(volunteerEnrolled);
+        volunteerProjectsRepo.save(volunteerProject);
     }
 
     public void recordVolunteerRegisterByUnregisteredUser(VolunteerUnRegisteredUserDTO volunteerUnRegisteredUserDTO) {
@@ -62,6 +65,8 @@ public class VolunteerRegisteredService {
         volunteerEnrolled.setFirstName(volunteerUnRegisteredUserDTO.getFirstName());
         volunteerEnrolled.setLastName(volunteerUnRegisteredUserDTO.getLastName());
         VolunteerProjects volunteerProject = volunteerProjectsService.getVolunteerProjectByUUID(volunteerUnRegisteredUserDTO.getVolunteerProjectUUID());
+        int peopleCount = volunteerProject.getPeopleRegistered() + 1;
+        volunteerProject.setPeopleRegistered(peopleCount);
         volunteerEnrolled.setVolunteerProjects(volunteerProject);
         volunteerEnrolledRepo.save(volunteerEnrolled);
     }
