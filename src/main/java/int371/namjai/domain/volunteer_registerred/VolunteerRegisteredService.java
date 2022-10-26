@@ -5,6 +5,7 @@ import int371.namjai.domain.user.UserService;
 import int371.namjai.domain.volunteer_projects.VolunteerProjects;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsRepository;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsService;
+import int371.namjai.domain.volunteer_projects.exceoptions.VolunteerProjectException;
 import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProject;
 import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProjectDTO;
 import int371.namjai.domain.volunteer_registerred.dto.VolunteerRegisteredUserDTO;
@@ -74,6 +75,10 @@ public class VolunteerRegisteredService {
     @Transactional
     public void unRegisteredVolunteerProject(String email, String volunteerProjectUUID) {
 //        VolunteerEnrolled volunteerEnrolled = volunteerEnrolledRepo.findByVolunteerProjects_VolunteerProjectsUUIDAndAndVolunteerEnrolledUUID(unEnrolledVolunteerProjectDTO.getVolunteerProjectUUID(),unEnrolledVolunteerProjectDTO.getVolunteerEnrolledUUID());
+        VolunteerProjects volunteerProjects = volunteerProjectsRepo.findById(volunteerProjectUUID).orElseThrow(VolunteerProjectException::new);
+        int peopleCount = volunteerProjects.getPeopleRegistered() - 1;
+        volunteerProjects.setPeopleRegistered(peopleCount);
+        volunteerProjectsRepo.save(volunteerProjects);
         VolunteerEnrolled volunteerEnrolled = volunteerEnrolledRepo.findVolunteerEnrolledByEmailAndVolunteerProjects_VolunteerProjectsUUID(email, volunteerProjectUUID);
         volunteerEnrolledRepo.delete(volunteerEnrolled);
 //        volunteerEnrolledRepo.save();
