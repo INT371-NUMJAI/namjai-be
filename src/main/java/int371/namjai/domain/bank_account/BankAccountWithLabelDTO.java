@@ -5,14 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BankAccountDTO {
+public class BankAccountWithLabelDTO {
     private String bankAccountUUID;
     private String bankBrand;
     private String bankNumber;
     private String accountName;
     private String label;
-
-    public String getLabel() {
-        return this.getBankNumber() + " " + this.getBankBrand() + " " + this.getAccountName();
-    }
 }
