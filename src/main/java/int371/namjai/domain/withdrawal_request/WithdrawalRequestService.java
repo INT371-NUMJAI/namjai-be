@@ -60,7 +60,9 @@ public class WithdrawalRequestService {
         WithdrawalRequest withdrawalRequest = getWithdrawalRequestById(withdrawalRequestApproveDTO.getWithdrawalUUID());
         withdrawalRequest.setStatus(withdrawalRequestApproveDTO.getStatus());
         withdrawalRequest.setApproveDate(new Timestamp(System.currentTimeMillis()));
+        withdrawalRequest.setStatus("APPROVED");
         backOfficeService.sendmailForApprovalWithdrawal(withdrawalRequestApproveDTO.getWithdrawalUUID(), withdrawalRequestApproveDTO.getFdnEmail(), withdrawalRequest.getStatus(), withdrawalRequestApproveDTO.getMessage());
+        withdrawalRequestRepo.save(withdrawalRequest);
     }
 
     private WithdrawalRequest getWithdrawalRequestById(String requestID) {
