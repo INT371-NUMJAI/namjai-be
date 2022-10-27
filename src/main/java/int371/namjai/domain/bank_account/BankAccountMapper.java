@@ -13,7 +13,7 @@ public interface BankAccountMapper {
 
     //    @Mapping(target = "volunteerProjectUUID", source = "volunteerEnrolled.volunteerProjectUUID"),
     @Mappings({
-            @Mapping(target = "bankAccountUUID", source = "bankAccountUUID"),
+            @Mapping(target = "value", source = "bankAccountUUID"),
             @Mapping(target = "bankBrand", source = "bankBrand"),
             @Mapping(target = "bankNumber", source = "bankNumber"),
             @Mapping(target = "accountName", source = "accountName")
