@@ -60,6 +60,8 @@ public class BackOfficeController {
             backOfficeService.sendmailForVerification(apiVerificationFDN.getFdnUUid(), foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
         }
         else {
+            foundation.setStatus(apiVerificationFDN.getStatus());
+            foundationRepository.save(foundation);
             backOfficeService.sendmailForVerification(apiVerificationFDN.getFdnUUid(), foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
         }
         return ResponseEntity.ok().build();
