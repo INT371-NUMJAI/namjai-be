@@ -62,7 +62,7 @@ public class BackOfficeService {
 
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(messageBodyPart);
-        if (Constant.FDN_STATUS_VERIFIED.equals(status)) {
+        if (Constant.PROJECT_APPROVED.equals(status)) {
             messageBodyPart.setContent("Your  withdrawal request have been verified , Please check your bank account and balance", "text/html");
         } else {
             messageBodyPart.setContent("Your withdrawal request have been rejected  due to " + message + ". Please contact admin for further information (namjai.service@gmail.com)", "text/html");

@@ -21,6 +21,10 @@ public class Constant {
     public static final String VOLUNTEER_PROJECT_ONSITE = "ONSITE";
     public static final String VOLUNTEER_PROJECT_ONLINE = "ONLINE";
 
+    public static final String PROJECT_APPROVED = "APPROVED";
+    public static final String PROJECT_REJECTED = "REJECTED";
+
+
 //    public static final String FDN_DOC_PATH = "~/backend/dev/fdn_documents/";
 //    public static final String FDN_DOC_PATH_LOCAL = "D:\\me\\int371\\namjai-be\\fdn_documents\\";
 
