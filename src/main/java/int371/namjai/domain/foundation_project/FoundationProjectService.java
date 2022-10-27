@@ -6,6 +6,7 @@ import int371.namjai.domain.foundation.mapper.FoundationContactDTO;
 import int371.namjai.domain.foundation.mapper.FoundationMapper;
 import int371.namjai.domain.foundation_project.exceptions.FoundationProjectsNotFoundException;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectDTO;
+import int371.namjai.domain.foundation_project.mapper.FoundationProjectListToRequest;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectMapper;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectShortDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,4 +58,10 @@ public class FoundationProjectService {
     public List<FoundationProjectShortDTO> getFoundationProjectsByFoundationUUID(String fdnUUID) {
         return FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectRepo.findByfdnUUID(fdnUUID));
     }
+
+    public List<FoundationProjectListToRequest> getFoundationProjectToRequest(String fdnUUID) {
+        List<FoundationProject> foundationProjects = foundationProjectRepo.findFoundationProjectsByFDNAndStatus(fdnUUID);
+        return FoundationProjectMapper.INSTANCE.toFoundationProjectListToRequests(foundationProjects);
+    }
+
 }

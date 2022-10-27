@@ -66,8 +66,12 @@ public class VolunteerProjectsService {
         List<VolunteerProjects> volunteerProjectsList = volunteerProjectsRepo.findAll();
         List<VolunteerProjectShort> volunteerProjectShorts = VolunteerProjectMapper.INSTANCE.toVolunteerProjectShortList(volunteerProjectsList);
         return volunteerProjectShorts;
+    }
 
-
+    public List<VolunteerProjectShort> getVolunteerProjectsListByFDNEmail(String fdnEmail) {
+        List<VolunteerProjects> volunteerProjectsList = volunteerProjectsRepo.findVolunteerProjectsByFoundation_Email(fdnEmail);
+        List<VolunteerProjectShort> volunteerProjectShorts = VolunteerProjectMapper.INSTANCE.toVolunteerProjectShortList(volunteerProjectsList);
+        return volunteerProjectShorts;
     }
 
     public VolunteerProjectDetailDTO getVolunteerProjectDetailByUUID(String volunteerProjectUUID) {

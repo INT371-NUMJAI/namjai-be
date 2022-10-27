@@ -32,4 +32,9 @@ public class BankAccountService {
         List<BankAccount> bankAccounts = bankAccountRepository.findBankAccountsByFoundation_FdnUUid(fdnUUId);
         return BankAccountMapper.INSTANCE.toBankAccountDTOList(bankAccounts);
     }
+
+    public BankAccount getBankAccountById(String bankAccountUUID) {
+        return bankAccountRepository.findById(bankAccountUUID).orElseThrow(BankAccountNotfoundException::new);
+    }
+
 }

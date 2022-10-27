@@ -50,21 +50,17 @@ public class BackOfficeController {
     private ResponseEntity<Void> approveFoundation(@RequestBody APIVerificationFDN apiVerificationFDN) throws MessagingException {
         Foundation foundation = foundationService.getFoundationById(apiVerificationFDN.getFdnUUid());
 //        FoundationDocuments foundationDocuments = foundationService.getFoundationDocFIle(apiVerificationFDN.getFdnUUid());
-        String newStatus = ("V".equals(apiVerificationFDN.getStatus())) ? Constant.FDN_STATUS_VERIFIED : Constant.FDN_STATUS_REJECTED;
+        String newStatus = ("APPROVE".equals(apiVerificationFDN.getStatus())) ? Constant.FDN_STATUS_VERIFIED : Constant.FDN_STATUS_REJECTED;
         if(Constant.FDN_STATUS_VERIFIED.equals(newStatus)){
             User newUser = userRepository.findByEmailIgnoreCaseAndStatusDisable(foundation.getEmail());
             newUser.setStatus(Constant.USER_STATUS_ACTIVE);
             foundation.setStatus(newStatus);
             foundationRepository.save(foundation);
             userRepository.save(newUser);
-            backOfficeService.sendmail(apiVerificationFDN.getFdnUUid(), foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
+            backOfficeService.sendmailForVerification(apiVerificationFDN.getFdnUUid(), foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
         }
         else {
-            backOfficeService.sendmail(apiVerificationFDN.getFdnUUid(), foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
-//            foundationDocumentsRepo.delete(foundationDocuments);
-//            userRepository.deleteByEmail(foundation.getEmail());
-//            foundationRepository.delete(foundation);
-
+            backOfficeService.sendmailForVerification(apiVerificationFDN.getFdnUUid(), foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
         }
         return ResponseEntity.ok().build();
     }

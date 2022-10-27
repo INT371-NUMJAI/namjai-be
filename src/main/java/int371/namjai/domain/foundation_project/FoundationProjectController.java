@@ -4,6 +4,7 @@ package int371.namjai.domain.foundation_project;
 import int371.namjai.domain.foundation.Foundation;
 import int371.namjai.domain.foundation.FoundationService;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectDTO;
+import int371.namjai.domain.foundation_project.mapper.FoundationProjectListToRequest;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectMapper;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectShortDTO;
 import int371.namjai.domain.target_catergories.TargetCategories;
@@ -118,12 +119,16 @@ public class FoundationProjectController {
         return ResponseEntity.ok().body(foundationProjectShortDTOS);
     }
 
-//findByFDNEmailIgnoreCaseAndStatusNotClosed
 
     @GetMapping(value = "/project/user-open")
     public ResponseEntity<List<FoundationProjectShortDTO>> getFdnProjectByFdnUUIDAndStatusNotClosed(@RequestParam("email") String email) {
         List<FoundationProject> foundationProjectList = foundationProjectRepo.findByFDNEmailIgnoreCaseAndStatusNotClosed(email);
         List<FoundationProjectShortDTO> foundationProjectShortDTOS = FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectList);
         return ResponseEntity.ok().body(foundationProjectShortDTOS);
+    }
+
+    @GetMapping(value = "/projects/closed")
+    public ResponseEntity<List<FoundationProjectListToRequest>> getProjectListToMakeRequest(@RequestParam("fdnid") String fdnUUID) {
+        return ResponseEntity.ok().body(foundationProjectService.getFoundationProjectToRequest(fdnUUID));
     }
 }

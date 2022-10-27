@@ -1,11 +1,13 @@
 package int371.namjai.utill.exception;
 
+import int371.namjai.domain.bank_account.BankAccountNotfoundException;
 import int371.namjai.domain.foundation.FoundationNotFoundException;
 import int371.namjai.domain.foundation_project.exceptions.FoundationProjectsNotFoundException;
 import int371.namjai.domain.report_issue.ReportIssueNotFoundException;
 import int371.namjai.domain.user.exceptions.UserDuplicateException;
 import int371.namjai.domain.user.exceptions.UserNotFoundException;
 import int371.namjai.domain.volunteer_projects.exceoptions.VolunteerProjectException;
+import int371.namjai.domain.withdrawal_request.WithdrawalRequestNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -65,6 +67,26 @@ public class CustomizedExceptionHandling extends ResponseEntityExceptionHandler 
         response.setHttpStatus(HttpStatus.NOT_FOUND);
         response.setDateTime(LocalDateTime.now());
         response.setMessage("This user  may not exist");
+        ResponseEntity<Object> entity = new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return entity;
+    }
+
+    @ExceptionHandler(BankAccountNotfoundException.class)
+    public ResponseEntity<Object> handleExceptions(BankAccountNotfoundException exception, WebRequest webRequest) {
+        ExceptionResponse response = new ExceptionResponse();
+        response.setHttpStatus(HttpStatus.NOT_FOUND);
+        response.setDateTime(LocalDateTime.now());
+        response.setMessage("This account  may not exist");
+        ResponseEntity<Object> entity = new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return entity;
+    }
+
+    @ExceptionHandler(WithdrawalRequestNotFoundException.class)
+    public ResponseEntity<Object> handleExceptions(WithdrawalRequestNotFoundException exception, WebRequest webRequest) {
+        ExceptionResponse response = new ExceptionResponse();
+        response.setHttpStatus(HttpStatus.NOT_FOUND);
+        response.setDateTime(LocalDateTime.now());
+        response.setMessage("This withdrawal request  may not exist");
         ResponseEntity<Object> entity = new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         return entity;
     }

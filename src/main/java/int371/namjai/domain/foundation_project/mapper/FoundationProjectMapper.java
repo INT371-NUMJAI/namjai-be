@@ -45,4 +45,13 @@ public interface FoundationProjectMapper {
     })
     FoundationProjectDTO toFoundationProjectDto(FoundationProject foundationProject, FoundationContactDTO foundationContactDTO);
 
+
+    @Mappings({
+            @Mapping(target = "foundationProjectUUID", source = "fdnProjectUUid"),
+            @Mapping(target = "foundationProjectName", source = "fdnProjectName"),
+            @Mapping(target = "totalAmount", source = "received"),
+    })
+    FoundationProjectListToRequest toFoundationProjectListToRequest(FoundationProject foundationProject);
+
+    List<FoundationProjectListToRequest> toFoundationProjectListToRequests(List<FoundationProject> foundationProjects);
 }
