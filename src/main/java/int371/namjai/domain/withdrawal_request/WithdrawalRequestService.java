@@ -44,6 +44,7 @@ public class WithdrawalRequestService {
         withdrawalRequest.setApproveDate(null);
         withdrawalRequest.setBankAccount(bankAccount);
         withdrawalRequest.setFoundationProject(foundationProject);
+        withdrawalRequestRepo.save(withdrawalRequest);
     }
 
     public List<WithdrawalRequestApproveShortDTO> getWithdrawalRequest() {
