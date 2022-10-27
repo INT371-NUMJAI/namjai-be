@@ -32,7 +32,7 @@ public class VolunteerProjectsController {
         return ResponseEntity.ok().body(volunteerProjectsService.getVolunteerProjectDetailByUUID(volunteerProjectUUID));
     }
 
-    @GetMapping("/volunteer-projects")
+    @GetMapping("/volunteer-projects/")
     public ResponseEntity<List<VolunteerProjectShort>> getVolunteerProjectListByFDNEmail(@RequestParam("email") String fdnEmail) {
         return ResponseEntity.ok().body(volunteerProjectsService.getVolunteerProjectsListByFDNEmail(fdnEmail));
     }
