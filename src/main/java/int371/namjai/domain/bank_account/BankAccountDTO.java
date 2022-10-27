@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BankAccountDTO {
-    private String bankAccountUUID;
+    private String value;
     private String bankBrand;
     private String bankNumber;
     private String accountName;
