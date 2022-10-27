@@ -34,6 +34,12 @@ public class WithdrawalRequestController {
         return ResponseEntity.ok().body(withdrawalRequestService.getWithdrawalRequestDetailByID(requestUUID));
     }
 
+    @GetMapping(value = "/request-withdrawal/")
+    public ResponseEntity<List<WithdrawalRequestApproveShortDTO>> getWithdrawalRequestDetailByEmail(@RequestParam("email") String email) {
+        return ResponseEntity.ok().body(withdrawalRequestService.getWithdrawralRequestByEmail(email));
+    }
+
+
     @PostMapping(value = "/request-withdrawal/approve")
     public ResponseEntity<WithdrawalRequestApproveDetailDTO> approveWithdrawalRequest(@RequestBody WithdrawalRequestApproveDTO withdrawalRequestApproveDTO) throws MessagingException {
         withdrawalRequestService.approveWithdrawal(withdrawalRequestApproveDTO);

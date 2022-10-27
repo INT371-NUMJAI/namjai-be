@@ -51,6 +51,10 @@ public class WithdrawalRequestService {
         return WithdrawalRequestMapper.INSTANCE.toWithdrawalRequestApproveShortDtoList(withdrawalRequestRepo.findAll());
     }
 
+    public List<WithdrawalRequestApproveShortDTO> getWithdrawralRequestByEmail(String email) {
+        return WithdrawalRequestMapper.INSTANCE.toWithdrawalRequestApproveShortDtoList(withdrawalRequestRepo.findWithdrawalRequestByFoundationEmail(email));
+    }
+
     public WithdrawalRequestApproveDetailDTO getWithdrawalRequestDetailByID(String withdrawalUUID) {
         return WithdrawalRequestMapper.INSTANCE.toWithdrawalRequestApproveDetailDto(getWithdrawalRequestById(withdrawalUUID));
     }
