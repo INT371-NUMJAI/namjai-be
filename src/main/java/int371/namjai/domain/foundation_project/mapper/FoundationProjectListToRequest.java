@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FoundationProjectListToRequest {
-    private String foundationProjectUUID;
+    private String value;
     private String foundationProjectName;
     private double totalAmount;
     private String label;

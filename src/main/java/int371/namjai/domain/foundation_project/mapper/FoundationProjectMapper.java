@@ -47,7 +47,7 @@ public interface FoundationProjectMapper {
 
 
     @Mappings({
-            @Mapping(target = "foundationProjectUUID", source = "fdnProjectUUid"),
+            @Mapping(target = "value", source = "fdnProjectUUid"),
             @Mapping(target = "foundationProjectName", source = "fdnProjectName"),
             @Mapping(target = "totalAmount", source = "received"),
     })
