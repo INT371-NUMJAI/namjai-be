@@ -84,7 +84,7 @@ public class FoundationProjectController {
     }
 
     @PostMapping(value = "/project/create")
-    public ResponseEntity<String> uploadFoundationProjectForm(@RequestBody APIFoundationProjectForm apiFoundationProjectForm) {
+    public ResponseEntity<Void> uploadFoundationProjectForm(@RequestBody APIFoundationProjectForm apiFoundationProjectForm) {
         FoundationProject foundationProject = new FoundationProject();
         Foundation foundation = foundationService.getFoundationById(apiFoundationProjectForm.getFdnUUID());
         foundationProject.setFoundation(foundation);
@@ -100,9 +100,9 @@ public class FoundationProjectController {
         foundationProject.setTargetCategoriesSet(apiFoundationProjectForm.getTargetCategoriesSet());
         foundationProject.setResponsiblePerson(apiFoundationProjectForm.getResponsiblePerson());
         foundationProject.setReceived(0L);
+        foundationProject.setStatus(apiFoundationProjectForm.getStatus());
         foundationProjectRepo.save(foundationProject);
-        return ResponseEntity.ok("test demo");
-
+        return ResponseEntity.ok().build();
     }
 
 
