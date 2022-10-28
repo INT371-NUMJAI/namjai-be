@@ -41,6 +41,7 @@ public interface FoundationMapper {
     @Mappings({
             @Mapping(target = "fdnUUID", source = "fdnUUid"),
             @Mapping(target = "fdnName", source = "fdnName"),
+            @Mapping(target = "fdnEmail", source = "email"),
             @Mapping(target = "profilePath", source = "profilePath"),
     })
     APIFDNList foundationListShort(Foundation foundationList);
