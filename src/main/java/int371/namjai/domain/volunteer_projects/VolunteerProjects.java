@@ -40,6 +40,9 @@ public class VolunteerProjects {
     @Column(name = "activity_type")
     private String activityType;
 
+    @Column(name = "status")
+    private String status;
+
     @Column(name = "start_date")
     private Date startDate;
 

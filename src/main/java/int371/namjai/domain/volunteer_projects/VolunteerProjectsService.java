@@ -37,7 +37,6 @@ public class VolunteerProjectsService {
         volunteerProjects.setPeopleNeeded(newVolunteerProjects.getPeopleNeeded());
         volunteerProjects.setPeopleRegistered(0);
         volunteerProjects.setDescription(newVolunteerProjects.getDescription());
-//        volunteerProjects.setQualify(newVolunteerProjects.getQualify());
         volunteerProjects.setActivityType(newVolunteerProjects.getActivityType()); //
         volunteerProjects.setStartDate(newVolunteerProjects.getStartDate());
         volunteerProjects.setEndDate(newVolunteerProjects.getEndDate());
@@ -52,14 +51,9 @@ public class VolunteerProjectsService {
         volunteerProjects.setTargetCategoriesSet(newVolunteerProjects.getTargetCategoriesSet());
         volunteerProjects.setQualify(newVolunteerProjects.getQualify());
         volunteerProjects.setDuty(newVolunteerProjects.getDuty());
-
-
-//        volunteerProjects.setVolunteerProjectQualifies(newVolunteerProjects.getVolunteerProjectQualifies());
-
 //        volunteerProjects.setPicturePath(newVolunteerProjects.getPicturePath());
 //        volunteerProjects.setUser(null);
         volunteerProjectsRepo.save(volunteerProjects);
-
     }
 
     public List<VolunteerProjectShort> getVolunteerProjectsList() {
@@ -83,6 +77,12 @@ public class VolunteerProjectsService {
     public VolunteerProjects getVolunteerProjectByUUID(String volunteerProjectUUID) {
         return volunteerProjectsRepo.findById(volunteerProjectUUID).orElseThrow(VolunteerProjectException::new);
 
+    }
+
+    public List<VolunteerProjectShort> getVolunteerProjectsListByName(String volunteerName) {
+        List<VolunteerProjects> volunteerProjectsList = volunteerProjectsRepo.findVolunteerProjectsByVolunteerProjectNameContainingIgnoreCase(volunteerName);
+        List<VolunteerProjectShort> volunteerProjectShorts = VolunteerProjectMapper.INSTANCE.toVolunteerProjectShortList(volunteerProjectsList);
+        return volunteerProjectShorts;
     }
 
 

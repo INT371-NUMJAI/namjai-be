@@ -38,5 +38,9 @@ public class FoundationService {
         return apifdnLists;
     }
 
-
+    public List<APIFDNList> searchFoundationListShortByName(String fdnName) {
+        List<Foundation> foundationList = foundationRepository.findFoundationsByFdnNameContainingIgnoreCase(fdnName);
+        List<APIFDNList> apifdnLists = FoundationMapper.INSTANCE.toFDNListShort(foundationList);
+        return apifdnLists;
+    }
 }

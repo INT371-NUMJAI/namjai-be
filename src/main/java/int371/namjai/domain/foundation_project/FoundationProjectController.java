@@ -50,6 +50,14 @@ public class FoundationProjectController {
         return ResponseEntity.ok(foundationProjectService.getAllFoundationProjectInShort());
     }
 
+
+    @GetMapping(value = "/short/foundationproject/search/")
+    public ResponseEntity<List<FoundationProjectShortDTO>> getAllFoundationProjectsInShort(@RequestParam("q") String fdnName) {
+
+        return ResponseEntity.ok(foundationProjectService.getFoundationProjectByName(fdnName));
+    }
+
+
     @GetMapping(value = "/random")
     public ResponseEntity<List<FoundationProjectShortDTO>> getRandomFoundationProjectsInShort() {
         return ResponseEntity.ok(FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectRepo.findTop6AndStatusOpen()));

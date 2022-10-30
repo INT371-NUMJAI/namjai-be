@@ -21,6 +21,12 @@ public class VolunteerProjectsController {
         return ResponseEntity.ok().body(volunteerProjectsService.getVolunteerProjectsList());
     }
 
+    @GetMapping("/volunteer-projects/search")
+    public ResponseEntity<List<VolunteerProjectShort>> searchVolunteerProjectList(@RequestParam("q") String volunteerName) {
+        return ResponseEntity.ok().body(volunteerProjectsService.getVolunteerProjectsListByName(volunteerName));
+    }
+
+
     @PostMapping("/volunteer-projects/add")
     public ResponseEntity<Void> createNewVolunteerProject(@RequestBody VolunteerProjectsFormDTO volunteerProjects) {
         volunteerProjectsService.createVolunteerProjects(volunteerProjects);

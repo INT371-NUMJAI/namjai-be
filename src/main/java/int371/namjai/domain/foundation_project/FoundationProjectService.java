@@ -64,4 +64,9 @@ public class FoundationProjectService {
         return FoundationProjectMapper.INSTANCE.toFoundationProjectListToRequests(foundationProjects);
     }
 
+    public List<FoundationProjectShortDTO> getFoundationProjectByName(String fdnName) {
+        List<FoundationProject> foundationProjects = foundationProjectRepo.findFoundationProjectsByProjectNameAndStatus(fdnName);
+        return FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjects);
+    }
+
 }

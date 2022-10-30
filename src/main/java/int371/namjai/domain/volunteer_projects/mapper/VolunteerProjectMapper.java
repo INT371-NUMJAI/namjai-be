@@ -47,6 +47,7 @@ public interface VolunteerProjectMapper {
             @Mapping(target = "activityStartDate", source = " volunteerProjects.activityStartDate"),
             @Mapping(target = "activityEndDate", source = " volunteerProjects.activityEndDate"),
             @Mapping(target = "locationProvince", source = "volunteerProjects.locationProvince"),
+            @Mapping(target = "status", source = "volunteerProjects.status"),
     })
     VolunteerProjectShort toVolunteerProjectShort(VolunteerProjects volunteerProjects);
 

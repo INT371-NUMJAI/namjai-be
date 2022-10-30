@@ -9,16 +9,13 @@ import java.util.List;
 @Repository
 public interface VolunteerProjectsRepository extends JpaRepository<VolunteerProjects, String> {
 
-//    @Query(value = "select * from fdn_projects fp where fp.status ='OPEN' order by random()  limit 6 ", nativeQuery = true)
-//    List<FoundationProject> findTop6AndStatusOpen();
-
-//    @Query(value = "select * from volunteers_projects  vp  where fp.volunteer_projects_uuid ='OPEN' order by random()  limit 6 ", nativeQuery = true)
-
-
     @Query("select vp.volunteerProjectName from VolunteerProjects  vp where vp.volunteerProjectsUUID = ?1 ")
     String getVolunteerName(String volunteerProjectUUID);
 
     List<VolunteerProjects> findVolunteerProjectsByFoundation_Email(String fdnEmail);
-//    List<FoundationProject> findByfdnUUID(String fdnUUID);
+
+    @Query("select vp from VolunteerProjects  vp  where upper(vp.volunteerProjectName) like  concat('%',UPPER(?1),'%') and vp.status='OPEN'")
+    List<VolunteerProjects> findVolunteerProjectsByVolunteerProjectNameContainingIgnoreCase(String volunteerName);
+
 
 }

@@ -61,6 +61,12 @@ public class FoundationController {
         return apifdnShortList;
     }
 
+    @GetMapping(value = "/view/foundations/search/")
+    private List<APIFDNList> getShortFoundationListByName(@RequestParam("q") String fdnName) {
+        List<APIFDNList> apifdnShortList = foundationService.searchFoundationListShortByName(fdnName);
+        return apifdnShortList;
+    }
+
     @GetMapping(value = "/view/getName")
     public Map<String, String> getNameOnProfileDisplay(@RequestParam String email) {
         return authenticationService.getProfileNameDisplay(email);
