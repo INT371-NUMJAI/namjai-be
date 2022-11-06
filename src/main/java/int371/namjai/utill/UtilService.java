@@ -1,9 +1,11 @@
 package int371.namjai.utill;
 
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class UtilService {
+
     static String getAlphaNumericString() {
 
         // chose a Character random from this String
@@ -29,5 +31,6 @@ public class UtilService {
 
         return sb.toString();
     }
+
 
 }

@@ -17,5 +17,5 @@ public interface VolunteerProjectsRepository extends JpaRepository<VolunteerProj
     @Query("select vp from VolunteerProjects  vp  where upper(vp.volunteerProjectName) like  concat('%',UPPER(?1),'%') and vp.status='OPEN'")
     List<VolunteerProjects> findVolunteerProjectsByVolunteerProjectNameContainingIgnoreCase(String volunteerName);
 
-
+    List<VolunteerProjects> findAllByStatusIsOrderByEndDateDesc(String status);
 }

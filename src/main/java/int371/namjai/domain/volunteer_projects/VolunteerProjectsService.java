@@ -51,13 +51,11 @@ public class VolunteerProjectsService {
         volunteerProjects.setTargetCategoriesSet(newVolunteerProjects.getTargetCategoriesSet());
         volunteerProjects.setQualify(newVolunteerProjects.getQualify());
         volunteerProjects.setDuty(newVolunteerProjects.getDuty());
-//        volunteerProjects.setPicturePath(newVolunteerProjects.getPicturePath());
-//        volunteerProjects.setUser(null);
         volunteerProjectsRepo.save(volunteerProjects);
     }
 
     public List<VolunteerProjectShort> getVolunteerProjectsList() {
-        List<VolunteerProjects> volunteerProjectsList = volunteerProjectsRepo.findAll();
+        List<VolunteerProjects> volunteerProjectsList = volunteerProjectsRepo.findAllByStatusIsOrderByEndDateDesc("OPEN");
         List<VolunteerProjectShort> volunteerProjectShorts = VolunteerProjectMapper.INSTANCE.toVolunteerProjectShortList(volunteerProjectsList);
         return volunteerProjectShorts;
     }
@@ -83,6 +81,10 @@ public class VolunteerProjectsService {
         List<VolunteerProjects> volunteerProjectsList = volunteerProjectsRepo.findVolunteerProjectsByVolunteerProjectNameContainingIgnoreCase(volunteerName);
         List<VolunteerProjectShort> volunteerProjectShorts = VolunteerProjectMapper.INSTANCE.toVolunteerProjectShortList(volunteerProjectsList);
         return volunteerProjectShorts;
+    }
+
+    public void saveToTableVolunteer(VolunteerProjects volunteerProjects) {
+        volunteerProjectsRepo.save(volunteerProjects);
     }
 
 

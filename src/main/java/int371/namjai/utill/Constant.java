@@ -15,7 +15,7 @@ public class Constant {
     public static final String dateTimeFormatter = "yyyy-MM-dd  HH:mm:ss z";
 
     public static final String FDN_DOC_PATH = "./fdn_documents/";
-    public static final String FDN_PATH = "./foundation/";
+    public static final String FDN_PATH = "./foundations/";
     public static final String WEB_RESOURCE_PATH = "./web_resource/";
 
     public static final String VOLUNTEER_PROJECT_ONSITE = "ONSITE";

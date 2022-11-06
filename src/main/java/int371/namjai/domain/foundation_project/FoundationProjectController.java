@@ -13,9 +13,7 @@ import int371.namjai.utill.ResourceUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -80,16 +78,6 @@ public class FoundationProjectController {
         return ResponseEntity.ok(foundationProjectService.getFoundationProjectDTOById(fdnProjectUUID));
     }
 
-    @PostMapping("/foundation/project/upload-pic")
-    public ResponseEntity<String> uploadFileWithBody(@RequestParam("file") MultipartFile file, @RequestParam("fdnName") String fdnName, @RequestParam("fdnProjectUUID") String fdnProjectUUID) throws IOException {
-        String path = resourceUtilService.saveFileToProjectFolder(file, fdnName);
-        String fileName = file.getOriginalFilename();
-//        FoundationDocuments fdnDoc = new FoundationDocuments(newFDNDocUUid, fileName, Constant.FDN_DOC_PATH, fileExtension, fdnUuid,new Timestamp(date.getTime()));
-        FoundationProject fdnProject = foundationProjectService.getFoundationById(fdnProjectUUID);
-        fdnProject.setPicturePath(path + "/" + fileName);
-        foundationProjectRepo.save(fdnProject);
-        return ResponseEntity.ok().body(path + "/" + fileName);
-    }
 
     @PostMapping(value = "/project/create")
     public ResponseEntity<Void> uploadFoundationProjectForm(@RequestBody APIFoundationProjectForm apiFoundationProjectForm) {

@@ -27,7 +27,7 @@ public class FoundationProjectService {
     }
 
     public List<FoundationProjectShortDTO> getAllFoundationProjectInShort() {
-        List<FoundationProject> foundationProjectList = foundationProjectRepo.findAll();
+        List<FoundationProject> foundationProjectList = foundationProjectRepo.findAllByOrderByCreateDateAsc();
         return FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectList);
     }
 
@@ -67,6 +67,10 @@ public class FoundationProjectService {
     public List<FoundationProjectShortDTO> getFoundationProjectByName(String fdnName) {
         List<FoundationProject> foundationProjects = foundationProjectRepo.findFoundationProjectsByProjectNameAndStatus(fdnName);
         return FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjects);
+    }
+
+    public void saveToTable(FoundationProject project) {
+        foundationProjectRepo.save(project);
     }
 
 }

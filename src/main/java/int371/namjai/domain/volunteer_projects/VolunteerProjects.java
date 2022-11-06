@@ -82,14 +82,11 @@ public class VolunteerProjects {
     @Column(name = "qualify")
     private String qualify;
 
-
     @ManyToOne
-    @JoinColumn(name = "fdn_uuid", nullable = true)
+    @JoinColumn(name = "fdn_uuid")
     private Foundation foundation = new Foundation();
 
-    //    @ManyToOne
-//    @JoinColumn(name = "user_uuid", nullable = true)
-//    private User user = new User();
+
     @Column(name = "people_registered")
     private Integer peopleRegistered;
 

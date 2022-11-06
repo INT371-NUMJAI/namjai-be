@@ -8,7 +8,7 @@ import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
 import int371.namjai.domain.user.User;
 import int371.namjai.domain.user.UserRepository;
 import int371.namjai.utill.Constant;
-import int371.namjai.utill.JsonConvertUtill;
+import int371.namjai.utill.ResourceUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +31,7 @@ public class BackOfficeController {
     private FoundationService foundationService;
 
     @Autowired
-    private JsonConvertUtill jsonConvertUtill;
+    private ResourceUtilService resourceUtilService;
 
     @Autowired
     private BackOfficeService backOfficeService;
@@ -57,6 +57,7 @@ public class BackOfficeController {
             foundation.setStatus(newStatus);
             foundationRepository.save(foundation);
             userRepository.save(newUser);
+            resourceUtilService.createDirForVerifiedFoundation(foundation.getNameEn());
             backOfficeService.sendmailForVerification(apiVerificationFDN.getFdnUUid(), foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
         }
         else {
