@@ -1,6 +1,7 @@
 package int371.namjai.utill;
 
 import int371.namjai.domain.auth_security.AuthenticationService;
+import int371.namjai.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ public class UtilController {
     @Autowired
     private ResourceUtilService resourceUtilService;
 
+    @Autowired
+    private UserRepository userRepo;
+
 
     @GetMapping("/img")
     public ResponseEntity<byte[]> getImage(@RequestParam("path") String imagePath) throws IOException {
@@ -40,6 +44,11 @@ public class UtilController {
         resourceUtilService.saveFileToFolder(file, type, userName, uuid);
         resourceUtilService.saveImagePathToTable(file.getOriginalFilename(), type, uuid, userName);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/user-name")
+    public ResponseEntity<String> getUserNameByEmail(@RequestParam("email") String email) {
+        return ResponseEntity.ok().body(userRepo.findUserNameByEmailIgnoreCase(email));
     }
 
 }

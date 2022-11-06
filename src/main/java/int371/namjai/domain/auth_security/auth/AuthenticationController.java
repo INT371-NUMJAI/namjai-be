@@ -196,6 +196,7 @@ public class AuthenticationController {
         return ResponseEntity.ok().build();
     }
 
+
     private String encryptedPassword(String password) {
         return passwordEncoder.encode(password);
     }
