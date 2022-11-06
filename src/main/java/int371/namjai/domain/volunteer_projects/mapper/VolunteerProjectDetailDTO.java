@@ -30,7 +30,7 @@ public class VolunteerProjectDetailDTO {
     private Set<TargetCategories> targetCategoriesSet;
     private String qualify;
     private String duty;
-    //    private String picturePath;
+    private String picturePath;
     private FoundationContactDTO foundationContactDTO;
 
 }

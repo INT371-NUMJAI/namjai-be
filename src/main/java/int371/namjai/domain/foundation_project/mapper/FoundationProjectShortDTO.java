@@ -16,4 +16,5 @@ public class FoundationProjectShortDTO {
     private long received;
     private String status;
     private double percentage;
+    private String picturePath;
 }

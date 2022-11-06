@@ -32,6 +32,7 @@ public interface VolunteerProjectMapper {
             @Mapping(target = "targetCategoriesSet", source = "volunteerProjects.targetCategoriesSet"),
             @Mapping(target = "qualify", source = "volunteerProjects.qualify"),
             @Mapping(target = "duty", source = "volunteerProjects.duty"),
+            @Mapping(target = "picturePath", source = "volunteerProjects.picturePath"),
             @Mapping(target = "foundationContactDTO", source = "contact"),
 
     })
@@ -48,6 +49,7 @@ public interface VolunteerProjectMapper {
             @Mapping(target = "activityEndDate", source = " volunteerProjects.activityEndDate"),
             @Mapping(target = "locationProvince", source = "volunteerProjects.locationProvince"),
             @Mapping(target = "status", source = "volunteerProjects.status"),
+            @Mapping(target = "picturePath", source = "volunteerProjects.picturePath"),
     })
     VolunteerProjectShort toVolunteerProjectShort(VolunteerProjects volunteerProjects);
 

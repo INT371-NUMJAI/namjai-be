@@ -21,6 +21,7 @@ public interface FoundationProjectMapper {
             @Mapping(target = "goal", expression = "java((long)foundationProject.getGoal())"),
             @Mapping(target = " received", expression = "java((long)foundationProject.getReceived())"),
             @Mapping(target = "status", source = "status"),
+            @Mapping(target = "picturePath", source = "picturePath"),
             @Mapping(target = "percentage", expression = "java((double)((foundationProject.getReceived()/foundationProject.getGoal()))*100)"),
 
     })
