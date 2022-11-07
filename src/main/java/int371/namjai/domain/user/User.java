@@ -36,12 +36,14 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-
     @Column(name = "create_date", nullable = false)
     private LocalDate createDate;
 
     @Column(name = "status")
     private String status;
+
+    @Column(name = "profile_path")
+    private String profilePath;
 
     @ManyToOne
     @JoinColumn(name = "role_id")

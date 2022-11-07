@@ -1,10 +1,13 @@
 package int371.namjai.utill;
 
 import int371.namjai.domain.foundation.Foundation;
+import int371.namjai.domain.foundation.FoundationService;
 import int371.namjai.domain.foundation_document.FoundationDocuments;
 import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
 import int371.namjai.domain.foundation_project.FoundationProject;
 import int371.namjai.domain.foundation_project.FoundationProjectService;
+import int371.namjai.domain.user.User;
+import int371.namjai.domain.user.UserService;
 import int371.namjai.domain.volunteer_projects.VolunteerProjects;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,12 @@ public class ResourceUtilService {
 
     @Autowired
     private VolunteerProjectsService volunteerProjectsService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private FoundationService foundationService;
 
     public void saveFDNDocumentFile(MultipartFile docFile, Foundation foundation) throws IOException {
         FoundationDocuments foundationDocuments = new FoundationDocuments();
@@ -79,10 +88,8 @@ public class ResourceUtilService {
                 FileOutputStream fos = new FileOutputStream(myFile); //
                 fos.write(file.getBytes());
                 fos.close();
-//                return fullPath;
             }
         }
-//        return fullPath;
     }
 
     public void savePictureProfileToFoundation(MultipartFile file, String fdnUUID) throws IOException {
@@ -111,7 +118,17 @@ public class ResourceUtilService {
                 volunteerProjects.setPicturePath(path);
                 volunteerProjectsService.saveToTableVolunteer(volunteerProjects);
                 break;
-
+            case "profile":
+                User user = userService.getUserByUserName(userName);
+                if (user.getRole().getRoleUUid().equalsIgnoreCase("3")) {
+                    Foundation foundation = foundationService.getFoundationByEmail(user.getEmail());
+                    foundation.setProfilePath(path);
+                    foundationService.saveToTableFoundation(foundation);
+                } else if (user.getRole().getRoleUUid().equalsIgnoreCase("2")) {
+                    user.setProfilePath(path);
+                    userService.saveToTableUser(user);
+                }
+                break;
             // articles
         }
     }
@@ -155,9 +172,12 @@ public class ResourceUtilService {
         MediaType mediaType = null;
         switch (contentType) {
             case "jpg":
+            case "JPG":
             case "jpeg":
+            case "JPEG":
                 mediaType = MediaType.IMAGE_JPEG;
                 break;
+            case "PNG":
             case "png":
                 mediaType = MediaType.IMAGE_PNG;
                 break;

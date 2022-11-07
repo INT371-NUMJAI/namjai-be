@@ -1,6 +1,7 @@
 package int371.namjai.utill;
 
 import int371.namjai.domain.auth_security.AuthenticationService;
+import int371.namjai.domain.user.User;
 import int371.namjai.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -48,7 +49,9 @@ public class UtilController {
 
     @GetMapping(value = "/user-name")
     public ResponseEntity<String> getUserNameByEmail(@RequestParam("email") String email) {
-        return ResponseEntity.ok().body(userRepo.findUserNameByEmailIgnoreCase(email));
+        User user = userRepo.findByEmailIgnoreCaseAndStatusActive(email);
+        String userName = user.getRole().getRoleUUid().equalsIgnoreCase("2") ? user.getUserName() : user.getLastName();
+        return ResponseEntity.ok().body(userName);
     }
 
 }

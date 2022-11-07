@@ -5,13 +5,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 
     @Query(value = "SELECT u FROM User u WHERE UPPER(u.email) LIKE UPPER(?1) " +
             "AND u.status LIKE 'ACTIVE' ")
     User findByEmailIgnoreCaseAndStatusActive(String email);
-
 
     @Query(value = "SELECT u FROM User u WHERE UPPER(u.email) LIKE UPPER(?1) " +
             "AND u.status LIKE 'DISABLE' ")
@@ -31,5 +32,10 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Query(value = "SELECT u.userName FROM User u WHERE UPPER(u.email) LIKE UPPER(?1) ")
     String findUserNameByEmailIgnoreCase(String email);
+
+    User findByUserNameIgnoreCase(String userName);
+
+    List<User> findUsersByRole_RoleUUidAndStatus(String roleId, String status);
+
 
 }

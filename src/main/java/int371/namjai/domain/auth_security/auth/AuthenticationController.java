@@ -141,18 +141,18 @@ public class AuthenticationController {
         newFDN.setEstablishDate(apifdnRegister.getEstablishDate());
         newFDN.setStatus(Constant.FDN_STATUS_PENDING);
         newFDN.setNameEn(apifdnRegister.getFdnNameEn());
-        newFDN.setProfilePath(null);
 
         String fdnToUserUUid = UUID.randomUUID().toString();
         fdnUser.setUserUUid(fdnToUserUUid);
         fdnUser.setEmail(apifdnRegister.getEmail());
         fdnUser.setFirstName("Foundation");
         fdnUser.setLastName(newFDN.getFdnName());
-        fdnUser.setUserName(apifdnRegister.getFdnName());
+        fdnUser.setUserName(apifdnRegister.getFdnUsername());
         fdnUser.setPassword(encryptedPassword(apifdnRegister.getPassword()));
         fdnUser.setCreateDate(LocalDate.now());
         fdnUser.setRole(role);
         fdnUser.setPhoneNumber(apifdnRegister.getContactNo());
+        fdnUser.setProfilePath(null);
         fdnUser.setStatus(Constant.USER_STATUS_DISABLE);
 
         fdnRepo.save(newFDN);
