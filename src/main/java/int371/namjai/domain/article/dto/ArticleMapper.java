@@ -18,7 +18,7 @@ public interface ArticleMapper {
             @Mapping(target = "articleBody", source = "article.createDate", dateFormat = "dd MMM yyyy"),
             @Mapping(target = "articlePicture", source = "article.status"),
             @Mapping(target = "createDate", source = "article.createDate"),
-            @Mapping(target = "author", source = "article.email")
+            @Mapping(target = "author", source = "article.createByEmail")
     })
     ArticleShortDTO toArticleShortDto(Article article);
 
