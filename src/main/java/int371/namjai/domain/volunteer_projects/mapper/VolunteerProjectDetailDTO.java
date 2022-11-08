@@ -13,6 +13,7 @@ import java.util.Set;
 public class VolunteerProjectDetailDTO {
     private String volunteerProjectsUUID;
     private String volunteerProjectName;
+    private String status;
     private Integer peopleNeeded;
     private Integer peopleRegistered;
     private String description;
