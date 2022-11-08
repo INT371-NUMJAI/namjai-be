@@ -1,10 +1,13 @@
 package int371.namjai.domain.article;
 
 import int371.namjai.domain.article.dto.ArticleForm;
+import int371.namjai.domain.article.dto.ArticleMapper;
+import int371.namjai.domain.article.dto.ArticleShortDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class ArticleService {
@@ -25,5 +28,8 @@ public class ArticleService {
         articleRepo.save(article);
     }
 
+    public List<ArticleShortDTO> getArticleShortDTO() {
+        return ArticleMapper.INSTANCE.toArticleShortDTOList(articleRepo.findAll());
+    }
 
 }
