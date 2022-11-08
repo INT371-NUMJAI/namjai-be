@@ -32,6 +32,10 @@ public class ArticleService {
         return ArticleMapper.INSTANCE.toArticleShortDTOList(articleRepo.findAllByOrderByCreateDateDesc());
     }
 
+    public ArticleShortDTO getArticleShortDTOByUUID(String articleUUID) {
+        return ArticleMapper.INSTANCE.toArticleShortDto(getArticleByID(articleUUID));
+    }
+
     public Article getArticleByID(String articleUUID) {
         return articleRepo.findById(articleUUID).orElseThrow(ArticleNotfoundException::new);
     }

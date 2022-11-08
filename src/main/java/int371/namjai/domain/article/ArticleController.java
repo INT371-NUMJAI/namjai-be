@@ -26,4 +26,9 @@ public class ArticleController {
         return ResponseEntity.ok().body(articleService.getArticleShortDTO());
     }
 
+    @GetMapping(value = "/article/{id}")
+    public ResponseEntity<ArticleShortDTO> getArticleShortByUUID(@PathVariable("id") String articleUUIID) {
+        return ResponseEntity.ok().body(articleService.getArticleShortDTOByUUID(articleUUIID));
+    }
+
 }
