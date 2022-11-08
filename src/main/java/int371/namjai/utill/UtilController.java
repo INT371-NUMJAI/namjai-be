@@ -1,6 +1,9 @@
 package int371.namjai.utill;
 
 import int371.namjai.domain.auth_security.AuthenticationService;
+import int371.namjai.domain.foundation.Foundation;
+import int371.namjai.domain.foundation.FoundationService;
+import int371.namjai.domain.user.ProfileNameDTO;
 import int371.namjai.domain.user.User;
 import int371.namjai.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +29,9 @@ public class UtilController {
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    private FoundationService foundationService;
+
 
     @GetMapping("/img")
     public ResponseEntity<byte[]> getImage(@RequestParam("path") String imagePath) throws IOException {
@@ -48,10 +54,13 @@ public class UtilController {
     }
 
     @GetMapping(value = "/user-name")
-    public ResponseEntity<String> getUserNameByEmail(@RequestParam("email") String email) {
+    public ResponseEntity<ProfileNameDTO> getUserNameByEmail(@RequestParam("email") String email) {
         User user = userRepo.findByEmailIgnoreCaseAndStatusActive(email);
+        Foundation foundation = foundationService.getFoundationByEmail(email);
         String userName = user.getRole().getRoleUUid().equalsIgnoreCase("2") ? user.getUserName() : user.getLastName();
-        return ResponseEntity.ok().body(userName);
+        String profilePath = user.getRole().getRoleUUid().equalsIgnoreCase("2") ? user.getProfilePath() : foundation.getProfilePath();
+        ProfileNameDTO profileNameDTO = new ProfileNameDTO(userName, profilePath);
+        return ResponseEntity.ok().body(profileNameDTO);
     }
 
 }
