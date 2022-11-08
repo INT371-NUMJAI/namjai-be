@@ -15,9 +15,10 @@ public interface ArticleMapper {
     @Mappings({
             @Mapping(target = "articleUUID", source = " article.articleUUID"),
             @Mapping(target = "articleHeader", source = "article.articleHeader"),
-            @Mapping(target = "articleBody", source = "article.createDate", dateFormat = "dd MMM yyyy"),
-            @Mapping(target = "articlePicture", source = "article.status"),
-            @Mapping(target = "createDate", source = "article.createDate"),
+            @Mapping(target = "articleBody", source = "article.articleBody"),
+            @Mapping(target = "status", source = "article.status"),
+            @Mapping(target = "articlePicture", source = "article.picturePath"),
+            @Mapping(target = "createDate", source = "article.createDate", dateFormat = "dd MMM yyyy"),
             @Mapping(target = "author", source = "article.createByEmail")
     })
     ArticleShortDTO toArticleShortDto(Article article);

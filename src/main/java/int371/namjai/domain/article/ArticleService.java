@@ -29,7 +29,7 @@ public class ArticleService {
     }
 
     public List<ArticleShortDTO> getArticleShortDTO() {
-        return ArticleMapper.INSTANCE.toArticleShortDTOList(articleRepo.findAll());
+        return ArticleMapper.INSTANCE.toArticleShortDTOList(articleRepo.findAllByOrderByCreateDateDesc());
     }
 
     public Article getArticleByID(String articleUUID) {
