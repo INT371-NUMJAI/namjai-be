@@ -1,5 +1,6 @@
 package int371.namjai.utill.exception;
 
+import int371.namjai.domain.article.ArticleNotfoundException;
 import int371.namjai.domain.bank_account.BankAccountNotfoundException;
 import int371.namjai.domain.foundation.FoundationNotFoundException;
 import int371.namjai.domain.foundation_project.exceptions.FoundationProjectsNotFoundException;
@@ -43,6 +44,16 @@ public class CustomizedExceptionHandling extends ResponseEntityExceptionHandler 
 
     @ExceptionHandler(ReportIssueNotFoundException.class)
     public ResponseEntity<Object> handleExceptions(ReportIssueNotFoundException exception, WebRequest webRequest) {
+        ExceptionResponse response = new ExceptionResponse();
+        response.setHttpStatus(HttpStatus.NOT_FOUND);
+        response.setDateTime(LocalDateTime.now());
+        response.setMessage("This report  may not exist");
+        ResponseEntity<Object> entity = new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return entity;
+    }
+
+    @ExceptionHandler(ArticleNotfoundException.class)
+    public ResponseEntity<Object> handleExceptions(ArticleNotfoundException exception, WebRequest webRequest) {
         ExceptionResponse response = new ExceptionResponse();
         response.setHttpStatus(HttpStatus.NOT_FOUND);
         response.setDateTime(LocalDateTime.now());

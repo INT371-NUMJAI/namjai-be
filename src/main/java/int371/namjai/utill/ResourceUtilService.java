@@ -1,5 +1,7 @@
 package int371.namjai.utill;
 
+import int371.namjai.domain.article.Article;
+import int371.namjai.domain.article.ArticleService;
 import int371.namjai.domain.foundation.Foundation;
 import int371.namjai.domain.foundation.FoundationService;
 import int371.namjai.domain.foundation_document.FoundationDocuments;
@@ -41,6 +43,9 @@ public class ResourceUtilService {
 
     @Autowired
     private FoundationService foundationService;
+
+    @Autowired
+    private ArticleService articleService;
 
     public void saveFDNDocumentFile(MultipartFile docFile, Foundation foundation) throws IOException {
         FoundationDocuments foundationDocuments = new FoundationDocuments();
@@ -129,7 +134,11 @@ public class ResourceUtilService {
                     userService.saveToTableUser(user);
                 }
                 break;
-            // articles
+            case "article":
+                Article article = articleService.getArticleByID(uuid);
+                article.setPicturePath(path);
+                articleService.saveToTableArticle(article);
+                break;
         }
     }
 

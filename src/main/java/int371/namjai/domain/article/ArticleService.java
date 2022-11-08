@@ -32,4 +32,12 @@ public class ArticleService {
         return ArticleMapper.INSTANCE.toArticleShortDTOList(articleRepo.findAll());
     }
 
+    public Article getArticleByID(String articleUUID) {
+        return articleRepo.findById(articleUUID).orElseThrow(ArticleNotfoundException::new);
+    }
+
+    public void saveToTableArticle(Article article) {
+        articleRepo.save(article);
+    }
+
 }
