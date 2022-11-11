@@ -36,6 +36,7 @@ public class FoundationProjectService {
                 .orElseThrow(FoundationProjectsNotFoundException::new);
     }
 
+
     public FoundationProjectDTO getFoundationProjectDTOById(String fdnProjectUUid) {
         FoundationProject foundationProject = getFoundationById(fdnProjectUUid);
         Foundation foundation = foundationService.getFoundationById(foundationProject.getFoundation().getFdnUUid());

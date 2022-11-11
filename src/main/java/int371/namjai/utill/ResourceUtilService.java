@@ -8,6 +8,8 @@ import int371.namjai.domain.foundation_document.FoundationDocuments;
 import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
 import int371.namjai.domain.foundation_project.FoundationProject;
 import int371.namjai.domain.foundation_project.FoundationProjectService;
+import int371.namjai.domain.foundation_project_progress.FoundationProjectProgress;
+import int371.namjai.domain.foundation_project_progress.FoundationProjectProgressService;
 import int371.namjai.domain.user.User;
 import int371.namjai.domain.user.UserService;
 import int371.namjai.domain.volunteer_projects.VolunteerProjects;
@@ -43,6 +45,9 @@ public class ResourceUtilService {
 
     @Autowired
     private FoundationService foundationService;
+
+    @Autowired
+    private FoundationProjectProgressService foundationProjectProgressService;
 
     @Autowired
     private ArticleService articleService;
@@ -117,6 +122,11 @@ public class ResourceUtilService {
                 FoundationProject project = foundationProjectService.getFoundationById(uuid);
                 project.setPicturePath(path);
                 foundationProjectService.saveToTable(project);
+                break;
+            case "progress":
+                FoundationProjectProgress foundationProjectProgress = foundationProjectProgressService.getFoundationProjectProgressByID(uuid); // fdnprojectuuid
+                foundationProjectProgress.setPicturePath(userName + "/project" + "/" + uuid + "/" + type + "/" + fileName);
+                foundationProjectProgressService.saveToTableFoundationProjectProgress(foundationProjectProgress);
                 break;
             case "volunteer":
                 VolunteerProjects volunteerProjects = volunteerProjectsService.getVolunteerProjectByUUID(uuid);
