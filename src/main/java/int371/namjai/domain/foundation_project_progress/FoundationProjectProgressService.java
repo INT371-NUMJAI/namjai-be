@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Service
 public class FoundationProjectProgressService {
@@ -30,12 +31,12 @@ public class FoundationProjectProgressService {
         foundationProjectProgressRepo.save(foundationProjectProgress);
     }
 
-    public FoundationProjectProgressDisplayDTO getFoundationProjectProgressDisplayDTOByID(String fdnProjectUUID) {
-        return FoundationProjectProgressMapper.INSTANCE.toFoundationProjectProgressDisplayDto(foundationProjectProgressRepo.findFoundationProjectProgressByFoundationProject_FdnProjectUUid(fdnProjectUUID));
+    public List<FoundationProjectProgressDisplayDTO> getFoundationProjectProgressDisplayDTListOByID(String fdnProjectUUID) {
+        return FoundationProjectProgressMapper.INSTANCE.toFoundationProjectProgressDisplayDTOList(foundationProjectProgressRepo.findFoundationProjectProgressesByFoundationProject_FdnProjectUUid(fdnProjectUUID));
     }
 
-    public FoundationProjectProgress getFoundationProjectProgressByID(String fdnProjectUUID) {
-        return foundationProjectProgressRepo.findFoundationProjectProgressByFoundationProject_FdnProjectUUid(fdnProjectUUID);
+    public FoundationProjectProgress getFoundationProjectProgressByIDS(String fdnProjectUUID, String fdnProjectProgressUUID) {
+        return foundationProjectProgressRepo.findFoundationProjectProgressByFoundationProject_FdnProjectUUidAndFdnProjectProgressUUID(fdnProjectUUID, fdnProjectProgressUUID);
     }
 
     public void saveToTableFoundationProjectProgress(FoundationProjectProgress foundationProjectProgress) {

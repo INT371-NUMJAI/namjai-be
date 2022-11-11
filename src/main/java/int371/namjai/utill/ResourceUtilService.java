@@ -86,20 +86,37 @@ public class ResourceUtilService {
 
     //    foundations/kaitomnampla/project/12Ny/รูป.jpg
     public void saveFileToFolder(MultipartFile file, String type, String userName, String uuid) throws IOException {
-//        userName + "/project" + "/" + uuid + "/" + type + "/" + fileName
         String fullPath = "";
         if (!ObjectUtils.isEmpty(file)) {
-            Path path = Paths.get(Constant.FDN_PATH + "/" + userName + "/" + type + "/" + "/" + uuid);
-            if (!Files.exists(path)) {
-                String fileName = file.getOriginalFilename();
-                boolean checkType = "progress".equalsIgnoreCase(type);
-                fullPath = checkType ? Constant.FDN_PATH + userName + "/project/" + uuid + "/" + type : Constant.FDN_PATH + "/" + userName + "/" + type + "/" + "/" + uuid;
-                File createDir = new File(fullPath);
-                createDir.mkdirs();
-                File myFile = new File(fullPath, fileName);
-                FileOutputStream fos = new FileOutputStream(myFile); //
-                fos.write(file.getBytes());
-                fos.close();
+            if (uuid.contains(":")) {
+                String[] id_spilt = uuid.split(":");
+                String fdnProjectUUID = id_spilt[0];
+                String fdnProjectProgressUUID = id_spilt[1];
+                Path path = Paths.get(Constant.FDN_PATH + "/" + userName + "/" + type + "/" + "/" + fdnProjectUUID);
+                if (!Files.exists(path)) {
+                    String fileName = file.getOriginalFilename();
+                    boolean checkType = "progress".equalsIgnoreCase(type);
+                    fullPath = checkType ? Constant.FDN_PATH + userName + "/project/" + fdnProjectUUID + "/" + type : Constant.FDN_PATH + "/" + userName + "/" + type + "/" + "/" + fdnProjectUUID;
+                    File createDir = new File(fullPath);
+                    createDir.mkdirs();
+                    File myFile = new File(fullPath, fileName);
+                    FileOutputStream fos = new FileOutputStream(myFile); //
+                    fos.write(file.getBytes());
+                    fos.close();
+                }
+            } else {
+                Path path = Paths.get(Constant.FDN_PATH + "/" + userName + "/" + type + "/" + "/" + uuid);
+                if (!Files.exists(path)) {
+                    String fileName = file.getOriginalFilename();
+                    boolean checkType = "progress".equalsIgnoreCase(type);
+                    fullPath = checkType ? Constant.FDN_PATH + userName + "/project/" + uuid + "/" + type : Constant.FDN_PATH + "/" + userName + "/" + type + "/" + "/" + uuid;
+                    File createDir = new File(fullPath);
+                    createDir.mkdirs();
+                    File myFile = new File(fullPath, fileName);
+                    FileOutputStream fos = new FileOutputStream(myFile); //
+                    fos.write(file.getBytes());
+                    fos.close();
+                }
             }
         }
     }
@@ -118,17 +135,20 @@ public class ResourceUtilService {
 
 
     public void saveImagePathToTable(String fileName, String type, String uuid, String userName) {
+        if (uuid.contains(":")) {
+            String[] id_spilt = uuid.split(":");
+            String fdnProjectUUID = id_spilt[0];
+            String fdnProjectProgressUUID = id_spilt[1];
+            FoundationProjectProgress foundationProjectProgress = foundationProjectProgressService.getFoundationProjectProgressByIDS(fdnProjectUUID, fdnProjectProgressUUID); // fdnprojectuuid
+            foundationProjectProgress.setPicturePath(userName + "/project" + "/" + fdnProjectUUID + "/" + type + "/" + fileName);
+            foundationProjectProgressService.saveToTableFoundationProjectProgress(foundationProjectProgress);
+        }
         String path = userName + "/" + type + "/" + uuid + "/" + fileName;
         switch (type) {
             case "project":
                 FoundationProject project = foundationProjectService.getFoundationById(uuid);
                 project.setPicturePath(path);
                 foundationProjectService.saveToTable(project);
-                break;
-            case "progress":
-                FoundationProjectProgress foundationProjectProgress = foundationProjectProgressService.getFoundationProjectProgressByID(uuid); // fdnprojectuuid
-                foundationProjectProgress.setPicturePath(userName + "/project" + "/" + uuid + "/" + type + "/" + fileName);
-                foundationProjectProgressService.saveToTableFoundationProjectProgress(foundationProjectProgress);
                 break;
             case "volunteer":
                 VolunteerProjects volunteerProjects = volunteerProjectsService.getVolunteerProjectByUUID(uuid);

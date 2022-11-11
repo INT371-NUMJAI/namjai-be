@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/view")
 @CrossOrigin("*")
@@ -21,7 +23,7 @@ public class FoundationProjectProgressController {
     }
 
     @GetMapping(value = "/project/{id}/progress")
-    public ResponseEntity<FoundationProjectProgressDisplayDTO> getProgressOfFoundationProject(@PathVariable("id") String fdnProjectUUID) {
-        return ResponseEntity.ok().body(foundationProjectProgressService.getFoundationProjectProgressDisplayDTOByID(fdnProjectUUID));
+    public ResponseEntity<List<FoundationProjectProgressDisplayDTO>> getProgressOfFoundationProject(@PathVariable("id") String fdnProjectUUID) {
+        return ResponseEntity.ok().body(foundationProjectProgressService.getFoundationProjectProgressDisplayDTListOByID(fdnProjectUUID));
     }
 }
