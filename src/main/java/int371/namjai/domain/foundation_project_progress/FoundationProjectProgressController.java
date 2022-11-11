@@ -15,7 +15,7 @@ public class FoundationProjectProgressController {
 
 
     @PostMapping(value = "/project/progress")
-    public ResponseEntity<Void> createProgressUpdateForFoundationProject(FoundationProjectProgressFormDTO fdnProjectProgress) {
+    public ResponseEntity<Void> createProgressUpdateForFoundationProject(@RequestBody FoundationProjectProgressFormDTO fdnProjectProgress) {
         foundationProjectProgressService.createUpdateProgress(fdnProjectProgress);
         return ResponseEntity.ok().build();
     }
