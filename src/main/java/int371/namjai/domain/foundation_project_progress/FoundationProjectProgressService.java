@@ -30,8 +30,12 @@ public class FoundationProjectProgressService {
         foundationProjectProgressRepo.save(foundationProjectProgress);
     }
 
-    public FoundationProjectProgressDisplayDTO getFoundationProjectProgressByID(String fdnProjectUUID) {
+    public FoundationProjectProgressDisplayDTO getFoundationProjectProgressDisplayDTOByID(String fdnProjectUUID) {
         return FoundationProjectProgressMapper.INSTANCE.toFoundationProjectProgressDisplayDto(foundationProjectProgressRepo.findFoundationProjectProgressByFoundationProject_FdnProjectUUid(fdnProjectUUID));
+    }
+
+    public FoundationProjectProgress getFoundationProjectProgressByID(String fdnProjectUUID) {
+        return foundationProjectProgressRepo.findFoundationProjectProgressByFoundationProject_FdnProjectUUid(fdnProjectUUID);
     }
 
     public void saveToTableFoundationProjectProgress(FoundationProjectProgress foundationProjectProgress) {

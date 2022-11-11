@@ -22,6 +22,6 @@ public class FoundationProjectProgressController {
 
     @GetMapping(value = "/project/{id}/progress")
     public ResponseEntity<FoundationProjectProgressDisplayDTO> getProgressOfFoundationProject(@PathVariable("id") String fdnProjectUUID) {
-        return ResponseEntity.ok().body(foundationProjectProgressService.getFoundationProjectProgressByID(fdnProjectUUID));
+        return ResponseEntity.ok().body(foundationProjectProgressService.getFoundationProjectProgressDisplayDTOByID(fdnProjectUUID));
     }
 }
