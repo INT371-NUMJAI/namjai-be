@@ -32,6 +32,10 @@ public class ArticleService {
         return ArticleMapper.INSTANCE.toArticleShortDTOList(articleRepo.findAllByOrderByCreateDateDesc());
     }
 
+    public List<ArticleShortDTO> getArticlesByEmail(String email) {
+        return ArticleMapper.INSTANCE.toArticleShortDTOList(articleRepo.findArticlesByCreateByEmailIgnoreCaseOrderByCreateDateDesc(email));
+    }
+
     public ArticleShortDTO getArticleShortDTOByUUID(String articleUUID) {
         return ArticleMapper.INSTANCE.toArticleShortDto(getArticleByID(articleUUID));
     }

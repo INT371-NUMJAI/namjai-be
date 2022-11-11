@@ -8,4 +8,6 @@ import java.util.List;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, String> {
     List<Article> findAllByOrderByCreateDateDesc();
+
+    List<Article> findArticlesByCreateByEmailIgnoreCaseOrderByCreateDateDesc(String email);
 }
