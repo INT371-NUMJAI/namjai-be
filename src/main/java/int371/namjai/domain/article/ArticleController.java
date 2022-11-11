@@ -31,7 +31,7 @@ public class ArticleController {
         return ResponseEntity.ok().body(articleService.getArticleShortDTOByUUID(articleUUIID));
     }
 
-    @GetMapping(value = "/articles/")
+    @GetMapping(value = "/articles/{email}")
     public ResponseEntity<List<ArticleShortDTO>> getArticleShortByEmail(@PathVariable("email") String email) {
         return ResponseEntity.ok().body(articleService.getArticlesByEmail(email));
     }
