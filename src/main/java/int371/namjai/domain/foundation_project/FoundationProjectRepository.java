@@ -21,6 +21,9 @@ public interface FoundationProjectRepository extends JpaRepository<FoundationPro
     @Query("select fp from FoundationProject  fp  where  UPPER(fp.foundation.email) = UPPER(?1) order by fp.createDate asc ")
     List<FoundationProject> findByFDNEmailIgnoreCase(String fdnEmail);
 
+    @Query("select fp from FoundationProject  fp  where  UPPER(fp.foundation.email) = UPPER(?1) and fp.status='OPEN' order by fp.createDate asc ")
+    List<FoundationProject> findByFDNEmailIgnoreCaseAndStatusOpen(String fdnEmail);
+
     @Query("select fp from FoundationProject  fp  where  UPPER(fp.foundation.email) = UPPER(?1) and fp.endDate <= current_date and fp.status != 'CLOSED' order by fp.createDate asc")
     List<FoundationProject> findByFDNEmailIgnoreCaseAndStatusNotClosed(String fdnEmail);
 

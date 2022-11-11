@@ -43,5 +43,9 @@ public class VolunteerProjectsController {
         return ResponseEntity.ok().body(volunteerProjectsService.getVolunteerProjectsListByFDNEmail(fdnEmail));
     }
 
+    @GetMapping("/volunteer-projects/user-fdn")
+    public ResponseEntity<List<VolunteerProjectShort>> getVolunteerProjectListByFDNEmailAndStatusOpen(@RequestParam("email") String fdnEmail) {
+        return ResponseEntity.ok().body(volunteerProjectsService.getVolunteerProjectsListByFDNEmailAndStatusOpen(fdnEmail));
+    }
 
 }

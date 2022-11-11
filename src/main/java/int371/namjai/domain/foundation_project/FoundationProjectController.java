@@ -115,6 +115,12 @@ public class FoundationProjectController {
         return ResponseEntity.ok().body(foundationProjectShortDTOS);
     }
 
+    @GetMapping(value = "/projects/user-fdn")
+    public ResponseEntity<List<FoundationProjectShortDTO>> getFdnProjectByFdnUUIDStatusOpen(@RequestParam("email") String email) {
+        List<FoundationProject> foundationProjectList = foundationProjectRepo.findByFDNEmailIgnoreCaseAndStatusOpen(email);
+        List<FoundationProjectShortDTO> foundationProjectShortDTOS = FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectList);
+        return ResponseEntity.ok().body(foundationProjectShortDTOS);
+    }
 
     @GetMapping(value = "/project/user-open")
     public ResponseEntity<List<FoundationProjectShortDTO>> getFdnProjectByFdnUUIDAndStatusNotClosed(@RequestParam("email") String email) {
