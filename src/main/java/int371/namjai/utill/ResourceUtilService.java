@@ -86,12 +86,14 @@ public class ResourceUtilService {
 
     //    foundations/kaitomnampla/project/12Ny/รูป.jpg
     public void saveFileToFolder(MultipartFile file, String type, String userName, String uuid) throws IOException {
+//        userName + "/project" + "/" + uuid + "/" + type + "/" + fileName
         String fullPath = "";
         if (!ObjectUtils.isEmpty(file)) {
             Path path = Paths.get(Constant.FDN_PATH + "/" + userName + "/" + type + "/" + "/" + uuid);
             if (!Files.exists(path)) {
                 String fileName = file.getOriginalFilename();
-                fullPath = Constant.FDN_PATH + "/" + userName + "/" + type + "/" + "/" + uuid;
+                boolean checkType = "progress".equalsIgnoreCase(type);
+                fullPath = checkType ? Constant.FDN_PATH + userName + "/project/" + uuid + "/" + type : Constant.FDN_PATH + "/" + userName + "/" + type + "/" + "/" + uuid;
                 File createDir = new File(fullPath);
                 createDir.mkdirs();
                 File myFile = new File(fullPath, fileName);
