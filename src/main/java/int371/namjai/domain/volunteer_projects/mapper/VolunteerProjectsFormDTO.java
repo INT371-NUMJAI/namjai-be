@@ -20,7 +20,6 @@ public class VolunteerProjectsFormDTO {
     private Date endDate;
     private Date activityStartDate;
     private Date activityEndDate;
-    //    private Timestamp createDate;
     private String locationDetail;
     private String locationDistrict;
     private String locationSubDistrict;
@@ -29,8 +28,7 @@ public class VolunteerProjectsFormDTO {
     private Set<TargetCategories> targetCategoriesSet;
     private String duty;
     private String qualify;
-    //    private String picturePath;
+    private String status;
     private String foundationUUID;
-    private String userUUID;
 
 }

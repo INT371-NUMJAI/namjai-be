@@ -51,6 +51,7 @@ public class VolunteerProjectsService {
         volunteerProjects.setTargetCategoriesSet(newVolunteerProjects.getTargetCategoriesSet());
         volunteerProjects.setQualify(newVolunteerProjects.getQualify());
         volunteerProjects.setDuty(newVolunteerProjects.getDuty());
+        volunteerProjects.setStatus(newVolunteerProjects.getStatus());
         volunteerProjectsRepo.save(volunteerProjects);
     }
 
