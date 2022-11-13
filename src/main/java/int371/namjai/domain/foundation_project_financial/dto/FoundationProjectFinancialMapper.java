@@ -15,9 +15,9 @@ public interface FoundationProjectFinancialMapper {
     @Mappings({
             @Mapping(target = "fdnProjectUUID", source = "foundationProject.fdnProjectUUid"),
             @Mapping(target = "financialPlanUUID", source = "fdnProjectFinancialUUID"),
-            @Mapping(target = "detail", source = "foundationProjectProgress.detail"),
-            @Mapping(target = "quantity", source = "foundationProjectProgress.quantity"),
-            @Mapping(target = "amount", source = "foundationProjectProgress.amount"),
+            @Mapping(target = "detail", source = "detail"),
+            @Mapping(target = "quantity", source = "quantity"),
+            @Mapping(target = "amount", source = "amount"),
     })
     FoundationProjectFinancialFormDTO toFoundationProjectFinancialFormDto(FoundationProjectFinancial foundationProjectFinancial);
 
