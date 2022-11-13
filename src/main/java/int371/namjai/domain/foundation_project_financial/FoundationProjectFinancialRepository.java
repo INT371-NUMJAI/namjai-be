@@ -8,5 +8,5 @@ import java.util.List;
 @Repository
 public interface FoundationProjectFinancialRepository extends JpaRepository<FoundationProjectFinancial, String> {
 
-    List<FoundationProjectFinancial> findFoundationProjectFinancialsByFoundationProject_FdnProjectUUidOrderByCreateDateDesc(String fdnProjectUUID);
+    List<FoundationProjectFinancial> findFoundationProjectFinancialsByFoundationProject_FdnProjectUUidOrderByCreateDateAsc(String fdnProjectUUID);
 }

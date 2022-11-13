@@ -35,7 +35,7 @@ public class FoundationProjectFinancialService {
     }
 
     public List<FoundationProjectFinancialFormDTO> getFoundationProjectFinancialListByProjectUUID(String fdnProjectUUID) {
-        return FoundationProjectFinancialMapper.INSTANCE.toFoundationProjectFinancialFormDtoList(foundationProjectFinancialRepo.findFoundationProjectFinancialsByFoundationProject_FdnProjectUUidOrderByCreateDateDesc(fdnProjectUUID));
+        return FoundationProjectFinancialMapper.INSTANCE.toFoundationProjectFinancialFormDtoList(foundationProjectFinancialRepo.findFoundationProjectFinancialsByFoundationProject_FdnProjectUUidOrderByCreateDateAsc(fdnProjectUUID));
     }
 
 }
