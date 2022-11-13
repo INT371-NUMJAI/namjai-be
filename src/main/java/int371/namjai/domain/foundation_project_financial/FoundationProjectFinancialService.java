@@ -3,6 +3,7 @@ package int371.namjai.domain.foundation_project_financial;
 import int371.namjai.domain.foundation_project.FoundationProjectService;
 import int371.namjai.domain.foundation_project_financial.dto.FoundationProjectFinancialFormDTO;
 import int371.namjai.domain.foundation_project_financial.dto.FoundationProjectFinancialMapper;
+import int371.namjai.domain.volunteer_projects.exceoptions.VolunteerProjectException;
 import int371.namjai.utill.UtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,15 +24,19 @@ public class FoundationProjectFinancialService {
     private FoundationProjectService foundationProjectService;
 
     public void createFinancialPlan(FoundationProjectFinancialFormDTO foundationProjectFinancialFormDTO) {
-        FoundationProjectFinancial foundationProjectFinancial = new FoundationProjectFinancial();
-        foundationProjectFinancial.setFdnProjectFinancialUUID(foundationProjectFinancialFormDTO.getFinancialPlanUUID());
-        foundationProjectFinancial.setFoundationProject(foundationProjectService.getFoundationById(foundationProjectFinancialFormDTO.getFdnProjectUUID()));
-        foundationProjectFinancial.setDetail(foundationProjectFinancialFormDTO.getDetail());
-        foundationProjectFinancial.setQuantity(foundationProjectFinancialFormDTO.getQuantity());
-        foundationProjectFinancial.setAmount(foundationProjectFinancialFormDTO.getAmount());
-        foundationProjectFinancial.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        if (foundationProjectFinancialFormDTO.getFdnProjectUUID() == null) {
+            throw new VolunteerProjectException();
+        } else {
+            FoundationProjectFinancial foundationProjectFinancial = new FoundationProjectFinancial();
+            foundationProjectFinancial.setFdnProjectFinancialUUID(foundationProjectFinancialFormDTO.getFinancialPlanUUID());
+            foundationProjectFinancial.setFoundationProject(foundationProjectService.getFoundationById(foundationProjectFinancialFormDTO.getFdnProjectUUID()));
+            foundationProjectFinancial.setDetail(foundationProjectFinancialFormDTO.getDetail());
+            foundationProjectFinancial.setQuantity(foundationProjectFinancialFormDTO.getQuantity());
+            foundationProjectFinancial.setAmount(foundationProjectFinancialFormDTO.getAmount());
+            foundationProjectFinancial.setCreateDate(new Timestamp(System.currentTimeMillis()));
 
-        foundationProjectFinancialRepo.save(foundationProjectFinancial);
+            foundationProjectFinancialRepo.save(foundationProjectFinancial);
+        }
     }
 
     public List<FoundationProjectFinancialFormDTO> getFoundationProjectFinancialListByProjectUUID(String fdnProjectUUID) {
