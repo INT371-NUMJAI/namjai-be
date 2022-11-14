@@ -68,7 +68,12 @@ public class VolunteerProjectsService {
     }
 
     public List<VolunteerProjectShort> getVolunteerProjectsListByTargetCatName(String targetCatname) {
-        List<VolunteerProjects> volunteerProjectsList = volunteerProjectsRepo.findByTargetCategoriesSet(targetCatname);
+        List<VolunteerProjects> volunteerProjectsList = null;
+        if (targetCatname.equalsIgnoreCase("all")) {
+            volunteerProjectsList = volunteerProjectsRepo.findAllByStatusIsOrderByEndDateDesc("OPEN");
+        } else {
+            volunteerProjectsList = volunteerProjectsRepo.findByTargetCategoriesSet(targetCatname);
+        }
         List<VolunteerProjectShort> volunteerProjectShorts = VolunteerProjectMapper.INSTANCE.toVolunteerProjectShortList(volunteerProjectsList);
         return volunteerProjectShorts;
     }

@@ -52,7 +52,12 @@ public class FoundationProjectService {
     }
 
     public List<FoundationProjectShortDTO> getAllFoundationProjectInShortByTargetCatName(String targetCatName) {
-        List<FoundationProject> foundationProjectList = foundationProjectRepo.findByTargetCategoriesSet(targetCatName);
+        List<FoundationProject> foundationProjectList = null;
+        if (targetCatName.equalsIgnoreCase("all")) {
+            foundationProjectList = foundationProjectRepo.findFoundationProjectsByStatusIsOrderByCreateDateDesc("OPEN");
+        } else {
+            foundationProjectList = foundationProjectRepo.findByTargetCategoriesSet(targetCatName);
+        }
         return FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectList);
     }
 

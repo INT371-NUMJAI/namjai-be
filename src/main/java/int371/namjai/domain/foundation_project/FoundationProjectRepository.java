@@ -35,4 +35,6 @@ public interface FoundationProjectRepository extends JpaRepository<FoundationPro
 
     List<FoundationProject> findAllByOrderByCreateDateAsc();
 
+    List<FoundationProject> findFoundationProjectsByStatusIsOrderByCreateDateDesc(String status);
+
 }
