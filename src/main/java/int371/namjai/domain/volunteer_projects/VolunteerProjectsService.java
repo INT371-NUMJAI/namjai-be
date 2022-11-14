@@ -69,7 +69,7 @@ public class VolunteerProjectsService {
 
     public List<VolunteerProjectShort> getVolunteerProjectsListByTargetCatName(String targetCatname) {
         List<VolunteerProjects> volunteerProjectsList = null;
-        if (targetCatname.equalsIgnoreCase("all")) {
+        if (targetCatname.equalsIgnoreCase("total")) {
             volunteerProjectsList = volunteerProjectsRepo.findAllByStatusIsOrderByEndDateDesc("OPEN");
         } else {
             volunteerProjectsList = volunteerProjectsRepo.findByTargetCategoriesSet(targetCatname);

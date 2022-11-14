@@ -53,7 +53,7 @@ public class FoundationProjectService {
 
     public List<FoundationProjectShortDTO> getAllFoundationProjectInShortByTargetCatName(String targetCatName) {
         List<FoundationProject> foundationProjectList = null;
-        if (targetCatName.equalsIgnoreCase("all")) {
+        if (targetCatName.equalsIgnoreCase("total")) {
             foundationProjectList = foundationProjectRepo.findFoundationProjectsByStatusIsOrderByCreateDateDesc("OPEN");
         } else {
             foundationProjectList = foundationProjectRepo.findByTargetCategoriesSet(targetCatName);
