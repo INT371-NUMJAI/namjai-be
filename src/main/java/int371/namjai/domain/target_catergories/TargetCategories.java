@@ -25,9 +25,5 @@ public class TargetCategories {
     @Column(name = "target_category_name")
     private String targetCategoriesName;
 
-//    @ManyToOne
-//    @JoinColumn(name="fdn_project_uuid", nullable=false)
-//    private FoundationProject foundationProject;
-
 
 }

@@ -1,18 +1,22 @@
 package int371.namjai.domain.user;
 
 import int371.namjai.domain.role.Role;
+import int371.namjai.domain.target_catergories.TargetCategories;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @Column(name = "user_uuid")
@@ -49,18 +53,24 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role = new Role();
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_suggestion",
+            joinColumns = @JoinColumn(name = "user_uuid"),
+            inverseJoinColumns = @JoinColumn(name = "target_category_id"))
+    Set<TargetCategories> targetCategoriesSuggestion;
 
-    public User(String userUUid, String email, String firstName, String lastName, String userName, String password, LocalDate createDate, String status, Role role) {
-        this.userUUid = userUUid;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.userName = userName;
-        this.password = password;
-        this.createDate = createDate;
-        this.status = status;
-        this.role = role;
-    }
+//    public User(String userUUid, String email, String firstName, String lastName, String userName, String password, LocalDate createDate, String status, Role role) {
+//        this.userUUid = userUUid;
+//        this.email = email;
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.userName = userName;
+//        this.password = password;
+//        this.createDate = createDate;
+//        this.status = status;
+//        this.role = role;
+//    }
 
 
 }

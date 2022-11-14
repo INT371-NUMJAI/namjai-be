@@ -1,4 +1,4 @@
-package int371.namjai.domain.user;
+package int371.namjai.domain.user.dto;
 
 import lombok.Getter;
 import lombok.Setter;

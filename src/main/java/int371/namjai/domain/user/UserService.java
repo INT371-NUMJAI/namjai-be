@@ -1,5 +1,6 @@
 package int371.namjai.domain.user;
 
+import int371.namjai.domain.user.dto.UserSuggestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,12 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepository userRepo;
+
+    public void saveUserSuggestion(UserSuggestionDTO userSuggestionDTO) {
+        User user = getUserByEmail(userSuggestionDTO.getUserEmail());
+        user.setTargetCategoriesSuggestion(userSuggestionDTO.getTargetCategoriesSuggestion());
+        userRepo.save(user);
+    }
 
 
     public User getUserCurrent(Authentication auth) {
@@ -38,4 +45,6 @@ public class UserService {
     public List<User> getUserListByRoleIDAndStatusActive() {
         return userRepo.findUsersByRole_RoleUUidAndStatus("3", "ACTIVE");
     }
+
+
 }

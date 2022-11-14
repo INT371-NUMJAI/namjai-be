@@ -51,8 +51,8 @@ public class FoundationProjectService {
         foundationProjectRepo.save(foundationProject);
     }
 
-    public List<FoundationProjectShortDTO> getAllFoundationProjectInShortByTargetCatID(String targetCatID) {
-        List<FoundationProject> foundationProjectList = foundationProjectRepo.findByTargetCategoriesSet(targetCatID);
+    public List<FoundationProjectShortDTO> getAllFoundationProjectInShortByTargetCatName(String targetCatName) {
+        List<FoundationProject> foundationProjectList = foundationProjectRepo.findByTargetCategoriesSet(targetCatName);
         return FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectList);
     }
 

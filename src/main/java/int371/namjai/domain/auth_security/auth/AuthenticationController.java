@@ -12,6 +12,8 @@ import int371.namjai.domain.role.Role;
 import int371.namjai.domain.role.RoleRepository;
 import int371.namjai.domain.user.User;
 import int371.namjai.domain.user.UserRepository;
+import int371.namjai.domain.user.UserService;
+import int371.namjai.domain.user.dto.UserSuggestionDTO;
 import int371.namjai.domain.user.exceptions.UserDuplicateException;
 import int371.namjai.utill.Constant;
 import int371.namjai.utill.DateUtill;
@@ -75,6 +77,9 @@ public class AuthenticationController {
 
     @Autowired
     private FoundationService foundationService;
+
+    @Autowired
+    private UserService userService;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -193,6 +198,12 @@ public class AuthenticationController {
     public ResponseEntity<Void> deleteUser(@RequestParam("email") String userEmail) {
         userRepo.deleteByEmail(userEmail);
 
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value = "/user-suggestion/add")
+    public ResponseEntity<Void> createUserSuggestion(@RequestBody UserSuggestionDTO userSuggestionDTO) {
+        userService.saveUserSuggestion(userSuggestionDTO);
         return ResponseEntity.ok().build();
     }
 
