@@ -48,4 +48,10 @@ public class VolunteerProjectsController {
         return ResponseEntity.ok().body(volunteerProjectsService.getVolunteerProjectsListByFDNEmailAndStatusOpen(fdnEmail));
     }
 
+    @GetMapping("/volunteer-projects/target")
+    public ResponseEntity<List<VolunteerProjectShort>> getVolunteerProjectListByTargetCat(@RequestParam("targetCatName") String targetCatName) {
+        return ResponseEntity.ok().body(volunteerProjectsService.getVolunteerProjectsListByTargetCatName(targetCatName));
+    }
+
+
 }

@@ -67,6 +67,12 @@ public class VolunteerProjectsService {
         return volunteerProjectShorts;
     }
 
+    public List<VolunteerProjectShort> getVolunteerProjectsListByTargetCatName(String targetCatname) {
+        List<VolunteerProjects> volunteerProjectsList = volunteerProjectsRepo.findByTargetCategoriesSet(targetCatname);
+        List<VolunteerProjectShort> volunteerProjectShorts = VolunteerProjectMapper.INSTANCE.toVolunteerProjectShortList(volunteerProjectsList);
+        return volunteerProjectShorts;
+    }
+
     public List<VolunteerProjectShort> getVolunteerProjectsListByFDNEmailAndStatusOpen(String fdnEmail) {
         List<VolunteerProjects> volunteerProjectsList = volunteerProjectsRepo.findVolunteerProjectsByFoundation_EmailAndStatusOpen(fdnEmail);
         List<VolunteerProjectShort> volunteerProjectShorts = VolunteerProjectMapper.INSTANCE.toVolunteerProjectShortList(volunteerProjectsList);

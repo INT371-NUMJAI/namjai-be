@@ -23,4 +23,7 @@ public interface VolunteerProjectsRepository extends JpaRepository<VolunteerProj
     List<VolunteerProjects> findVolunteerProjectsByVolunteerProjectNameContainingIgnoreCase(String volunteerName);
 
     List<VolunteerProjects> findAllByStatusIsOrderByEndDateDesc(String status);
+
+    @Query("select vp from VolunteerProjects  vp left join vp.targetCategoriesSet t where t.targetCategoriesNameEn = ?1 and vp.status='OPEN' order by vp.createDate asc")
+    List<VolunteerProjects> findByTargetCategoriesSet(String targetCatName);
 }

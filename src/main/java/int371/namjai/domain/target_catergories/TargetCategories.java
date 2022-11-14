@@ -25,5 +25,8 @@ public class TargetCategories {
     @Column(name = "target_category_name")
     private String targetCategoriesName;
 
+    @Column(name = "target_category_name_en")
+    private String targetCategoriesNameEn;
+
 
 }
