@@ -19,6 +19,10 @@ public class UserService {
         userRepo.save(user);
     }
 
+    public boolean getNumberOfExistsUserInUserSuggestion(String userUUID) {
+        boolean isExits = userRepo.getNumberOfUserSuggestion(userUUID) > 0 ? true : false;
+        return isExits;
+    }
 
     public User getUserCurrent(Authentication auth) {
         String userCurrent = auth.getName();

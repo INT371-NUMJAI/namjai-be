@@ -5,7 +5,7 @@ import int371.namjai.domain.user.UserService;
 import int371.namjai.domain.volunteer_projects.VolunteerProjects;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsRepository;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsService;
-import int371.namjai.domain.volunteer_projects.exceoptions.VolunteerProjectException;
+import int371.namjai.domain.volunteer_projects.exceoptions.VolunteerProjectNotFoundException;
 import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProject;
 import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProjectDTO;
 import int371.namjai.domain.volunteer_registerred.dto.VolunteerRegisteredUserDTO;
@@ -45,7 +45,6 @@ public class VolunteerRegisteredService {
 
 
         User user = userService.getUserByEmail(volunteerRegisteredUserDTO.getEmail());
-        volunteerEnrolled.setUser(user);
         volunteerEnrolled.setIsMember(true);
         volunteerEnrolled.setEmail(volunteerRegisteredUserDTO.getEmail());
         volunteerEnrolled.setContactNumber(user.getPhoneNumber());
@@ -59,23 +58,27 @@ public class VolunteerRegisteredService {
     public void recordVolunteerRegisterByUnregisteredUser(VolunteerUnRegisteredUserDTO volunteerUnRegisteredUserDTO) {
         volunteerEnrolled.setVolunteerEnrolledUUID(UUID.randomUUID().toString());
         volunteerEnrolled.setIsMember(false);
-        volunteerEnrolled.setUser(null);
 
-        volunteerEnrolled.setEmail(volunteerUnRegisteredUserDTO.getEmail());
-        volunteerEnrolled.setContactNumber(volunteerUnRegisteredUserDTO.getContactNumber());
-        volunteerEnrolled.setFirstName(volunteerUnRegisteredUserDTO.getFirstName());
-        volunteerEnrolled.setLastName(volunteerUnRegisteredUserDTO.getLastName());
-        VolunteerProjects volunteerProject = volunteerProjectsService.getVolunteerProjectByUUID(volunteerUnRegisteredUserDTO.getVolunteerProjectUUID());
-        int peopleCount = volunteerProject.getPeopleRegistered() + 1;
-        volunteerProject.setPeopleRegistered(peopleCount);
-        volunteerEnrolled.setVolunteerProjects(volunteerProject);
-        volunteerEnrolledRepo.save(volunteerEnrolled);
+        boolean isRegistered = volunteerEnrolledRepo.existsByVolunteerProjects_VolunteerProjectsUUIDAndEmailAndContactNumber(volunteerUnRegisteredUserDTO.getVolunteerProjectUUID(), volunteerUnRegisteredUserDTO.getEmail(), volunteerUnRegisteredUserDTO.getContactNumber());
+        if (isRegistered) {
+            throw new DuplicateEnrolledException();
+        } else {
+            volunteerEnrolled.setEmail(volunteerUnRegisteredUserDTO.getEmail());
+            volunteerEnrolled.setContactNumber(volunteerUnRegisteredUserDTO.getContactNumber());
+            volunteerEnrolled.setFirstName(volunteerUnRegisteredUserDTO.getFirstName());
+            volunteerEnrolled.setLastName(volunteerUnRegisteredUserDTO.getLastName());
+            VolunteerProjects volunteerProject = volunteerProjectsService.getVolunteerProjectByUUID(volunteerUnRegisteredUserDTO.getVolunteerProjectUUID());
+            int peopleCount = volunteerProject.getPeopleRegistered() + 1;
+            volunteerProject.setPeopleRegistered(peopleCount);
+            volunteerEnrolled.setVolunteerProjects(volunteerProject);
+            volunteerEnrolledRepo.save(volunteerEnrolled);
+        }
     }
 
     @Transactional
     public void unRegisteredVolunteerProject(String email, String volunteerProjectUUID) {
 //        VolunteerEnrolled volunteerEnrolled = volunteerEnrolledRepo.findByVolunteerProjects_VolunteerProjectsUUIDAndAndVolunteerEnrolledUUID(unEnrolledVolunteerProjectDTO.getVolunteerProjectUUID(),unEnrolledVolunteerProjectDTO.getVolunteerEnrolledUUID());
-        VolunteerProjects volunteerProjects = volunteerProjectsRepo.findById(volunteerProjectUUID).orElseThrow(VolunteerProjectException::new);
+        VolunteerProjects volunteerProjects = volunteerProjectsRepo.findById(volunteerProjectUUID).orElseThrow(VolunteerProjectNotFoundException::new);
         int peopleCount = volunteerProjects.getPeopleRegistered() - 1;
         volunteerProjects.setPeopleRegistered(peopleCount);
         volunteerProjectsRepo.save(volunteerProjects);

@@ -207,6 +207,11 @@ public class AuthenticationController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping(value = "/user/suggestion")
+    public ResponseEntity<Boolean> getNumberOfUseruuidInUserSuggestion(@RequestParam("id") String userUUID) {
+        return ResponseEntity.ok().body(userService.getNumberOfExistsUserInUserSuggestion(userUUID));
+    }
+
 
     private String encryptedPassword(String password) {
         return passwordEncoder.encode(password);

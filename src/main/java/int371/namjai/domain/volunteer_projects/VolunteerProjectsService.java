@@ -4,7 +4,7 @@ import int371.namjai.domain.foundation.Foundation;
 import int371.namjai.domain.foundation.FoundationService;
 import int371.namjai.domain.foundation.mapper.FoundationContactDTO;
 import int371.namjai.domain.foundation.mapper.FoundationMapper;
-import int371.namjai.domain.volunteer_projects.exceoptions.VolunteerProjectException;
+import int371.namjai.domain.volunteer_projects.exceoptions.VolunteerProjectNotFoundException;
 import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectDetailDTO;
 import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectMapper;
 import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectShort;
@@ -85,13 +85,13 @@ public class VolunteerProjectsService {
     }
 
     public VolunteerProjectDetailDTO getVolunteerProjectDetailByUUID(String volunteerProjectUUID) {
-        VolunteerProjects volunteerProjects = volunteerProjectsRepo.findById(volunteerProjectUUID).orElseThrow(VolunteerProjectException::new);
+        VolunteerProjects volunteerProjects = volunteerProjectsRepo.findById(volunteerProjectUUID).orElseThrow(VolunteerProjectNotFoundException::new);
         FoundationContactDTO foundationContactDTO = FoundationMapper.INSTANCE.toFoundationContactDto(volunteerProjects.getFoundation());
         return VolunteerProjectMapper.INSTANCE.toVolunteerProjectDetailDto(volunteerProjects, foundationContactDTO);
     }
 
     public VolunteerProjects getVolunteerProjectByUUID(String volunteerProjectUUID) {
-        return volunteerProjectsRepo.findById(volunteerProjectUUID).orElseThrow(VolunteerProjectException::new);
+        return volunteerProjectsRepo.findById(volunteerProjectUUID).orElseThrow(VolunteerProjectNotFoundException::new);
 
     }
 

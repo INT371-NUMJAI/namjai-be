@@ -60,17 +60,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "target_category_id"))
     Set<TargetCategories> targetCategoriesSuggestion;
 
-//    public User(String userUUid, String email, String firstName, String lastName, String userName, String password, LocalDate createDate, String status, Role role) {
-//        this.userUUid = userUUid;
-//        this.email = email;
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.userName = userName;
-//        this.password = password;
-//        this.createDate = createDate;
-//        this.status = status;
-//        this.role = role;
-//    }
 
 
 }
