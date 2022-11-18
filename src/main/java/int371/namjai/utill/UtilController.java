@@ -55,7 +55,7 @@ public class UtilController {
 
     @GetMapping(value = "/user-name")
     public ResponseEntity<ProfileNameDTO> getUserNameByEmail(@RequestParam("email") String email) {
-        User user = userRepo.findByEmailIgnoreCase(email);
+        User user = userRepo.findByEmailIgnoreCaseEveryStatus(email);
         Foundation foundation = foundationService.getFoundationByEmail(email);
         String userName = user.getRole().getRoleUUid().equalsIgnoreCase("2") ? user.getUserName() : user.getLastName();
         String profilePath = user.getRole().getRoleUUid().equalsIgnoreCase("2") ? user.getProfilePath() : foundation.getProfilePath();

@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     User findByEmailIgnoreCaseAndStatusActive(String email);
 
     @Query(value = "SELECT u FROM User u WHERE UPPER(u.email) LIKE UPPER(?1) ")
-    User findByEmailIgnoreCase(String email);
+    User findByEmailIgnoreCaseEveryStatus(String email);
 
     @Query(value = "SELECT u FROM User u WHERE UPPER(u.email) LIKE UPPER(?1) " +
             "AND u.status LIKE 'DISABLE' ")
