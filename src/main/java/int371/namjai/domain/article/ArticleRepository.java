@@ -9,5 +9,7 @@ import java.util.List;
 public interface ArticleRepository extends JpaRepository<Article, String> {
     List<Article> findAllByOrderByCreateDateDesc();
 
-    List<Article> findArticlesByCreateByEmailIgnoreCaseOrderByCreateDateDesc(String email);
+    List<Article> findArticlesByUser_EmailOrderByCreateDateAsc(String email);
+
+
 }

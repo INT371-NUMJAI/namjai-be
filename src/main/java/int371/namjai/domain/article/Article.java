@@ -1,14 +1,12 @@
 package int371.namjai.domain.article;
 
+import int371.namjai.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
@@ -37,8 +35,9 @@ public class Article {
     @Column(name = "author_role")
     private String authorRole;
 
-    @Column(name = "create_by_email")
-    private String createByEmail;
+    @ManyToOne
+    @JoinColumn(name = "user_uuid")
+    private User user = new User();
 
     @Column(name = "picture_path")
     private String picturePath;

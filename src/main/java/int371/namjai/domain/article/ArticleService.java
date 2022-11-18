@@ -3,6 +3,7 @@ package int371.namjai.domain.article;
 import int371.namjai.domain.article.dto.ArticleForm;
 import int371.namjai.domain.article.dto.ArticleMapper;
 import int371.namjai.domain.article.dto.ArticleShortDTO;
+import int371.namjai.domain.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,8 @@ public class ArticleService {
     @Autowired
     private ArticleRepository articleRepo;
 
+    @Autowired
+    private UserService userService;
 
     public void saveArticle(ArticleForm articleForm) {
         Article article = new Article();
@@ -23,7 +26,7 @@ public class ArticleService {
         article.setStatus("OPEN");
         article.setCreateDate(new Timestamp(System.currentTimeMillis()));
         article.setAuthorRole(articleForm.getAuthorRole());
-        article.setCreateByEmail(articleForm.getAuthorEmail());
+        article.setUser(userService.getUserByEmail(articleForm.getAuthorEmail()));
         article.setPicturePath(null);
         articleRepo.save(article);
     }
@@ -33,7 +36,7 @@ public class ArticleService {
     }
 
     public List<ArticleShortDTO> getArticlesByEmail(String email) {
-        return ArticleMapper.INSTANCE.toArticleShortDTOList(articleRepo.findArticlesByCreateByEmailIgnoreCaseOrderByCreateDateDesc(email));
+        return ArticleMapper.INSTANCE.toArticleShortDTOList(articleRepo.findArticlesByUser_EmailOrderByCreateDateAsc(email));
     }
 
     public ArticleShortDTO getArticleShortDTOByUUID(String articleUUID) {

@@ -37,7 +37,8 @@ public interface FoundationProjectRepository extends JpaRepository<FoundationPro
 
     List<FoundationProject> findFoundationProjectsByStatusIsOrderByCreateDateDesc(String status);
 
-//    @Query("select fp from FoundationProject  fp left join fp.targetCategoriesSet t  left join t.targetCat where t.targetCategoriesNameEn = ?1 and fp.status='OPEN' order by fp.createDate asc")
-//    List<FoundationProject> findByTargetCategoriesSet(String targetCatName);
+//    @Query("select fp from FoundationProject  fp left join fp.targetCategoriesSet t where t.targetCategoriesID = ?1 and fp.status='OPEN' order by fp.createDate asc")
+//    List<FoundationProject> findByTargetCategoriesSet(String targetCatID);
+
 
 }
