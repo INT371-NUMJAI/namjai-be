@@ -41,7 +41,7 @@ public class FoundationProject {
 
     @ManyToOne
     @JoinColumn(name = "fdn_uuid")
-    private Foundation foundation = new Foundation();
+    private Foundation foundation;
 
     @Column(name = "picture_path")
     private String picturePath;

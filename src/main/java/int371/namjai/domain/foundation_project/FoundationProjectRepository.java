@@ -2,6 +2,7 @@ package int371.namjai.domain.foundation_project;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,6 +15,13 @@ public interface FoundationProjectRepository extends JpaRepository<FoundationPro
 
     @Query(value = "select * from fdn_projects fp where fp.status ='OPEN' order by random()  limit 6 ", nativeQuery = true)
     List<FoundationProject> findTop6AndStatusOpen();
+
+    @Query(value = "SELECT f.* FROM user_suggestion u \n" +
+            "JOIN fdn_project_target_categories fc ON u.target_category_id=fc.target_category_id\n" +
+            "JOIN fdn_projects f ON fc.fdn_project_uuid=f.fdn_project_uuid\n" +
+            "WHERE f.status ='OPEN'\n AND u.user_uuid=:userID\n" +
+            "GROUP BY f.fdn_project_uuid,fc.target_category_id ORDER BY fc.target_category_id LIMIT 6", nativeQuery = true)
+    List<FoundationProject> findTop6UserSuggestion(@Param("userID") String userUUID);
 
     @Query("select fp from FoundationProject  fp  where  fp.foundation.fdnUUid = ?1 ")
     List<FoundationProject> findByfdnUUID(String fdnUUID);
@@ -37,7 +45,7 @@ public interface FoundationProjectRepository extends JpaRepository<FoundationPro
 
     List<FoundationProject> findFoundationProjectsByStatusIsOrderByCreateDateDesc(String status);
 
-//    @Query("select fp from FoundationProject  fp left join fp.targetCategoriesSet t where t.targetCategoriesID = ?1 and fp.status='OPEN' order by fp.createDate asc")
+//    @Query("select fp from FoundationProject  fp left join fp.targetCategoriesSet t left join UserSugges= ?1 and fp.status='OPEN' order by fp.createDate asc")
 //    List<FoundationProject> findByTargetCategoriesSet(String targetCatID);
 
 

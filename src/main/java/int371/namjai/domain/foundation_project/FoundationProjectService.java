@@ -9,6 +9,7 @@ import int371.namjai.domain.foundation_project.mapper.FoundationProjectDTO;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectListToRequest;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectMapper;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectShortDTO;
+import int371.namjai.domain.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ public class FoundationProjectService {
     @Autowired
     private FoundationService foundationService;
 
+    @Autowired
+    private UserService userService;
+
     public List<FoundationProject> getAllFoundationProjects() {
         return foundationProjectRepo.findAll();
     }
@@ -34,6 +38,11 @@ public class FoundationProjectService {
     public FoundationProject getFoundationById(String fdnProjectUUid) {
         return foundationProjectRepo.findById(fdnProjectUUid)
                 .orElseThrow(FoundationProjectsNotFoundException::new);
+    }
+
+    public List<FoundationProject> getFoundationProjectsUserSuggestionByUserEmail(String userEmail) {
+        String userUUID = userService.getUserByEmail(userEmail).getUserUUid();
+        return foundationProjectRepo.findTop6UserSuggestion(userUUID);
     }
 
 

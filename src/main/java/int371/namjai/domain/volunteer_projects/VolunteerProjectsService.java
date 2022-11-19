@@ -4,12 +4,12 @@ import int371.namjai.domain.foundation.Foundation;
 import int371.namjai.domain.foundation.FoundationService;
 import int371.namjai.domain.foundation.mapper.FoundationContactDTO;
 import int371.namjai.domain.foundation.mapper.FoundationMapper;
+import int371.namjai.domain.user.UserService;
 import int371.namjai.domain.volunteer_projects.exceoptions.VolunteerProjectNotFoundException;
 import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectDetailDTO;
 import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectMapper;
 import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectShort;
 import int371.namjai.domain.volunteer_projects.mapper.VolunteerProjectsFormDTO;
-import int371.namjai.utill.UtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ public class VolunteerProjectsService {
     private FoundationService foundationService;
 
     @Autowired
-    private UtilService utilService;
+    private UserService userService;
 
 
     public void createVolunteerProjects(VolunteerProjectsFormDTO newVolunteerProjects) {
@@ -99,6 +99,11 @@ public class VolunteerProjectsService {
         List<VolunteerProjects> volunteerProjectsList = volunteerProjectsRepo.findVolunteerProjectsByVolunteerProjectNameContainingIgnoreCase(volunteerName);
         List<VolunteerProjectShort> volunteerProjectShorts = VolunteerProjectMapper.INSTANCE.toVolunteerProjectShortList(volunteerProjectsList);
         return volunteerProjectShorts;
+    }
+
+    public List<VolunteerProjectShort> getVolunteerProjectUserSuggestionByUserEmail(String userEmail) {
+        String userUUID = userService.getUserByEmail(userEmail).getUserUUid();
+        return VolunteerProjectMapper.INSTANCE.toVolunteerProjectShortList(volunteerProjectsRepo.findVolunteerProjectsByUserSuggestion(userUUID));
     }
 
     public void saveToTableVolunteer(VolunteerProjects volunteerProjects) {

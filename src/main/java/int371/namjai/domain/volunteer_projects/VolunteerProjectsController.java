@@ -53,5 +53,9 @@ public class VolunteerProjectsController {
         return ResponseEntity.ok().body(volunteerProjectsService.getVolunteerProjectsListByTargetCatName(targetCatName));
     }
 
+    @GetMapping("/volunteer-projects/user-suggestion/{email}")
+    public ResponseEntity<List<VolunteerProjectShort>> getVolunteerProjectsListByUserSuggestion(@PathVariable("email") String userEmail) {
+        return ResponseEntity.ok().body(volunteerProjectsService.getVolunteerProjectUserSuggestionByUserEmail(userEmail));
+    }
 
 }

@@ -133,4 +133,9 @@ public class FoundationProjectController {
     public ResponseEntity<List<FoundationProjectListToRequest>> getProjectListToMakeRequest(@RequestParam("fdnid") String fdnUUID) {
         return ResponseEntity.ok().body(foundationProjectService.getFoundationProjectToRequest(fdnUUID));
     }
+
+    @GetMapping(value = "/projects/user-suggestion/{email}")
+    public ResponseEntity<List<FoundationProjectShortDTO>> getUserSuggestionFoundationProjects(@PathVariable("email") String userEmail) {
+        return ResponseEntity.ok().body(FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjectService.getFoundationProjectsUserSuggestionByUserEmail(userEmail)));
+    }
 }
