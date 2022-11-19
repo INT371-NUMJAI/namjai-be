@@ -13,6 +13,8 @@ public interface VolunteerProjectsRepository extends JpaRepository<VolunteerProj
     @Query("select vp.volunteerProjectName from VolunteerProjects  vp where vp.volunteerProjectsUUID = ?1 ")
     String getVolunteerName(String volunteerProjectUUID);
 
+    @Query(value = "select * from volunteers_projects vp where vp.status ='OPEN' order by random()  limit 6 ", nativeQuery = true)
+    List<VolunteerProjects> findTop6AndStatusOpen();
 
     List<VolunteerProjects> findVolunteerProjectsByFoundation_Email(String fdnEmail);
 

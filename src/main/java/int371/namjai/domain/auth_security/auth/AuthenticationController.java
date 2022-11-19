@@ -208,8 +208,8 @@ public class AuthenticationController {
     }
 
     @GetMapping(value = "/user/suggestion")
-    public ResponseEntity<Boolean> getNumberOfUseruuidInUserSuggestion(@RequestParam("id") String userUUID) {
-        return ResponseEntity.ok().body(userService.getNumberOfExistsUserInUserSuggestion(userUUID));
+    public ResponseEntity<Boolean> getNumberOfUseruuidInUserSuggestion(@RequestParam("id") String userEmail) {
+        return ResponseEntity.ok().body(userService.getNumberOfExistsUserInUserSuggestion(userEmail));
     }
 
 

@@ -106,6 +106,10 @@ public class VolunteerProjectsService {
         return VolunteerProjectMapper.INSTANCE.toVolunteerProjectShortList(volunteerProjectsRepo.findVolunteerProjectsByUserSuggestion(userUUID));
     }
 
+    public List<VolunteerProjectShort> getVolunteerProjectTop6Random() {
+        return VolunteerProjectMapper.INSTANCE.toVolunteerProjectShortList(volunteerProjectsRepo.findTop6AndStatusOpen());
+    }
+
     public void saveToTableVolunteer(VolunteerProjects volunteerProjects) {
         volunteerProjectsRepo.save(volunteerProjects);
     }

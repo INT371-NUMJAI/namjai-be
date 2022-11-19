@@ -19,8 +19,8 @@ public class UserService {
         userRepo.save(user);
     }
 
-    public boolean getNumberOfExistsUserInUserSuggestion(String userUUID) {
-        boolean isExits = userRepo.getNumberOfUserSuggestion(userUUID) > 0 ? true : false;
+    public boolean getNumberOfExistsUserInUserSuggestion(String userEmail) {
+        boolean isExits = userRepo.getNumberOfUserSuggestion(userEmail) > 0 ? true : false;
         return isExits;
     }
 

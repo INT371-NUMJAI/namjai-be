@@ -40,8 +40,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     List<User> findUsersByRole_RoleUUidAndStatus(String roleId, String status);
 
-    @Query(value = "SELECT COUNT(u.userUUid) FROM User u inner join  u.targetCategoriesSuggestion t WHERE  u.userUUid =?1 ")
-    Integer getNumberOfUserSuggestion(String userUUID);
+    @Query(value = "SELECT COUNT(u.userUUid) FROM User u inner join  u.targetCategoriesSuggestion t WHERE  u.email =?1 ")
+    Integer getNumberOfUserSuggestion(String userEmail);
 
 
 }
