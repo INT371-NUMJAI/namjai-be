@@ -9,7 +9,6 @@ import int371.namjai.domain.foundation_project.mapper.FoundationProjectMapper;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectShortDTO;
 import int371.namjai.domain.target_catergories.TargetCategories;
 import int371.namjai.domain.target_catergories.TargetCategoriesRepository;
-import int371.namjai.utill.ResourceUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +33,6 @@ public class FoundationProjectController {
     @Autowired
     private FoundationService foundationService;
 
-    @Autowired
-    private ResourceUtilService resourceUtilService;
 
 
     @GetMapping(value = "/foundationprojects")

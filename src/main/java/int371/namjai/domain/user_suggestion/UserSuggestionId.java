@@ -11,6 +11,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
+import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,4 +26,17 @@ public class UserSuggestionId implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_uuid")
     private User user;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserSuggestionId)) return false;
+        UserSuggestionId that = (UserSuggestionId) o;
+        return Objects.equals(getTargetCategories(), that.getTargetCategories()) && Objects.equals(getUser(), that.getUser());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTargetCategories(), getUser());
+    }
 }
