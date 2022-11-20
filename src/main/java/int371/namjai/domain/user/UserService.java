@@ -2,6 +2,7 @@ package int371.namjai.domain.user;
 
 import int371.namjai.domain.foundation.Foundation;
 import int371.namjai.domain.foundation.FoundationService;
+import int371.namjai.domain.user.dto.ProfileDTO;
 import int371.namjai.domain.user.dto.UserSuggestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -29,16 +30,23 @@ public class UserService {
         return isExits;
     }
 
-    public String getUserProfile(String userEmail) {
+    public ProfileDTO getUserProfile(String userEmail) {
         String profile = null;
+        ProfileDTO profileDTO = new ProfileDTO();
         User user = getUserByEmail(userEmail);
         if (user.getRole().getRoleUUid().equalsIgnoreCase("3")) {
             Foundation fdn = foundationService.getFoundationByEmail(userEmail);
-            profile = fdn.getFdnDetail();
+            profileDTO.setProfileDetail(fdn.getFdnDetail());
+            profileDTO.setProfileAddress(fdn.getAddressDetail() + " " + fdn.getSubDistrict() + " " + fdn.getDistrict() + " " + fdn.getProvince() + " " + fdn.getPostalCode());
+            profileDTO.setContactNumber(fdn.getContactNumber());
+            profileDTO.setEmail(userEmail);
         } else if (user.getRole().getRoleUUid().equalsIgnoreCase("2")) {
-            profile = user.getFirstName() + " " + user.getLastName();
+            profileDTO.setProfileDetail(user.getFirstName() + " " + user.getLastName());
+            profileDTO.setProfileAddress("");
+            profileDTO.setContactNumber("");
+            profileDTO.setEmail(userEmail);
         }
-        return profile;
+        return profileDTO;
     }
 
     public User getUserCurrent(Authentication auth) {

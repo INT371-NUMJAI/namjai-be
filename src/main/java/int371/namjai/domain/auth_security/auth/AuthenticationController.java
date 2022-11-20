@@ -13,6 +13,7 @@ import int371.namjai.domain.role.RoleRepository;
 import int371.namjai.domain.user.User;
 import int371.namjai.domain.user.UserRepository;
 import int371.namjai.domain.user.UserService;
+import int371.namjai.domain.user.dto.ProfileDTO;
 import int371.namjai.domain.user.dto.UserSuggestionDTO;
 import int371.namjai.domain.user.exceptions.UserDuplicateException;
 import int371.namjai.utill.Constant;
@@ -213,7 +214,7 @@ public class AuthenticationController {
     }
 
     @GetMapping(value = "/user/profile")
-    public ResponseEntity<String> getUserProfile(@RequestParam("id") String userEmail) {
+    public ResponseEntity<ProfileDTO> getUserProfile(@RequestParam("id") String userEmail) {
         return ResponseEntity.ok().body(userService.getUserProfile(userEmail));
     }
 
