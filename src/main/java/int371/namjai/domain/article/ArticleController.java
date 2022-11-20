@@ -26,6 +26,11 @@ public class ArticleController {
         return ResponseEntity.ok().body(articleService.getArticleShortDTO());
     }
 
+    @GetMapping(value = "/articles/top-3")
+    public ResponseEntity<List<ArticleShortDTO>> getTop3ArticleShortList() {
+        return ResponseEntity.ok().body(articleService.getTop3Articles());
+    }
+
     @GetMapping(value = "/article/{id}")
     public ResponseEntity<ArticleShortDTO> getArticleShortByUUID(@PathVariable("id") String articleUUIID) {
         return ResponseEntity.ok().body(articleService.getArticleShortDTOByUUID(articleUUIID));

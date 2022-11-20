@@ -39,6 +39,11 @@ public class ArticleService {
         return ArticleMapper.INSTANCE.toArticleShortDTOList(articleRepo.findArticlesByUser_EmailOrderByCreateDateAsc(email));
     }
 
+    public List<ArticleShortDTO> getTop3Articles() {
+        return ArticleMapper.INSTANCE.toArticleShortDTOList(articleRepo.findTop3AndStatusOpen());
+    }
+
+
     public ArticleShortDTO getArticleShortDTOByUUID(String articleUUID) {
         return ArticleMapper.INSTANCE.toArticleShortDto(getArticleByID(articleUUID));
     }
@@ -46,6 +51,7 @@ public class ArticleService {
     public Article getArticleByID(String articleUUID) {
         return articleRepo.findById(articleUUID).orElseThrow(ArticleNotfoundException::new);
     }
+
 
     public void saveToTableArticle(Article article) {
         articleRepo.save(article);
