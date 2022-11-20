@@ -212,6 +212,11 @@ public class AuthenticationController {
         return ResponseEntity.ok().body(userService.getNumberOfExistsUserInUserSuggestion(userEmail));
     }
 
+    @GetMapping(value = "/user/profile")
+    public ResponseEntity<String> getUserProfile(@RequestParam("id") String userEmail) {
+        return ResponseEntity.ok().body(userService.getUserProfile(userEmail));
+    }
+
 
     private String encryptedPassword(String password) {
         return passwordEncoder.encode(password);

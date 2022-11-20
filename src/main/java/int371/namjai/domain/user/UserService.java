@@ -1,5 +1,7 @@
 package int371.namjai.domain.user;
 
+import int371.namjai.domain.foundation.Foundation;
+import int371.namjai.domain.foundation.FoundationService;
 import int371.namjai.domain.user.dto.UserSuggestionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,6 +15,9 @@ public class UserService {
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    private FoundationService foundationService;
+
     public void saveUserSuggestion(UserSuggestionDTO userSuggestionDTO) {
         User user = getUserByEmail(userSuggestionDTO.getUserEmail());
         user.setTargetCategoriesSuggestion(userSuggestionDTO.getTargetCategoriesSuggestion());
@@ -22,6 +27,18 @@ public class UserService {
     public boolean getNumberOfExistsUserInUserSuggestion(String userEmail) {
         boolean isExits = userRepo.getNumberOfUserSuggestion(userEmail) > 0 ? true : false;
         return isExits;
+    }
+
+    public String getUserProfile(String userEmail) {
+        String profile = null;
+        User user = getUserByEmail(userEmail);
+        if (user.getRole().getRoleUUid().equalsIgnoreCase("3")) {
+            Foundation fdn = foundationService.getFoundationByEmail(userEmail);
+            profile = fdn.getFdnDetail();
+        } else if (user.getRole().getRoleUUid().equalsIgnoreCase("2")) {
+            profile = user.getFirstName() + " " + user.getLastName();
+        }
+        return profile;
     }
 
     public User getUserCurrent(Authentication auth) {
