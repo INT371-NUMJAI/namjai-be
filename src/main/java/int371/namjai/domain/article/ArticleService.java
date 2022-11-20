@@ -27,7 +27,7 @@ public class ArticleService {
         article.setCreateDate(new Timestamp(System.currentTimeMillis()));
         article.setAuthorRole(articleForm.getAuthorRole());
         article.setUser(userService.getUserByEmail(articleForm.getAuthorEmail()));
-        article.setPicturePath(null);
+        article.setPicturePath("");
         articleRepo.save(article);
     }
 
