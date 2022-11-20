@@ -9,8 +9,8 @@ public class ArticleShortDTO {
     private String articleUUID;
     private String articleHeader;
     private String articleBody;
-    private String articlePicture;
     private String author;
     private String createDate;
     private String status;
+    private String articlePicture;
 }
