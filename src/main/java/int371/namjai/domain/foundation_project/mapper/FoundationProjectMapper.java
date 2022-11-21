@@ -33,7 +33,7 @@ public interface FoundationProjectMapper {
             @Mapping(target = "foundationProjectUUID", source = "foundationProject.fdnProjectUUid"),
             @Mapping(target = "foundationProjectName", source = "foundationProject.fdnProjectName"),
             @Mapping(target = "foundationProjectDetail", source = "foundationProject.fdnProjectDetail"),
-            @Mapping(target = "foundationProjectDetailPlace", source = "foundationProject.fdnProjectDetail"),
+            @Mapping(target = "foundationProjectDetailPlace", source = "foundationProject.fdnProjectDetailPlace"),
             @Mapping(target = "goal", expression = "java((long)foundationProject.getGoal())"),
             @Mapping(target = " received", expression = "java((long)foundationProject.getReceived())"),
             @Mapping(target = "percentage", expression = "java((double)((foundationProject.getReceived()/foundationProject.getGoal()))*100)"),
