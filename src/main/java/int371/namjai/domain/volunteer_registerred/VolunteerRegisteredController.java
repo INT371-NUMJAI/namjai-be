@@ -1,11 +1,14 @@
 package int371.namjai.domain.volunteer_registerred;
 
+import int371.namjai.domain.user_favorite.mapper.UserFavoriteDTO;
 import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProjectDTO;
 import int371.namjai.domain.volunteer_registerred.dto.VolunteerRegisteredUserDTO;
 import int371.namjai.domain.volunteer_registerred.dto.VolunteerUnRegisteredUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/view")
@@ -43,4 +46,9 @@ public class VolunteerRegisteredController {
         return ResponseEntity.ok().body(volunteerRegisteredService.checkUserIsEnrolledOrNot(volunteerProjectUUID, useremail));
     }
 
+    //    getActivityJoinedVolunteerProjectsByEmail
+    @GetMapping(value = "/volunteer-enrolled/activities")
+    public ResponseEntity<List<UserFavoriteDTO>> getListOfVolunteerEnrolledUserByUserEmail(@RequestParam("email") String email) {
+        return ResponseEntity.ok().body(volunteerRegisteredService.getActivityJoinedVolunteerProjectsByEmail(email));
+    }
 }

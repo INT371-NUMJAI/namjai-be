@@ -45,8 +45,8 @@ public interface FoundationProjectRepository extends JpaRepository<FoundationPro
 
     List<FoundationProject> findFoundationProjectsByStatusIsOrderByCreateDateDesc(String status);
 
-//    @Query("select fp from FoundationProject  fp left join fp.targetCategoriesSet t left join UserSugges= ?1 and fp.status='OPEN' order by fp.createDate asc")
-//    List<FoundationProject> findByTargetCategoriesSet(String targetCatID);
+//    @Query(value = "SELECT vp.* FROM volunteers_projects vp LEFT JOIN volunteer_enrolled ve ON vp.volunteer_projects_uuid=ve.volunteer_projects_uuid WHERE ve.email=:email ORDER BY vp.create_date desc",nativeQuery = true)
+//    List<FoundationProject> findByEmailVolunteerEnrolled(@Param("email") String volunteerEnrolledEmail);
 
 
 }

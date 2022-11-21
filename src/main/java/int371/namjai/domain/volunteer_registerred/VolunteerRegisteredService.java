@@ -2,6 +2,7 @@ package int371.namjai.domain.volunteer_registerred;
 
 import int371.namjai.domain.user.User;
 import int371.namjai.domain.user.UserService;
+import int371.namjai.domain.user_favorite.mapper.UserFavoriteDTO;
 import int371.namjai.domain.volunteer_projects.VolunteerProjects;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsRepository;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsService;
@@ -100,6 +101,11 @@ public class VolunteerRegisteredService {
     public Boolean checkUserIsEnrolledOrNot(String volunteerProjectUUID, String userEmail) {
         Boolean isEnrolled = volunteerEnrolledRepo.existsByVolunteerProjects_VolunteerProjectsUUIDAndEmail(volunteerProjectUUID, userEmail);
         return isEnrolled;
+    }
+
+    public List<UserFavoriteDTO> getActivityJoinedVolunteerProjectsByEmail(String email) {
+        List<VolunteerEnrolled> volunteerEnrolledList = volunteerEnrolledRepo.findVolunteerEnrolledsByEmailOrderByVolunteerProjectCreateDateDesc(email);
+        return VolunteerRegisteredMapper.INSTANCE.toUserFavoriteDTO(volunteerEnrolledList);
     }
 
 
