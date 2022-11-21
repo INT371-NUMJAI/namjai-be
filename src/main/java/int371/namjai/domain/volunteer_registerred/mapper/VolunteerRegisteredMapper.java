@@ -1,8 +1,8 @@
 package int371.namjai.domain.volunteer_registerred.mapper;
 
-import int371.namjai.domain.user_favorite.mapper.UserFavoriteDTO;
 import int371.namjai.domain.volunteer_registerred.VolunteerEnrolled;
 import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProject;
+import int371.namjai.domain.volunteer_registerred.dto.UserEnrolledVolunteerProjectDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -34,9 +34,10 @@ public interface VolunteerRegisteredMapper {
             @Mapping(target = "typeOfFavorite", constant = "ENROLLED_VOLUNTEER"),
             @Mapping(target = "favoriteReferenceUUID", source = "volunteerEnrolled.volunteerProjects.volunteerProjectsUUID"),
             @Mapping(target = "favoriteReferenceTitle", source = "volunteerEnrolled.volunteerProjects.volunteerProjectName"),
+            @Mapping(target = "enrolledDate", source = "volunteerEnrolled.enrolledDate", dateFormat = "dd MMM yyyy"),
     })
-    UserFavoriteDTO toUserFavoriteDto(VolunteerEnrolled volunteerEnrolled);
+    UserEnrolledVolunteerProjectDTO toUserFavoriteDto(VolunteerEnrolled volunteerEnrolled);
 
-    List<UserFavoriteDTO> toUserFavoriteDTO(List<VolunteerEnrolled> volunteerEnrolledList);
+    List<UserEnrolledVolunteerProjectDTO> toUserFavoriteDTO(List<VolunteerEnrolled> volunteerEnrolledList);
 
 }

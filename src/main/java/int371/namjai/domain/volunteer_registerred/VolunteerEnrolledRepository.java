@@ -19,7 +19,7 @@ public interface VolunteerEnrolledRepository extends JpaRepository<VolunteerEnro
 
     Boolean existsByVolunteerProjects_VolunteerProjectsUUIDAndEmailAndContactNumber(String volunteerProjectUUID, String email, String contactNumber);
 
-    @Query(value = "SELECT ve.* FROM volunteer_enrolled ve LEFT JOIN volunteers_projects vp ON ve.volunteer_projects_uuid=vp.volunteer_projects_uuid WHERE ve.email=:email ORDER BY vp.create_date desc", nativeQuery = true)
+    @Query(value = "SELECT ve.* FROM volunteer_enrolled ve LEFT JOIN volunteers_projects vp ON ve.volunteer_projects_uuid=vp.volunteer_projects_uuid WHERE ve.email=:email ORDER BY ve.enrolled_date desc", nativeQuery = true)
     List<VolunteerEnrolled> findVolunteerEnrolledsByEmailOrderByVolunteerProjectCreateDateDesc(@Param("email") String email);
 
 

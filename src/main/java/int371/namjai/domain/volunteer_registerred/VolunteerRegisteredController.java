@@ -1,7 +1,7 @@
 package int371.namjai.domain.volunteer_registerred;
 
-import int371.namjai.domain.user_favorite.mapper.UserFavoriteDTO;
 import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProjectDTO;
+import int371.namjai.domain.volunteer_registerred.dto.UserEnrolledVolunteerProjectDTO;
 import int371.namjai.domain.volunteer_registerred.dto.VolunteerRegisteredUserDTO;
 import int371.namjai.domain.volunteer_registerred.dto.VolunteerUnRegisteredUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,15 +40,13 @@ public class VolunteerRegisteredController {
         return ResponseEntity.ok().build();
     }
 
-    //    checkUserIsEnrolledOrNot
     @GetMapping("/volunteer/check-enrolled")
     public ResponseEntity<Boolean> getRegisteredUserVolunteerProject(@RequestParam("volunteerid") String volunteerProjectUUID, @RequestParam("email") String useremail) {
         return ResponseEntity.ok().body(volunteerRegisteredService.checkUserIsEnrolledOrNot(volunteerProjectUUID, useremail));
     }
 
-    //    getActivityJoinedVolunteerProjectsByEmail
     @GetMapping(value = "/volunteer-enrolled/activities")
-    public ResponseEntity<List<UserFavoriteDTO>> getListOfVolunteerEnrolledUserByUserEmail(@RequestParam("email") String email) {
+    public ResponseEntity<List<UserEnrolledVolunteerProjectDTO>> getListOfVolunteerEnrolledUserByUserEmail(@RequestParam("email") String email) {
         return ResponseEntity.ok().body(volunteerRegisteredService.getActivityJoinedVolunteerProjectsByEmail(email));
     }
 }

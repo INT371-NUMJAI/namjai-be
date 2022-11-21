@@ -83,7 +83,6 @@ public class FoundationProjectService {
         List<FoundationProject> foundationProjects = foundationProjectRepo.findFoundationProjectsByProjectNameAndStatus(fdnName);
         return FoundationProjectMapper.INSTANCE.toFoundationProjectShortDtoList(foundationProjects);
     }
-//    findByEmailVolunteerEnrolled
 
     public void saveToTable(FoundationProject project) {
         foundationProjectRepo.save(project);

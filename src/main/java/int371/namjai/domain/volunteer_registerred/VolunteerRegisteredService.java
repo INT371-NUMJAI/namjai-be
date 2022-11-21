@@ -2,20 +2,17 @@ package int371.namjai.domain.volunteer_registerred;
 
 import int371.namjai.domain.user.User;
 import int371.namjai.domain.user.UserService;
-import int371.namjai.domain.user_favorite.mapper.UserFavoriteDTO;
 import int371.namjai.domain.volunteer_projects.VolunteerProjects;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsRepository;
 import int371.namjai.domain.volunteer_projects.VolunteerProjectsService;
 import int371.namjai.domain.volunteer_projects.exceoptions.VolunteerProjectNotFoundException;
-import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProject;
-import int371.namjai.domain.volunteer_registerred.dto.EnrolledListVolunteerProjectDTO;
-import int371.namjai.domain.volunteer_registerred.dto.VolunteerRegisteredUserDTO;
-import int371.namjai.domain.volunteer_registerred.dto.VolunteerUnRegisteredUserDTO;
+import int371.namjai.domain.volunteer_registerred.dto.*;
 import int371.namjai.domain.volunteer_registerred.mapper.VolunteerRegisteredMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,6 +48,7 @@ public class VolunteerRegisteredService {
         volunteerEnrolled.setContactNumber(user.getPhoneNumber());
         volunteerEnrolled.setFirstName(user.getFirstName());
         volunteerEnrolled.setLastName(user.getLastName());
+        volunteerEnrolled.setEnrolledDate(new Timestamp(System.currentTimeMillis()));
 
         volunteerEnrolledRepo.save(volunteerEnrolled);
         volunteerProjectsRepo.save(volunteerProject);
@@ -68,6 +66,7 @@ public class VolunteerRegisteredService {
             volunteerEnrolled.setContactNumber(volunteerUnRegisteredUserDTO.getContactNumber());
             volunteerEnrolled.setFirstName(volunteerUnRegisteredUserDTO.getFirstName());
             volunteerEnrolled.setLastName(volunteerUnRegisteredUserDTO.getLastName());
+            volunteerEnrolled.setEnrolledDate(new Timestamp(System.currentTimeMillis()));
             VolunteerProjects volunteerProject = volunteerProjectsService.getVolunteerProjectByUUID(volunteerUnRegisteredUserDTO.getVolunteerProjectUUID());
             int peopleCount = volunteerProject.getPeopleRegistered() + 1;
             volunteerProject.setPeopleRegistered(peopleCount);
@@ -85,7 +84,6 @@ public class VolunteerRegisteredService {
         volunteerProjectsRepo.save(volunteerProjects);
         VolunteerEnrolled volunteerEnrolled = volunteerEnrolledRepo.findVolunteerEnrolledByEmailAndVolunteerProjects_VolunteerProjectsUUID(email, volunteerProjectUUID);
         volunteerEnrolledRepo.delete(volunteerEnrolled);
-//        volunteerEnrolledRepo.save();
     }
 
     public EnrolledListVolunteerProjectDTO getListOfEnRolledUserInVolunteerProject(String volunteerProjectUUID) {
@@ -103,7 +101,7 @@ public class VolunteerRegisteredService {
         return isEnrolled;
     }
 
-    public List<UserFavoriteDTO> getActivityJoinedVolunteerProjectsByEmail(String email) {
+    public List<UserEnrolledVolunteerProjectDTO> getActivityJoinedVolunteerProjectsByEmail(String email) {
         List<VolunteerEnrolled> volunteerEnrolledList = volunteerEnrolledRepo.findVolunteerEnrolledsByEmailOrderByVolunteerProjectCreateDateDesc(email);
         return VolunteerRegisteredMapper.INSTANCE.toUserFavoriteDTO(volunteerEnrolledList);
     }
