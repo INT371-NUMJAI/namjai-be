@@ -12,5 +12,6 @@ public class ArticleShortDTO {
     private String author;
     private String createDate;
     private String status;
+    private String email;
     private String articlePicture;
 }
