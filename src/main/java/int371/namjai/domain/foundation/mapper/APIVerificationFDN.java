@@ -9,4 +9,6 @@ public class APIVerificationFDN {
     private String fdnUUid;
     private String status;
     private String message;
+    private String adminApprove;
+
 }

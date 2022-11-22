@@ -28,7 +28,6 @@ public class BackOfficeService {
         msg.setFrom(new InternetAddress("namjai.service@gmail.com", false));
 
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(fdnEmail));
-//        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(fdnEmail));
         msg.setSubject("Namjai - Verification Result");
         msg.setSentDate(new Date());
 
