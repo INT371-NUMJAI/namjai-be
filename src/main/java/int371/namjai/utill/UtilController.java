@@ -59,7 +59,8 @@ public class UtilController {
         Foundation foundation = foundationService.getFoundationByEmail(email);
         String userName = user.getRole().getRoleUUid().equalsIgnoreCase("2") ? user.getUserName() : user.getLastName();
         String profilePath = user.getRole().getRoleUUid().equalsIgnoreCase("2") ? user.getProfilePath() : foundation.getProfilePath();
-        ProfileNameDTO profileNameDTO = new ProfileNameDTO(userName, profilePath);
+        String role = user.getRole().getRoleName().toString();
+        ProfileNameDTO profileNameDTO = new ProfileNameDTO(userName, profilePath, role);
         return ResponseEntity.ok().body(profileNameDTO);
     }
 

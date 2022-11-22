@@ -9,5 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ProfileNameDTO {
     private String userName;
+    private String role;
     private String profilePath;
 }
