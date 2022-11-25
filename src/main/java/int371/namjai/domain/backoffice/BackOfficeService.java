@@ -1,8 +1,15 @@
 package int371.namjai.domain.backoffice;
 
+import int371.namjai.domain.foundation.Foundation;
+import int371.namjai.domain.foundation.FoundationRepository;
+import int371.namjai.domain.foundation.FoundationService;
+import int371.namjai.domain.foundation.mapper.APIVerificationFDN;
 import int371.namjai.domain.foundation_rejected.FoundationRejected;
 import int371.namjai.domain.foundation_rejected.FoundationRejectedRepository;
+import int371.namjai.domain.user.User;
+import int371.namjai.domain.user.UserRepository;
 import int371.namjai.utill.Constant;
+import int371.namjai.utill.ResourceUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +25,43 @@ import java.util.UUID;
 
 @Service
 public class BackOfficeService {
+    @Autowired
+    private FoundationService foundationService;
+
+    @Autowired
+    private ResourceUtilService resourceUtilService;
+
+    @Autowired
+    private FoundationRepository foundationRepository;
 
     @Autowired
     private FoundationRejectedRepository foundationRejectedRepository;
 
+    @Autowired
+    private UserRepository userRepository;
 
-    public void sendmailForVerification(String fdnUUid, String fdnEmail, String status, String message) throws javax.mail.MessagingException {
+    public void approveFoundation(APIVerificationFDN apiVerificationFDN) throws MessagingException {
+        Foundation foundation = foundationService.getFoundationById(apiVerificationFDN.getFdnUUid());
+        String newStatus = ("APPROVE".equals(apiVerificationFDN.getStatus())) ? Constant.FDN_STATUS_VERIFIED : Constant.FDN_STATUS_REJECTED;
+        if (Constant.FDN_STATUS_VERIFIED.equals(newStatus)) {
+            User newUser = userRepository.findByEmailIgnoreCaseAndStatusDisable(foundation.getEmail());
+            newUser.setStatus(Constant.USER_STATUS_ACTIVE);
+            foundation.setStatus(newStatus);
+            foundation.setApproval(apiVerificationFDN.getAdminApprove());
+            foundationRepository.save(foundation);
+            userRepository.save(newUser);
+            resourceUtilService.createDirForVerifiedFoundation(foundation.getNameEn());
+            sendmailForVerification(apiVerificationFDN.getFdnUUid(), foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
+        } else {
+            foundation.setStatus(apiVerificationFDN.getStatus());
+            foundation.setApproval(apiVerificationFDN.getAdminApprove());
+            foundationRepository.save(foundation);
+            sendmailForVerification(apiVerificationFDN.getFdnUUid(), foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
+        }
+    }
+
+
+    private void sendmailForVerification(String fdnUUid, String fdnEmail, String status, String message) throws javax.mail.MessagingException {
         Message msg = new MimeMessage(setCredential());
         msg.setFrom(new InternetAddress("namjai.service@gmail.com", false));
 

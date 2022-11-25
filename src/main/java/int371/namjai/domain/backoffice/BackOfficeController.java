@@ -1,20 +1,12 @@
 package int371.namjai.domain.backoffice;
 
-import int371.namjai.domain.foundation.Foundation;
-import int371.namjai.domain.foundation.FoundationRepository;
-import int371.namjai.domain.foundation.FoundationService;
 import int371.namjai.domain.foundation.mapper.APIVerificationFDN;
-import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
-import int371.namjai.domain.user.User;
-import int371.namjai.domain.user.UserRepository;
-import int371.namjai.utill.Constant;
-import int371.namjai.utill.ResourceUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import java.util.List;
+
 
 @RestController
 @RequestMapping("/backoffice")
@@ -22,50 +14,12 @@ import java.util.List;
 public class BackOfficeController {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private FoundationRepository foundationRepository;
-
-    @Autowired
-    private FoundationService foundationService;
-
-    @Autowired
-    private ResourceUtilService resourceUtilService;
-
-    @Autowired
     private BackOfficeService backOfficeService;
-
-    @Autowired
-    private FoundationDocumentsRepo foundationDocumentsRepo;
-
-    @GetMapping(value = "/users")
-    private List<User> getAllUser() {
-        return userRepository.findAll();
-    }
 
 
     @PostMapping(value = "/approve-foundation")
-    @ResponseBody
     private ResponseEntity<Void> approveFoundation(@RequestBody APIVerificationFDN apiVerificationFDN) throws MessagingException {
-        Foundation foundation = foundationService.getFoundationById(apiVerificationFDN.getFdnUUid());
-        String newStatus = ("APPROVE".equals(apiVerificationFDN.getStatus())) ? Constant.FDN_STATUS_VERIFIED : Constant.FDN_STATUS_REJECTED;
-        if(Constant.FDN_STATUS_VERIFIED.equals(newStatus)){
-            User newUser = userRepository.findByEmailIgnoreCaseAndStatusDisable(foundation.getEmail());
-            newUser.setStatus(Constant.USER_STATUS_ACTIVE);
-            foundation.setStatus(newStatus);
-            foundation.setApproval(apiVerificationFDN.getAdminApprove());
-            foundationRepository.save(foundation);
-            userRepository.save(newUser);
-            resourceUtilService.createDirForVerifiedFoundation(foundation.getNameEn());
-            backOfficeService.sendmailForVerification(apiVerificationFDN.getFdnUUid(), foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
-        }
-        else {
-            foundation.setStatus(apiVerificationFDN.getStatus());
-            foundation.setApproval(apiVerificationFDN.getAdminApprove());
-            foundationRepository.save(foundation);
-            backOfficeService.sendmailForVerification(apiVerificationFDN.getFdnUUid(), foundation.getEmail(), newStatus, apiVerificationFDN.getMessage());
-        }
+        backOfficeService.approveFoundation(apiVerificationFDN);
         return ResponseEntity.ok().build();
     }
 

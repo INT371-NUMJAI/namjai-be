@@ -5,7 +5,6 @@ import int371.namjai.domain.backoffice.BackOfficeService;
 import int371.namjai.domain.bank_account.BankAccount;
 import int371.namjai.domain.bank_account.BankAccountService;
 import int371.namjai.domain.foundation_project.FoundationProject;
-import int371.namjai.domain.foundation_project.FoundationProjectRepository;
 import int371.namjai.domain.foundation_project.FoundationProjectService;
 import int371.namjai.domain.withdrawal_request.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +19,6 @@ public class WithdrawalRequestService {
 
     @Autowired
     private WithdrawalRequestRepository withdrawalRequestRepo;
-
-    @Autowired
-    private FoundationProjectRepository foundationProjectRepo;
 
     @Autowired
     private FoundationProjectService foundationProjectService;
