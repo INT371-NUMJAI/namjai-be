@@ -4,6 +4,7 @@ package int371.namjai.domain.foundation;
 import int371.namjai.domain.foundation.mapper.APIFDNList;
 import int371.namjai.domain.foundation.mapper.APIFDNShort;
 import int371.namjai.domain.foundation.mapper.FoundationMapper;
+import int371.namjai.domain.foundation_document.FoundationDocuments;
 import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,11 @@ public class FoundationService {
     public Foundation getFoundationById(String fdnUUid) {
         return foundationRepository.findById(fdnUUid)
                 .orElseThrow(FoundationNotFoundException::new);
+    }
+
+    public String retrievedDocFullPath(String fdnUUID) {
+        FoundationDocuments foundationDocuments = foundationDocumentsRepo.findByFoundationUUid(fdnUUID).orElseThrow(FoundationNotFoundException::new);
+        return foundationDocuments.getFilePath() + fdnUUID + "/" + foundationDocuments.getFileName();
     }
 
     public Foundation getFoundationByEmail(String email) {

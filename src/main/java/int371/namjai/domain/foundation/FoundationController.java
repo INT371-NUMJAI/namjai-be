@@ -3,9 +3,6 @@ package int371.namjai.domain.foundation;
 import int371.namjai.domain.auth_security.AuthenticationService;
 import int371.namjai.domain.foundation.mapper.APIFDNList;
 import int371.namjai.domain.foundation.mapper.APIFDNShort;
-import int371.namjai.domain.foundation_document.FoundationDocuments;
-import int371.namjai.domain.foundation_document.FoundationDocumentsRepo;
-import int371.namjai.utill.ResourceUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -22,29 +19,16 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
-//@RequestMapping("/")
 public class FoundationController {
 
     @Autowired
     private FoundationService foundationService;
 
-    @Autowired
-    private FoundationRepository foundationRepo;
 
-    @Autowired
-    private FoundationDocumentsRepo foundationDocumentsRepo;
 
     @Autowired
     private AuthenticationService authenticationService;
 
-    @Autowired
-    private ResourceUtilService resourceUtilService;
-
-    @GetMapping(value = "/view/foundation/{id}")
-    private ResponseEntity<Foundation> getFoundationById(@PathVariable("id") String fdnUUid) {
-        Foundation foundation = foundationService.getFoundationById(fdnUUid);
-        return ResponseEntity.ok(foundation);
-    }
 
 
     @GetMapping(value = "/view/foundationlist")
@@ -59,24 +43,15 @@ public class FoundationController {
         return apifdnShortList;
     }
 
-//    @GetMapping(value = "/view/foundations/search/")
-//    private List<APIFDNList> getShortFoundationListByName(@RequestParam("q") String fdnName) {
-//        List<APIFDNList> apifdnShortList = foundationService.searchFoundationListShortByName(fdnName);
-//        return apifdnShortList;
-//    }
-
     @GetMapping(value = "/view/getName")
     public Map<String, String> getNameOnProfileDisplay(@RequestParam String email) {
         return authenticationService.getProfileNameDisplay(email);
-//        return authenticationService.getProfileNameDisplay(apiGetName.getRole(), apiGetName.getEmail());
     }
 
 
     @GetMapping(value = "/view/getFile/{id}")
     public ResponseEntity<Resource> getDocFile(@PathVariable("id") String fdnUUID) throws FileNotFoundException {
-        FoundationDocuments foundationDocuments = foundationDocumentsRepo.findByFoundationUUid(fdnUUID).orElseThrow(FoundationNotFoundException::new);
-        String fullPath = foundationDocuments.getFilePath() + fdnUUID + "/" + foundationDocuments.getFileName();
-        File downloadFile = new File(fullPath);
+        File downloadFile = new File(foundationService.retrievedDocFullPath(fdnUUID));
         InputStreamResource resource = new InputStreamResource(new FileInputStream(downloadFile));
         HttpHeaders header = new HttpHeaders();
         header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + downloadFile.getName());
@@ -90,26 +65,5 @@ public class FoundationController {
                 .body(resource);
     }
 
-//    @PostMapping("/view/foundation/upload/qr")
-//    public ResponseEntity<String> uploadQRWithBody(@RequestParam("file") MultipartFile file, @RequestParam("fdnName") String fdnName, @RequestParam("fdnUUID") String fdnUUID) throws IOException {
-//        String path = resourceUtilService.saveFileToProjectFolder(file, fdnName);
-//        String fileName = file.getOriginalFilename();
-////        FoundationDocuments fdnDoc = new FoundationDocuments(newFDNDocUUid, fileName, Constant.FDN_DOC_PATH, fileExtension, fdnUuid,new Timestamp(date.getTime()));
-//        Foundation foundation = foundationService.getFoundationById(fdnUUID);
-//        foundation.setQrCodePath(path + "/" + fileName);
-//        foundationRepo.save(foundation);
-//        return ResponseEntity.ok().body(path + "/" + fileName);
-//    }
-
-//    @PostMapping("/view/foundation/upload-profile")
-//    public ResponseEntity<String> uploadProfilePicWithBody(@RequestParam("file") MultipartFile file, @RequestParam("fdnUUID") String fdnUUID) throws IOException {
-//        Foundation foundation = foundationService.getFoundationById(fdnUUID);
-//        String path = resourceUtilService.saveFileToProjectFolder(file, foundation.getNameEn());
-//        String fileName = file.getOriginalFilename();
-////        FoundationDocuments fdnDoc = new FoundationDocuments(newFDNDocUUid, fileName, Constant.FDN_DOC_PATH, fileExtension, fdnUuid,new Timestamp(date.getTime()));
-//        foundation.setProfilePath(path + "/" + fileName);
-//        foundationRepo.save(foundation);
-//        return ResponseEntity.ok().body(path + "/" + fileName);
-//    }
 
 }
