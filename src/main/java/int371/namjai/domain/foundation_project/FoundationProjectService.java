@@ -13,6 +13,7 @@ import int371.namjai.domain.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -57,6 +58,26 @@ public class FoundationProjectService {
     public void editFoundationProjectStatus(APIEditStatusProjectStatus apiEditStatusProjectStatus) {
         FoundationProject foundationProject = getFoundationById(apiEditStatusProjectStatus.getFdnProjectUUID());
         foundationProject.setStatus(apiEditStatusProjectStatus.getNewStatus());
+        foundationProjectRepo.save(foundationProject);
+    }
+
+    public void createFoundationProject(APIFoundationProjectForm apiFoundationProjectForm) {
+        FoundationProject foundationProject = new FoundationProject();
+        Foundation foundation = foundationService.getFoundationById(apiFoundationProjectForm.getFdnUUID());
+        foundationProject.setFoundation(foundation);
+        foundationProject.setFdnProjectUUid(apiFoundationProjectForm.getFdnProjectUUID());
+        foundationProject.setFdnProjectName(apiFoundationProjectForm.getFdnProjectName());
+        foundationProject.setStartDate(apiFoundationProjectForm.getStartDate());
+        foundationProject.setEndDate(apiFoundationProjectForm.getEndDate());
+        foundationProject.setGoal(apiFoundationProjectForm.getGoal());
+        foundationProject.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        foundationProject.setPicturePath(null);
+        foundationProject.setFdnProjectDetail(apiFoundationProjectForm.getFdnProjectDetail());
+        foundationProject.setFdnProjectDetailPlace(apiFoundationProjectForm.getFdnProjectDetailPlace());
+        foundationProject.setTargetCategoriesSet(apiFoundationProjectForm.getTargetCategoriesSet());
+        foundationProject.setResponsiblePerson(apiFoundationProjectForm.getResponsiblePerson());
+        foundationProject.setReceived(0L);
+        foundationProject.setStatus(apiFoundationProjectForm.getStatus());
         foundationProjectRepo.save(foundationProject);
     }
 

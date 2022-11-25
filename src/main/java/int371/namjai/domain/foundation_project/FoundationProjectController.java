@@ -1,8 +1,6 @@
 package int371.namjai.domain.foundation_project;
 
 
-import int371.namjai.domain.foundation.Foundation;
-import int371.namjai.domain.foundation.FoundationService;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectDTO;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectListToRequest;
 import int371.namjai.domain.foundation_project.mapper.FoundationProjectMapper;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -30,8 +27,6 @@ public class FoundationProjectController {
     @Autowired
     private TargetCategoriesRepository targetCategoriesRepo;
 
-    @Autowired
-    private FoundationService foundationService;
 
 
 
@@ -78,23 +73,7 @@ public class FoundationProjectController {
 
     @PostMapping(value = "/project/create")
     public ResponseEntity<Void> uploadFoundationProjectForm(@RequestBody APIFoundationProjectForm apiFoundationProjectForm) {
-        FoundationProject foundationProject = new FoundationProject();
-        Foundation foundation = foundationService.getFoundationById(apiFoundationProjectForm.getFdnUUID());
-        foundationProject.setFoundation(foundation);
-        foundationProject.setFdnProjectUUid(apiFoundationProjectForm.getFdnProjectUUID());
-        foundationProject.setFdnProjectName(apiFoundationProjectForm.getFdnProjectName());
-        foundationProject.setStartDate(apiFoundationProjectForm.getStartDate());
-        foundationProject.setEndDate(apiFoundationProjectForm.getEndDate());
-        foundationProject.setGoal(apiFoundationProjectForm.getGoal());
-        foundationProject.setCreateDate(new Timestamp(System.currentTimeMillis()));
-        foundationProject.setPicturePath(null);
-        foundationProject.setFdnProjectDetail(apiFoundationProjectForm.getFdnProjectDetail());
-        foundationProject.setFdnProjectDetailPlace(apiFoundationProjectForm.getFdnProjectDetailPlace());
-        foundationProject.setTargetCategoriesSet(apiFoundationProjectForm.getTargetCategoriesSet());
-        foundationProject.setResponsiblePerson(apiFoundationProjectForm.getResponsiblePerson());
-        foundationProject.setReceived(0L);
-        foundationProject.setStatus(apiFoundationProjectForm.getStatus());
-        foundationProjectRepo.save(foundationProject);
+        foundationProjectService.createFoundationProject(apiFoundationProjectForm);
         return ResponseEntity.ok().build();
     }
 
