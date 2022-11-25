@@ -58,7 +58,6 @@ public class VolunteerProjectsController {
         return ResponseEntity.ok().body(volunteerProjectsService.getVolunteerProjectUserSuggestionByUserEmail(userEmail));
     }
 
-    //   getVolunteerProjectTop6Random
     @GetMapping("/volunteer-projects/random")
     public ResponseEntity<List<VolunteerProjectShort>> getVolunteerProjectsListTop6Random() {
         return ResponseEntity.ok().body(volunteerProjectsService.getVolunteerProjectTop6Random());
