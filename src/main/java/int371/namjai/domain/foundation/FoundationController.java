@@ -24,12 +24,8 @@ public class FoundationController {
     @Autowired
     private FoundationService foundationService;
 
-
-
     @Autowired
     private AuthenticationService authenticationService;
-
-
 
     @GetMapping(value = "/view/foundationlist")
     private List<APIFDNShort> getShortFoundation() {
